@@ -18,11 +18,11 @@ public class KeboardController :ICharacterController
 
         if(Input.GetKey(KeyCode.RightArrow))
         {
-            velocity = new Vector3(0, 1, 0);
+            velocity = new Vector3(1, 0, 0);
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
-            velocity = new Vector3(0, -1, 0);
+            velocity = new Vector3(-1, 0, 0);
         }
 
         return velocity;
