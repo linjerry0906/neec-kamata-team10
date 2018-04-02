@@ -5,6 +5,7 @@ using UnityEngine;
 public class ControllerManager
 {
     private KeboardController keyboard_controller;
+    private KeboardController pad_controller;
 
     public ControllerManager()
     {
@@ -14,10 +15,16 @@ public class ControllerManager
     private void Initialize()
     {
         keyboard_controller = new KeboardController();
+        pad_controller = new KeboardController();
     }
 
-    public ICharacterController KeyboardController()
+    public ICharacterController Keyboard()
     {
         return keyboard_controller;
+    }
+
+    public ICharacterController Pad()
+    {
+        return pad_controller;
     }
 }
