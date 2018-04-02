@@ -16,13 +16,13 @@ public class KeboardController :ICharacterController
     {
         Vector3 velocity = Vector3.zero;
 
-        if(Input.GetKey(KeyCode.RightArrow))
+        if(Input.GetKey(KeyCode.A))
         {
-            velocity = new Vector3(0, 1, 0);
+            velocity = new Vector3(1, 0, 0);
         }
-        if(Input.GetKey(KeyCode.LeftArrow))
+        if(Input.GetKey(KeyCode.D))
         {
-            velocity = new Vector3(0, -1, 0);
+            velocity = new Vector3(-1, 0, 0);
         }
 
         return velocity;
