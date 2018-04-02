@@ -26,7 +26,7 @@ public class PadController : MonoBehaviour,ICharacterController
     /// <returns></returns>
     public bool SwitchToTheRight()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton5))
+        if (Input.GetKeyDown(KeyCode.JoystickButton5)) //R
         {
             return true;
         }
@@ -40,7 +40,7 @@ public class PadController : MonoBehaviour,ICharacterController
     /// <returns></returns>
     public bool SwitchToTheLeft()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton4))
+        if (Input.GetKeyDown(KeyCode.JoystickButton4)) //L
         {
             return true;
         }
@@ -54,7 +54,7 @@ public class PadController : MonoBehaviour,ICharacterController
     /// <returns></returns>
     public bool Jump()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0)) //A
         {
             return true;
         }
@@ -68,7 +68,7 @@ public class PadController : MonoBehaviour,ICharacterController
     /// <returns></returns>
     public bool OperateTheMirror()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton2))
+        if (Input.GetKeyDown(KeyCode.JoystickButton2)) //X
         {
             return true;
         }
