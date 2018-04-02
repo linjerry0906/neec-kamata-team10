@@ -29,6 +29,9 @@ public class Mirror : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag.Equals("reflect"))                                    //像は無視
+            return;
+
         origin_obj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, other.tag.Equals("Unresizable"));   //鏡側の像を追加
     }
@@ -52,8 +55,8 @@ public class Mirror : MonoBehaviour {
         Vector3 dest_size = ReflectSize(unresizable);       //サイズ指定
         
         GameObject reflect = Instantiate(origin);           //像のObjectを生成
-        Destroy(reflect.GetComponent<Rigidbody>());         //必要がないコンポーネントを削除
         Destroy(reflect.GetComponent<Collider>());          //必要がないコンポーネントを削除
+        reflect.tag = "reflect";                            //Tag追加
 
         reflect.GetComponent<MeshRenderer>().material = mirror_obj_material;        //マテリアル設定
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加

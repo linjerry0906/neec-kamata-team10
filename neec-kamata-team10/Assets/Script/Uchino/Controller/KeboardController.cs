@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeboardController : MonoBehaviour,ICharacterController
+public class KeboardController : ICharacterController
 {
     /// <summary>
     /// 水平移動

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PadController : MonoBehaviour,ICharacterController
+public class PadController : ICharacterController
 {
     public Vector3 HorizontalMove()
     {
