@@ -81,4 +81,27 @@ public class Mirror : MonoBehaviour {
             return new Vector3(1, 1, 1);                    //サイズ変更なし
         return reflect_size;                                //プリセットのサイズ
     }
+
+    /// <summary>
+    /// 映すサイズ
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 ReflectSize()
+    {
+        return reflect_size;
+    }
+
+    /// <summary>
+    /// 鏡の各辺の座標、サイズ
+    /// </summary>
+    /// <returns></returns>
+    public Rect GetSide()
+    {
+        float xScale = GetComponent<BoxCollider>().size.x / 2 * transform.localScale.x;
+        float yScale = GetComponent<BoxCollider>().size.y / 2 * transform.localScale.y;
+        float x = transform.position.x - xScale;
+        float y = transform.position.y - yScale;
+        Rect rect = new Rect(x, y, xScale * 2, yScale * 2);
+        return new Rect(x, y, xScale * 2, yScale * 2);
+    }
 }
