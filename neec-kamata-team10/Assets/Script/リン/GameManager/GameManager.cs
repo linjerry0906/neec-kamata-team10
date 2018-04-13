@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------
+// 作成日：2018.4.2
+// 作成者：林 佳叡
+// 内容：ゲームマネージャー
+//------------------------------------------------------
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +13,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
-        controller_manager = new ControllerManager();
+        controller_manager = new ControllerManager();       //実体生成
     }
 
     void Start () {

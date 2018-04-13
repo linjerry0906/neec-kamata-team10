@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//------------------------------------------------------
+// 作成日：2018.4.2
+// 作成者：林 佳叡
+// 内容：コントローラーを管理するクラス
+//------------------------------------------------------
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
