@@ -34,7 +34,7 @@ public class TraceHint : CameraMode
 
         Vector3 targetPos = target.transform.position;                                                  //注目先の位置
         Vector3 point = camera.WorldToViewportPoint(targetPos);                                         //画面上の位置に変換
-        Vector3 direct = targetPos - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));     //方向を計算する
+        Vector3 direct = targetPos - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));     //同じ深度で方向を計算する
         Vector3 destination = cameraObj.transform.position + direct;                                    //目的地を計算
         cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, destination, ref velocity, dampTime);   //スムーズダンプさせる
     }
