@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject gameManager;
     [SerializeField]
@@ -13,23 +12,32 @@ public class Player : MonoBehaviour
     private float maxSpeed;
     [SerializeField]
     private float acceleration;
+    [SerializeField]
+    private Mirror mirror;
+    [SerializeField]
+    private float changeTime;
 
     private float speed = 0;
     private float storeDirectionX= 0;
     private Vector3 direction = new Vector3(1, 0, 0);
 
+    private ChangeScale changeScale;
     private ICharacterController controller;
 
     // Use this for initialization
     void Start()
     {
         controller = gameManager.GetComponent<GameManager>().GetController(eController);
+        changeScale = new ChangeScale(mirror, changeTime);
+        //changeScale.SetMirror(mirror);
+        //changeScale.SetChangeTime(changeTime);
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+        ChangeScale();
     }
 
     void Move()
@@ -37,7 +45,8 @@ public class Player : MonoBehaviour
         float directionX = controller.HorizontalMove().x;
         ChangeSpeed(directionX);
         ChangeDirection(directionX);
-        GetComponent<Rigidbody>().velocity = direction * speed;
+        transform.position += direction * speed * Time.deltaTime;
+        //GetComponent<Rigidbody>().velocity = direction * speed;
     }
 
     void ChangeDirection(float directionX)
@@ -54,5 +63,10 @@ public class Player : MonoBehaviour
         else speed -= acceleration;
 
         speed = Mathf.Clamp(speed, 0, maxSpeed);
+    }
+
+    void ChangeScale()
+    {
+        transform.localScale = changeScale.Scale(new Vector2(transform.position.x, transform.position.y));
     }
 }
