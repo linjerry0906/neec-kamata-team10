@@ -31,7 +31,8 @@ public class MapEditor : EditorWindow
     private int infoLength = 100;                       //説明欄の長さ
 
     private string saveFileName;                        //保存名前
-    private string savePath = "Assets/";                //保存場所
+    private string savePath = "Assets/Scene/";          //保存場所
+    private Scene currentScene;                         //開いたシーン
 
     private GameObject tileMapPrefab;                   //TileMapのPrefab
     private GameObject gameManagerPrefab;               //GameManagerのPrefab
@@ -84,7 +85,7 @@ public class MapEditor : EditorWindow
             return;
 
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();        //今のシーンを保存するか
-        Scene scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);       //新しいシーン
+        currentScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);       //新しいシーン
         LoadPrefab();                                                       //Prefabをロードする
         InitNewScene();                                                     //Sceneを初期化
     }
@@ -134,18 +135,25 @@ public class MapEditor : EditorWindow
     /// </summary>
     private void SaveLoad()
     {
-        Save();                                                                      //セーブUI
-        Load();                                                                      //ロードUI
+        SaveUI();                                                                    //セーブUI
+        LoadUI();                                                                    //ロードUI
     }
 
-    private void Load()
+    /// <summary>
+    /// ロードUI
+    /// </summary>
+    private void LoadUI()
     {
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUILayout.LabelField("読み込み");
+        //if(GUILayout.Button()
         EditorGUILayout.EndVertical();
     }
 
-    private void Save()
+    /// <summary>
+    /// セーブUI
+    /// </summary>
+    private void SaveUI()
     {
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUILayout.LabelField("書出し");
@@ -164,19 +172,29 @@ public class MapEditor : EditorWindow
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("セーブ"))                                             //セーブボタン
         {
-            GameObject a = new GameObject();                                        //Todo：Mapに代わる
-            PrefabUtility.CreatePrefab(savePath + "/" + saveFileName + ".prefab", a);
+            SaveScene();                                                            //シーン保存
         }
         if (GUILayout.Button("リセット"))                                           //リセットボタン
         {
             saveFileName = "";                                                      //初期設定
-            savePath = "Assets/";
+            savePath = "Assets/Scene/";
             Refresh();                                                              //UI再描画
         }
         EditorGUILayout.EndHorizontal();
         #endregion
 
         EditorGUILayout.EndVertical();
+    }
+
+    /// <summary>
+    /// シーンを保存
+    /// </summary>
+    private void SaveScene()
+    {
+        if (!currentScene.IsValid())                                                //Nullの場合
+            return;
+
+        EditorSceneManager.SaveScene(currentScene, savePath + saveFileName + ".unity");
     }
 
     /// <summary>
@@ -211,7 +229,7 @@ public class MapEditor : EditorWindow
             return;
         }
 
-        path = "Assets/";                                                           //プロジェクト以外はパス修正
+        path = "Assets/Scene";                                                      //プロジェクト以外はパス修正
         Refresh();
     }
 }
