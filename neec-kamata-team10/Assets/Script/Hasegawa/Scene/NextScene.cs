@@ -9,11 +9,12 @@ public class NextScene : MonoBehaviour {
 
     public void Change()
     {
-        GameManager.Instance.GetComponent<Transform>().GetChild(0).GetComponent<SceneChange>().ChangeScene(nextScene);
+        GameManager.Instance.ChangeScene(nextScene);
     }
 
     void OnTriggerEnter(Collider t)
     {
+        //Time.timeScale = 0.01f;
         Debug.Log("in");
         Change();
     }
