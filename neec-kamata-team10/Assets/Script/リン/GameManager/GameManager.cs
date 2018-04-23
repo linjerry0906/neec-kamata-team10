@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);                 //削除されないように
     }
 
-    void Start () {
-		
+    void Start ()
+    {
 	}
 	
 	void Update () {
