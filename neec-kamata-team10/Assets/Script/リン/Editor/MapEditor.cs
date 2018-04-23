@@ -3,17 +3,11 @@
 // 作成者：林 佳叡
 // 内容：マップ編集用拡張機能
 //------------------------------------------------------
-using System.Collections;
-using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 public class MapEditor : EditorWindow
 {
-
     [MenuItem("Window/マップ編集")]
     static void Open()
     {
@@ -24,20 +18,16 @@ public class MapEditor : EditorWindow
     {
         EditMode = 0,       //マップ編集
         SaveLoad,           //データ保存など
+        Object,             //オブジェクト配置など
     }
 
     private int currentMode = (int)Mode.EditMode;       //編集モード
 
-    private int infoLength = 100;                       //説明欄の長さ
+    private LayoutManager layoutManager = new LayoutManager();
+    private StageIO stageIO = new StageIO();
+    private ObjectEditor objectEditor = new ObjectEditor();
 
-    private string saveFileName;                        //保存名前
-    private string savePath = "Assets/Scene/";          //保存場所
-    private Scene currentScene;                         //開いたシーン
-
-    private GameObject tileMapPrefab;                   //TileMapのPrefab
-    private GameObject gameManagerPrefab;               //GameManagerのPrefab
-
-    private GameObject stage;                           //Stage
+    private GameObject OnMouse = null;
 
     /// <summary>
     /// GUI配置
@@ -45,191 +35,54 @@ public class MapEditor : EditorWindow
     private void OnGUI()
     {
         EditorGUILayout.BeginVertical();
-        EditorGUILayout.LabelField("マップ エディター");
 
         currentMode = GUILayout.Toolbar(currentMode,
-            new string[] { "マップ編集", "書出し / 読み込み" });
+            new string[] { "マップ編集", "書出し / 読み込み", "オブジェクト" });
+
+        EditorGUILayout.EndVertical();
 
         switch ((Mode)currentMode)                      //モードにより機能が変わる
         {
             case Mode.EditMode:                         //マップ編集モード
-                EditMap();
+                layoutManager.Update();
                 break;
             case Mode.SaveLoad:                         //マップ保存や読み込み
-                SaveLoad();
+                stageIO.Update();
+                break;
+            case Mode.Object:                           //オブジェクト配置
+                objectEditor.Update();
                 break;
         }
-        EditorGUILayout.EndVertical();
+
+        UpdateScene();                                  //シーンと連動する処理
     }
 
     /// <summary>
-    /// UI更新
+    /// シーンの処理
     /// </summary>
-    private void Refresh()
+    private void UpdateScene()
     {
-        GUI.SetNextControlName("");
-        GUI.FocusControl("");
-    }
-
-    private void EditMap()
-    {
-        EditorGUILayout.BeginVertical(GUI.skin.box);
-        OpenNewScene();                                //新しいSceneを作る
-        OpenPalette();                                 //マップチップを開く
-        EditorGUILayout.EndVertical();
-    }
-
-    private void OpenNewScene()
-    {
-        if (!GUILayout.Button("新しいステージ"))                            //新しいステージボタン
-            return;
-
-        EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();        //今のシーンを保存するか
-        currentScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);       //新しいシーン
-        LoadPrefab();                                                       //Prefabをロードする
-        InitNewScene();                                                     //Sceneを初期化
-    }
-
-    /// <summary>
-    /// PrefabをLoadする
-    /// </summary>
-    private void LoadPrefab()
-    {
-        tileMapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Grid.prefab");
-        gameManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/GameManager/GameManager.prefab");
-    }
-
-    private void InitNewScene()
-    {
-        GameObject gameManager = Instantiate(gameManagerPrefab, Vector3.zero, Quaternion.identity);             //GameManagerを作成
-        gameManager.name = "GameManager";                                   //名前修正
-
-        stage = new GameObject();                                           //StageのEmptyObject
-        stage.name = "Stage";                                               //名前修正
-
-        string[] layout = { "Last", "Back", "Default", "Front", "First" };  //名前
-        int stageZ = 1;
-        int interval = 3;                                                   //Layoutの間隔
-        for (int i = 0; i < layout.Length; i++)
+        if (objectEditor.GetCurrentObject() == null)
         {
-            GameObject grid = Instantiate(tileMapPrefab, Vector3.zero, Quaternion.identity, stage.transform);    //Gridを作成する
-            grid.transform.position = new Vector3(0, 0, interval * 2 - i * interval - stageZ);                  //Z軸修正
-            grid.name = layout[i] + "Grid";                                  //名前修正
-            grid.transform.GetChild(0).name = layout[i] + "Layout";          //名前修正
-        }
-    }
-
-    /// <summary>
-    /// EditWindowを開く
-    /// </summary>
-    private void OpenPalette()
-    {
-        if (GUILayout.Button("Map Chipを開く"))                                      //開くボタン
-        {
-            EditorApplication.ExecuteMenuItem("Window/Tile Palette");                //Paletteを開く
-        }
-    }
-
-    /// <summary>
-    /// マップをセーブ/ロード
-    /// </summary>
-    private void SaveLoad()
-    {
-        SaveUI();                                                                    //セーブUI
-        LoadUI();                                                                    //ロードUI
-    }
-
-    /// <summary>
-    /// ロードUI
-    /// </summary>
-    private void LoadUI()
-    {
-        EditorGUILayout.BeginVertical(GUI.skin.box);
-        EditorGUILayout.LabelField("読み込み");
-        //if(GUILayout.Button()
-        EditorGUILayout.EndVertical();
-    }
-
-    /// <summary>
-    /// セーブUI
-    /// </summary>
-    private void SaveUI()
-    {
-        EditorGUILayout.BeginVertical(GUI.skin.box);
-        EditorGUILayout.LabelField("書出し");
-
-        FileName(ref saveFileName);                                                 //ファイル名欄
-
-        #region File Path
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("保存先：", GUILayout.Width(infoLength));        //説明欄
-        savePath = EditorGUILayout.TextField(savePath);                             //パス欄
-        FolderBrowser(ref savePath);                                                //ブラウザボタン
-        EditorGUILayout.EndHorizontal();
-        #endregion
-
-        #region Save Reset Button
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("セーブ"))                                             //セーブボタン
-        {
-            SaveScene();                                                            //シーン保存
-        }
-        if (GUILayout.Button("リセット"))                                           //リセットボタン
-        {
-            saveFileName = "";                                                      //初期設定
-            savePath = "Assets/Scene/";
-            Refresh();                                                              //UI再描画
-        }
-        EditorGUILayout.EndHorizontal();
-        #endregion
-
-        EditorGUILayout.EndVertical();
-    }
-
-    /// <summary>
-    /// シーンを保存
-    /// </summary>
-    private void SaveScene()
-    {
-        if (!currentScene.IsValid())                                                //Nullの場合
-            return;
-
-        EditorSceneManager.SaveScene(currentScene, savePath + saveFileName + ".unity");
-    }
-
-    /// <summary>
-    /// ファイル名の欄
-    /// </summary>
-    /// <param name="fileName">ファイル名を指定する変数</param>
-    private void FileName(ref string fileName)
-    {
-        EditorGUILayout.BeginHorizontal();                                          //横並び
-        EditorGUILayout.LabelField("ファイル名：", GUILayout.Width(infoLength));    //説明欄
-        fileName = EditorGUILayout.TextField(fileName);                             //入力欄
-        EditorGUILayout.EndHorizontal();                                            //横並び
-    }
-
-    /// <summary>
-    /// フォルダブラウザを開く
-    /// </summary>
-    /// <param name="path">指定パスの変数</param>
-    private void FolderBrowser(ref string path)
-    {
-        bool click = GUILayout.Button("...", GUILayout.Width(25));                  //ブラウザボタン
-
-        if (!click)                                                                 //クリックされなかったらリターン
-            return;
-
-        path = EditorUtility.SaveFolderPanel("", "Assets/", "");                    //パス指定
-        if (path.Contains("Assets/"))                                               //プロジェクト内なら
-        {
-            int index = path.IndexOf("Assets/");                                    //パス修正
-            path = path.Remove(0, index);
-            Refresh();                                                              //UI再表示
+            OnMouse = null;
             return;
         }
+        if (OnMouse == null ||
+            OnMouse.name != objectEditor.GetCurrentObject().name)
+        {
+            OnMouse = PrefabUtility.InstantiatePrefab(objectEditor.GetCurrentObject()) as GameObject;
+            OnMouse.name = objectEditor.GetCurrentObject().name;
+        }
 
-        path = "Assets/Scene";                                                      //プロジェクト以外はパス修正
-        Refresh();
+        Camera camera = SceneView.lastActiveSceneView.camera;
+
+        Vector2 mousePos = Event.current.mousePosition;
+
+        Vector3 world = camera.ScreenToWorldPoint(HandleUtility.GUIPointToScreenPixelCoordinate(mousePos));
+
+        world.z = -0.5f;
+        OnMouse.transform.position = world;
     }
+
+    
 }

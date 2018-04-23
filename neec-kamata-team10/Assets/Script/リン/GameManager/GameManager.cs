@@ -9,11 +9,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager Instance;                     //GameManagerのインスタンス
+
     private ControllerManager controller_manager;           //コントローラーのマネージャー
 
     private void Awake()
     {
+        CheckInstance();                                    //Instanceをチェックする
+
         controller_manager = new ControllerManager();       //実体生成
+    }
+
+    /// <summary>
+    /// Instanceをチェックする
+    /// </summary>
+    private void CheckInstance()
+    {
+        if (Instance != null)                               //Nullじゃない場合
+        {
+            Destroy(this.gameObject);                       //削除
+            return;
+        }
+        Instance = this;                                    //Instance指定
+        DontDestroyOnLoad(this.gameObject);                 //削除されないように
     }
 
     void Start () {
