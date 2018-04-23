@@ -5,25 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour {
 
-    [SerializeField]
-    private string sceneName;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (IsEnd())
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-    }
-
-    //シーン変更の条件
-    bool IsEnd()
+    //シーンの変更
+    public void ChangeScene(EScene scene)
     {
-        return Input.GetMouseButtonDown(0);
+        Debug.Log(scene.ToString() + "に変更されました");
+        SceneManager.LoadScene(scene.ToString());
     }
+
+    //勉強用メモ
+    //public void TestLoad()
+    //{
+    //    SceneManager.LoadScene(EScene.PlayTest.ToString());
+    //    transform.GetChild(0).GetComponent<SceneChange>();
+    //    GameObject SceneManager = new GameObject("SceneManager");
+    //    SceneManager.AddComponent<SceneChange>();
+    //    transform.parent.
+    //}
 }
