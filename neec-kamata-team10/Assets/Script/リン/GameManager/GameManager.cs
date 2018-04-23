@@ -11,13 +11,15 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;                     //GameManagerのインスタンス
 
-    private ControllerManager controller_manager;           //コントローラーのマネージャー
+    private ControllerManager controllerManager;            //コントローラーのマネージャー
+    private SceneChange sceneManager;                       //シーンマネージャー
 
     private void Awake()
     {
         CheckInstance();                                    //Instanceをチェックする
 
-        controller_manager = new ControllerManager();       //実体生成
+        controllerManager = new ControllerManager();        //実体生成
+        sceneManager = new SceneChange();                   //実体生成
     }
 
     /// <summary>
@@ -43,6 +45,15 @@ public class GameManager : MonoBehaviour {
 	}
 
     /// <summary>
+    /// シーンを切り替わる
+    /// </summary>
+    /// <param name="nextScene">次のシーン</param>
+    public void ChangeScene(EScene nextScene)
+    {
+        sceneManager.ChangeScene(nextScene);                //シーンChange
+    }
+
+    /// <summary>
     /// 指定のコントローラーを取得
     /// </summary>
     /// <param name="eController">キーボードか、パッドか</param>
@@ -50,8 +61,8 @@ public class GameManager : MonoBehaviour {
     public ICharacterController GetController(EController eController)
     {
         if(eController == EController.KEYBOARD)             //キーボードの場合
-            return controller_manager.Keyboard();           //キーボードのコントローラーを返す
+            return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
-        return controller_manager.Pad();                    //パッドのコントローラーを返す
+        return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
 }
