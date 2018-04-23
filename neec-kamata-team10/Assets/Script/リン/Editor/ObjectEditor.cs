@@ -94,9 +94,11 @@ public class ObjectEditor
 
 #region 名前表示
         EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal(GUILayout.MinWidth(200));
         EditorGUILayout.LabelField("選択中：", GUILayout.MaxWidth(50));
-        EditorGUILayout.LabelField(currentObject.name, GUILayout.MaxWidth(200));
-        if (GUILayout.Button("クリア"))             //クリアボタン
+        EditorGUILayout.LabelField(currentObject.name);
+        EditorGUILayout.EndHorizontal();
+        if (GUILayout.Button("クリア", GUILayout.MaxWidth(150)))                        //クリアボタン
         {
             currentObject = null;
             EditorGUILayout.EndHorizontal();
@@ -108,7 +110,10 @@ public class ObjectEditor
 #region 画像表示
         EditorGUILayout.BeginHorizontal();
         Texture2D texture = AssetPreview.GetAssetPreview(currentObject);                //画像取得
+        EditorGUILayout.BeginHorizontal(GUILayout.MinWidth(260));
         GUILayout.Box(texture);                                                         //表示
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.LabelField("Spaceキー でブロック配置");
         EditorGUILayout.EndHorizontal();
 #endregion
 

@@ -23,7 +23,6 @@ public class StageIO
     public void Update ()
     {
         SaveUI();                                       //セーブUI
-        LoadUI();                                       //ロードUI
     }
 
     /// <summary>
@@ -33,16 +32,6 @@ public class StageIO
     {
         GUI.SetNextControlName("");
         GUI.FocusControl("");
-    }
-
-    /// <summary>
-    /// ロードUI
-    /// </summary>
-    private void LoadUI()
-    {
-        EditorGUILayout.BeginVertical(GUI.skin.box);
-        EditorGUILayout.LabelField("読み込み");
-        EditorGUILayout.EndVertical();
     }
 
     /// <summary>

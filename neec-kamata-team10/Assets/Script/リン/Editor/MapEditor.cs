@@ -5,6 +5,7 @@
 //------------------------------------------------------
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class MapEditor : EditorWindow
 {
@@ -12,6 +13,18 @@ public class MapEditor : EditorWindow
     static void Open()
     {
         GetWindow<MapEditor>("マップ編集");             //Window表示（すでにある場合は既存のWindowを最上階）
+    }
+
+    void OnFocus()
+    {
+        SceneView.onSceneGUIDelegate -= OnSceneGUI;
+        SceneView.onSceneGUIDelegate += OnSceneGUI;
+        Repaint();
+    }
+
+    void OnDestroy()
+    {
+        SceneView.onSceneGUIDelegate -= OnSceneGUI;
     }
 
     private enum Mode
@@ -27,7 +40,8 @@ public class MapEditor : EditorWindow
     private StageIO stageIO = new StageIO();
     private ObjectEditor objectEditor = new ObjectEditor();
 
-    private GameObject OnMouse = null;
+    private GameObject stageObj;
+    private GameObject onMouse = null;
 
     /// <summary>
     /// GUI配置
@@ -53,8 +67,6 @@ public class MapEditor : EditorWindow
                 objectEditor.Update();
                 break;
         }
-
-        UpdateScene();                                  //シーンと連動する処理
     }
 
     /// <summary>
@@ -62,27 +74,89 @@ public class MapEditor : EditorWindow
     /// </summary>
     private void UpdateScene()
     {
-        if (objectEditor.GetCurrentObject() == null)
-        {
-            OnMouse = null;
-            return;
-        }
-        if (OnMouse == null ||
-            OnMouse.name != objectEditor.GetCurrentObject().name)
-        {
-            OnMouse = PrefabUtility.InstantiatePrefab(objectEditor.GetCurrentObject()) as GameObject;
-            OnMouse.name = objectEditor.GetCurrentObject().name;
-        }
+        UpdateMouse();
 
-        Camera camera = SceneView.lastActiveSceneView.camera;
-
-        Vector2 mousePos = Event.current.mousePosition;
-
-        Vector3 world = camera.ScreenToWorldPoint(HandleUtility.GUIPointToScreenPixelCoordinate(mousePos));
-
-        world.z = -0.5f;
-        OnMouse.transform.position = world;
+        SceneView.RepaintAll();                         //Editor描画
+        HandleUtility.Repaint();                        //Editor描画
     }
 
-    
+    /// <summary>
+    /// Mouseを更新
+    /// </summary>
+    private void UpdateMouse()
+    {
+        if (objectEditor.GetCurrentObject() == null)    //選択なし状態
+        {
+            if (onMouse != null)                        //マウスにオブジェクトある場合
+                DestroyImmediate(onMouse);              //削除
+            onMouse = null;                             //Nullにする
+            return;
+        }
+        if (onMouse == null ||
+            onMouse.name != objectEditor.GetCurrentObject().name)   //マウスのオブジェクトが異なる場合
+        {
+            if (onMouse != null)                                    //マウスにオブジェクトある場合
+                DestroyImmediate(onMouse);                          //削除
+            CreateMouseObj();                                       //マウスのObjectを作成
+        }
+        Event e = Event.current;
+        Camera camera = SceneView.lastActiveSceneView.camera;       //カメラ取得
+        Vector2 mousePos = e.mousePosition;                         //マウス位置取得
+        Vector3 world = camera.ScreenToWorldPoint(HandleUtility.GUIPointToScreenPixelCoordinate(mousePos)); //座標変換
+        world.z = -0.5f;                                            //深度固定
+        world = GridHelper.SetOnGrid(world);
+        onMouse.transform.position = world;                         //座標設定
+
+        SetTrigger();
+    }
+
+    /// <summary>
+    /// マウスのObjectを作成
+    /// </summary>
+    private void CreateMouseObj()
+    {
+        onMouse = PrefabUtility.InstantiatePrefab(objectEditor.GetCurrentObject()) as GameObject;           //作成
+        onMouse.name = objectEditor.GetCurrentObject().name;        //名前変更
+        CheckStage();                                               //ステージオブジェクト確認
+        onMouse.transform.SetParent(stageObj.transform);            //親オブジェクト設定
+    }
+
+    /// <summary>
+    /// Spaceキーで設置
+    /// </summary>
+    private void SetTrigger()
+    {
+        Event e = Event.current;
+        int controlID = GUIUtility.GetControlID(FocusType.Passive);
+        if (e.GetTypeForControl(controlID) == EventType.KeyDown &&
+            e.keyCode == KeyCode.Space)                             //Spaceキーが押したら
+        {
+            CreateMouseObj();                                       //設置
+        }
+    }
+
+    /// <summary>
+    /// ステージオブジェクトあるかを確認
+    /// </summary>
+    private void CheckStage()
+    {
+        if (stageObj != null)
+            return;
+
+        Scene currentScene = SceneManager.GetActiveScene();         //scene取得
+        foreach (GameObject g in currentScene.GetRootGameObjects()) //Rootオブジェクトから探す
+        {
+            if (g.name == "Stage")                                  //ステージがある場合
+            {
+                stageObj = g;                                       //指定
+                return;
+            }
+        }
+        stageObj = new GameObject("Stage");                         //新しく作成
+    }
+
+    private void OnSceneGUI(SceneView sceneView)
+    {
+        UpdateScene();                                              //シーンを更新
+    }
 }
