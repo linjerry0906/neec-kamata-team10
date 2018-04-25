@@ -49,7 +49,7 @@ public class LayoutManager
     /// </summary>
     private void LoadPrefab()
     {
-        stagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Stage.prefab");
+        stagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/BackgroundLayer.prefab");
         gameManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/GameManager/GameManager.prefab");
         cameraPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Main Camera.prefab");
     }

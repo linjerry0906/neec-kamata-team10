@@ -7,22 +7,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mirror : MonoBehaviour {
+public class Mirror : MonoBehaviour
+{
 
     [SerializeField]
     private Vector3 reflect_size;               //映したサイズ
     [SerializeField]
     private Material mirror_obj_material;       //鏡側用のマテリアル
     [SerializeField]
+    private Material mirror_obj_sprite_material;//鏡側用のマテリアル
+    [SerializeField]
     private List<GameObject> origin_obj;        //映し元
     [SerializeField]
     private List<GameObject> reflect_obj;       //映した像
 
-	void Start ()
+    void Start()
     {
         origin_obj = new List<GameObject>();
         reflect_obj = new List<GameObject>();
-	}
+    }
 
     private void Update()
     {
@@ -38,7 +41,8 @@ public class Mirror : MonoBehaviour {
             return;
 
         origin_obj.Add(other.gameObject);                                   //映したい物を保存
-        AddReflectObj(other.gameObject, other.tag.Equals("Unresizable"));   //鏡側の像を追加
+        bool unresizable = IsUnresizableTag(other.tag);
+        AddReflectObj(other.gameObject, unresizable);                       //鏡側の像を追加
     }
 
     private void OnTriggerExit(Collider other)
@@ -51,6 +55,20 @@ public class Mirror : MonoBehaviour {
     }
 
     /// <summary>
+    /// サイズ調整できないか
+    /// </summary>
+    /// <param name="tag">タグ</param>
+    /// <returns></returns>
+    private bool IsUnresizableTag(string tag)
+    {
+        if (tag.Equals("Unresizable"))
+            return true;
+        if (tag.Equals("stage_block"))
+            return true;
+        return false;
+    }
+
+    /// <summary>
     /// 映す像を追加する処理
     /// </summary>
     /// <param name="origin">映し元</param>
@@ -58,10 +76,21 @@ public class Mirror : MonoBehaviour {
     private void AddReflectObj(GameObject origin, bool unresizable)
     {
         Vector3 dest_size = ReflectSize(unresizable);       //サイズ指定
-        
+
         GameObject reflect = Instantiate(origin);           //像のObjectを生成
         Destroy(reflect.GetComponent<Collider>());          //必要がないコンポーネントを削除
         reflect.tag = "reflect";                            //Tag追加
+        for (int i = 0; i < reflect.transform.childCount; ++i)                      //子供全体追加
+        {
+            Transform child = reflect.transform.GetChild(i);
+            child.tag = "reflect";
+            MeshRenderer mesh = child.GetComponent<MeshRenderer>();
+            SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
+            if (mesh)
+                mesh.material = mirror_obj_material;
+            if (sprite)
+                sprite.material = mirror_obj_sprite_material;
+        }
 
         reflect.GetComponent<MeshRenderer>().material = mirror_obj_material;        //マテリアル設定
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加

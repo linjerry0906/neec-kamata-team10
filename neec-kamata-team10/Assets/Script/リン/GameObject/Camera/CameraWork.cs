@@ -16,7 +16,7 @@ public class CameraWork : MonoBehaviour {
     [SerializeField]
     private float dampTime;                                     //移動にかかる時間
     [SerializeField]
-    private Vector3 relativePos = new Vector3(0, 6, -17);       //相対位置
+    private Vector3 relativePos = new Vector3(0, 17, -30);      //相対位置
     [SerializeField]
     private float radius;                                       //移動しない半径
     [SerializeField]

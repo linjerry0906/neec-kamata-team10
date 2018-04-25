@@ -25,7 +25,7 @@ public class MapEditor : EditorWindow
 
     void OnDestroy()
     {
-        DestroyImmediate(onMouse);
+        DestroyImmediate(onMouse);                      //MouseObjを削除
         SceneView.onSceneGUIDelegate -= OnSceneGUI;
     }
 
@@ -134,10 +134,25 @@ public class MapEditor : EditorWindow
             e.keyCode == KeyCode.Space)                             //Spaceキーが押したら
         {
             onMouse.tag = objectEditor.CurrentTag();                //タグ設定
+            MapBlockComponent();
             CreateMouseObj();                                       //設置
             Scene currentScene = SceneManager.GetActiveScene();     //scene取得
             EditorSceneManager.MarkSceneDirty(currentScene);        //変更があると表記する
         }
+    }
+
+    /// <summary>
+    /// 鏡に映れるようにする
+    /// </summary>
+    private void MapBlockComponent()
+    {
+        if (!objectEditor.CurrentTag().Equals("stage_block"))
+            return;
+        onMouse.AddComponent<BoxCollider>();
+        Rigidbody rigidbody = onMouse.AddComponent<Rigidbody>();
+        rigidbody.useGravity = false;
+        rigidbody.isKinematic = true;
+        rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     /// <summary>

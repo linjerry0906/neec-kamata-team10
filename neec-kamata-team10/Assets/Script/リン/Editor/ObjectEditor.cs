@@ -14,7 +14,7 @@ public class ObjectEditor
     private GameObject currentObject = null;                            //現在選択中のオブジェクト
 
     private Vector2 scrollPos = Vector2.zero;                           //スクロール用
-    private string tag;                                                 //タグ
+    private string tag = "Untagged";                                    //タグ
 
     public ObjectEditor() { }
 
@@ -147,7 +147,10 @@ public class ObjectEditor
             EditorGUILayout.BeginVertical(GUI.skin.box);            //一セットにする
             EditorGUILayout.LabelField(g.name, GUILayout.MaxWidth(buttonSize));                                 //名前表示
             if (GUILayout.Button(texture, GUILayout.MaxWidth(buttonSize), GUILayout.MaxHeight(buttonSize)))     //画像ボタン
+            {
                 currentObject = g;                                  //クリックされたら記録
+                tag = currentObject.tag;
+            }
             EditorGUILayout.EndVertical();
             ++count;                                                //数追加
         }
