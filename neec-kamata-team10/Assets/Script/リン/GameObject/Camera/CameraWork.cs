@@ -10,58 +10,74 @@ using UnityEngine;
 public class CameraWork : MonoBehaviour {
 
     [SerializeField]
-    private TraceMode mode;                     //追尾モード
+    private TraceMode currentMode;                              //追尾モード
     [SerializeField]
-    private bool isSmooth = false;              //等速追尾（静止オブジェクト）
+    private GameObject target;                                  //注目先
     [SerializeField]
-    private GameObject target;                  //注目先
+    private float dampTime;                                     //移動にかかる時間
     [SerializeField]
-    private float dampTime;                     //移動にかかる時間
+    private Vector3 relativePos = new Vector3(0, 6, -17);       //相対位置
+    [SerializeField]
+    private float radius;                                       //移動しない半径
+    [SerializeField]
+    private float charaTraceSpeed;                              //キャラ追尾するスピード
 
-    private Vector3 velocity = Vector3.zero;    //Velocity
-    private Camera camera;                      //カメラ
-
-    [SerializeField]
-    private Vector3 relativeVec = new Vector3(0, 6, -17);       //相対位置
+    private CameraMode cameraMode;                              //動くモード
+    private TraceMode previousMode;                             //Debug：前回のモード
 
     void Start ()
     {
-        camera = GetComponent<Camera>();
+        previousMode = TraceMode.TRACE_CHARACTER;               //Debug：前回のモードを初期化
+        cameraMode = ModeFactory(previousMode);                 //指定モードを生成
 	}
 	
 	void Update ()
     {
-        if (isSmooth)
+        if (previousMode != currentMode)                        //Debug：変更があれば
         {
-            SmoothLerp();
-            return;
+            ChangeMode(currentMode);                            //Debug：現在のモードに変更
+            previousMode = currentMode;                         //Debug：前回のモードを更新
         }
 
-        Trace();
+        cameraMode.SetTarget(target);                           //Debug：ターゲット指定
+        cameraMode.Trace();                                     //追尾する
     }
 
-    private void SmoothLerp()
+    /// <summary>
+    /// 追尾モードを変更
+    /// </summary>
+    /// <param name="mode">モード</param>
+    private void ChangeMode(TraceMode mode)
     {
-        if (target)
+        cameraMode = ModeFactory(mode);                         //ファクトリーから作成
+    }
+
+    /// <summary>
+    /// 注目ターゲットを変更
+    /// </summary>
+    /// <param name="target">ターゲット</param>
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;               //変更
+        cameraMode.SetTarget(target);       //設定
+    }
+
+    /// <summary>
+    /// カメラモードのファクトリー
+    /// </summary>
+    /// <param name="mode">カメラモード</param>
+    /// <returns></returns>
+    private CameraMode ModeFactory(TraceMode mode)
+    {
+        switch (mode)
         {
-            Vector3 targetPos = target.transform.position;
-            Vector3 point = camera.WorldToViewportPoint(targetPos);
-            Vector3 direct = targetPos - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
-            Vector3 destination = transform.position + direct;
-            transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
+            case TraceMode.TRACE_CHARACTER:
+                return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);     //キャラクターを追尾
+
+            case TraceMode.TRACE_HINT:
+                return new TraceHint(target, gameObject, dampTime);                                      //指定オブジェクトを追尾
         }
-    }
 
-    private void Trace()
-    {
-        Vector3 dest = target.transform.position + relativeVec;
-        Vector3 dir = dest - transform.position;
-
-        float length = dir.magnitude;
-        if (length < 3)
-            return;
-
-        dir /= length;
-        transform.position += dir * (length - 3) * 0.01f;
+        return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);             //デフォルト
     }
 }
