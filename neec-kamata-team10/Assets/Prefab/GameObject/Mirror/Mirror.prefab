@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33566510603190884}
   - component: {fileID: 23428338491802664}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: up
   m_TagString: Unresizable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33047305187177928}
   - component: {fileID: 23232578587612718}
   m_Layer: 0
-  m_Name: Cube (6)
+  m_Name: right
   m_TagString: Unresizable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 33931555724908208}
   - component: {fileID: 23341830496888240}
   m_Layer: 0
-  m_Name: Cube (7)
+  m_Name: left
   m_TagString: Unresizable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 33184853489756186}
   - component: {fileID: 23485093559572896}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: down
   m_TagString: Unresizable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,9 +395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1007fe28b56e844495085dcb9ff3df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflect_size: {x: 2.5, y: 2.5, z: 2.5}
-  mirror_obj_material: {fileID: 2100000, guid: e4264eab912e0f44190d0411f6b20e66, type: 2}
-  mirror_obj_sprite_material: {fileID: 2100000, guid: fb4bdac1a728db4469f033f497a99e18,
-    type: 2}
-  origin_obj: []
-  reflect_obj: []
+  sizeEnum: 0
+  reflectSize: {x: 1, y: 1, z: 1}
+  reflectMaterial: {fileID: 2100000, guid: e4264eab912e0f44190d0411f6b20e66, type: 2}
+  spriteMaterial: {fileID: 2100000, guid: fb4bdac1a728db4469f033f497a99e18, type: 2}
+  originObj: []
+  reflectObj: []

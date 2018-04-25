@@ -1,6 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//------------------------------------------------------
+// 作成日：2018.4.25
+// 作成者：林 佳叡
+// 内容：サイズの列挙
+//------------------------------------------------------
 
 public enum SizeEnum
 {

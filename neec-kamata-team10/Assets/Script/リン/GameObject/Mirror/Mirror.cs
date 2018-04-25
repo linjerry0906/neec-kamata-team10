@@ -9,49 +9,54 @@ using UnityEngine;
 
 public class Mirror : MonoBehaviour
 {
-
     [SerializeField]
-    private Vector3 reflect_size;               //映したサイズ
+    private SizeEnum sizeEnum;                  //サイズEnum
     [SerializeField]
-    private Material mirror_obj_material;       //鏡側用のマテリアル
+    private Vector3 reflectSize;                //映したサイズ
     [SerializeField]
-    private Material mirror_obj_sprite_material;//鏡側用のマテリアル
+    private Material reflectMaterial;           //鏡側用のマテリアル
     [SerializeField]
-    private List<GameObject> origin_obj;        //映し元
+    private Material spriteMaterial;            //鏡側用のマテリアル
     [SerializeField]
-    private List<GameObject> reflect_obj;       //映した像
+    private List<GameObject> originObj;         //映し元
+    [SerializeField]
+    private List<GameObject> reflectObj;        //映した像
 
     void Start()
     {
-        origin_obj = new List<GameObject>();
-        reflect_obj = new List<GameObject>();
+        originObj = new List<GameObject>();
+        reflectObj = new List<GameObject>();
     }
 
     private void Update()
     {
-        for (int i = 0; i < origin_obj.Count; i++)                          //鏡側のObjを修正
+        for (int i = 0; i < originObj.Count; i++)                          //鏡側のObjを修正
         {
-            reflect_obj[i].GetComponent<ReflectObject>().Reflect();         //位置、サイズ、回転を修正
+            reflectObj[i].GetComponent<ReflectObject>().Reflect();         //位置、サイズ、回転を修正
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("reflect"))                                    //像は無視
+        if (other.tag.Equals("reflect") ||                                 //像は無視
+            other.tag.Equals("mirror"))                                    //鏡無視
             return;
 
-        origin_obj.Add(other.gameObject);                                   //映したい物を保存
+        originObj.Add(other.gameObject);                                   //映したい物を保存
         bool unresizable = IsUnresizableTag(other.tag);
-        AddReflectObj(other.gameObject, unresizable);                       //鏡側の像を追加
+        AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
     }
 
     private void OnTriggerExit(Collider other)
     {
-        int index = origin_obj.IndexOf(other.gameObject);   //削除Indexを確保
-        Destroy(reflect_obj[index]);                        //像のGameObjectを破壊
+        if (other.GetComponent<ObjectSize>())
+            other.GetComponent<ObjectSize>().SetSize(SizeEnum.Normal);
+        int index = originObj.IndexOf(other.gameObject);   //削除Indexを確保
+        if(reflectObj[index])
+            Destroy(reflectObj[index]);                    //像のGameObjectを破壊
 
-        origin_obj.RemoveAt(index);                         //映し元を削除
-        reflect_obj.RemoveAt(index);                        //鏡側の像を削除
+        originObj.RemoveAt(index);                         //映し元を削除
+        reflectObj.RemoveAt(index);                        //鏡側の像を削除
     }
 
     /// <summary>
@@ -84,20 +89,21 @@ public class Mirror : MonoBehaviour
         {
             Transform child = reflect.transform.GetChild(i);
             child.tag = "reflect";
-            MeshRenderer mesh = child.GetComponent<MeshRenderer>();
-            SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
+            MeshRenderer mesh = child.GetComponent<MeshRenderer>();                 //モデル
+            SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();           //Sprite
             if (mesh)
-                mesh.material = mirror_obj_material;
+                mesh.material = reflectMaterial;
             if (sprite)
-                sprite.material = mirror_obj_sprite_material;
+                sprite.material = spriteMaterial;
         }
 
-        reflect.GetComponent<MeshRenderer>().material = mirror_obj_material;        //マテリアル設定
+        SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
+        reflect.GetComponent<MeshRenderer>().material = reflectMaterial;            //マテリアル設定
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加
-        reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size);       //映し元とサイズ設定
+        reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
         reflect.GetComponent<ReflectObject>().Reflect();                            //映す
 
-        reflect_obj.Add(reflect);                           //管理リストに追加
+        reflectObj.Add(reflect);                           //管理リストに追加
     }
     /// <summary>
     /// 映すサイズ
@@ -106,9 +112,9 @@ public class Mirror : MonoBehaviour
     /// <returns></returns>
     private Vector3 ReflectSize(bool unresizable)
     {
-        if (unresizable)                                    //変わりたくないObjの場合
-            return new Vector3(1, 1, 1);                    //サイズ変更なし
-        return reflect_size;                                //プリセットのサイズ
+        if (unresizable)                                   //変わりたくないObjの場合
+            return new Vector3(1, 1, 1);                   //サイズ変更なし
+        return reflectSize;                                //プリセットのサイズ
     }
 
     /// <summary>
@@ -117,7 +123,7 @@ public class Mirror : MonoBehaviour
     /// <returns></returns>
     public Vector3 ReflectSize()
     {
-        return reflect_size;                                //プリセットのサイズ
+        return reflectSize;                                //プリセットのサイズ
     }
 
     /// <summary>

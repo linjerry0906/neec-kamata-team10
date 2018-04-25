@@ -1,9 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//------------------------------------------------------
+// 作成日：2018.4.13
+// 作成者：林 佳叡
+// 内容：サイズを管理するクラス
+//------------------------------------------------------
 using UnityEngine;
 
 public class ObjectSize : MonoBehaviour
 {
+    [SerializeField]
     private SizeEnum size = SizeEnum.Normal;
 
     public void SetSize(SizeEnum size)
