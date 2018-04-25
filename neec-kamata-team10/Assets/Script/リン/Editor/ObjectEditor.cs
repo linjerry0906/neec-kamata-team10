@@ -14,6 +14,7 @@ public class ObjectEditor
     private GameObject currentObject = null;                            //現在選択中のオブジェクト
 
     private Vector2 scrollPos = Vector2.zero;                           //スクロール用
+    private string tag;                                                 //タグ
 
     public ObjectEditor() { }
 
@@ -113,7 +114,11 @@ public class ObjectEditor
         EditorGUILayout.BeginHorizontal(GUILayout.MinWidth(260));
         GUILayout.Box(texture);                                                         //表示
         EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginVertical();
         EditorGUILayout.LabelField("Spaceキー でブロック配置");
+        EditorGUILayout.LabelField("タグ種類：");
+        tag = EditorGUILayout.TagField(tag, GUILayout.MaxWidth(150));
+        EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
 #endregion
 
@@ -158,5 +163,14 @@ public class ObjectEditor
     public GameObject GetCurrentObject()
     {
         return currentObject;
+    }
+
+    /// <summary>
+    /// 選択中のタグ
+    /// </summary>
+    /// <returns></returns>
+    public string CurrentTag()
+    {
+        return tag;
     }
 }

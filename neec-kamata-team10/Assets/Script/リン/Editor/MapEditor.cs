@@ -25,6 +25,7 @@ public class MapEditor : EditorWindow
 
     void OnDestroy()
     {
+        DestroyImmediate(onMouse);
         SceneView.onSceneGUIDelegate -= OnSceneGUI;
     }
 
@@ -132,6 +133,7 @@ public class MapEditor : EditorWindow
         if (e.GetTypeForControl(controlID) == EventType.KeyDown &&
             e.keyCode == KeyCode.Space)                             //Spaceキーが押したら
         {
+            onMouse.tag = objectEditor.CurrentTag();                //タグ設定
             CreateMouseObj();                                       //設置
             Scene currentScene = SceneManager.GetActiveScene();     //scene取得
             EditorSceneManager.MarkSceneDirty(currentScene);        //変更があると表記する
