@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PadController : ICharacterController
 {
+
+    /// <summary>
+    /// 水平移動
+    /// </summary>
+    /// <returns></returns>
     public Vector3 HorizontalMove()
     {
         Vector3 velocity = Vector3.zero;
