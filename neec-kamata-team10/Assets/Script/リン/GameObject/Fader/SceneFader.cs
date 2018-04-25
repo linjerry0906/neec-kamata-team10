@@ -1,32 +1,58 @@
 ﻿//------------------------------------------------------
 // 作成日：2018.4.23
 // 作成者：林 佳叡
-// 内容：シーンフェーダー
+// 内容：シーンフェーダー（最後にレンダーするカメラに）
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneFader : MonoBehaviour
 {
     [SerializeField]
-    private Material shaderMaterial;
+    private Material shaderMaterial;                //フェイドShader
     [SerializeField]
-    private float fadeFactor = 1.0f;
+    private float speed;                            //変換スピード
 
+    private float fadeFactor = 0.0f;                //Factor
+
+    private void Update()
+    {
+        if (!IsEnd())
+        {
+            Time.timeScale = 0;
+            return;
+        }
+
+        Time.timeScale = 1;
+        Destroy(gameObject.GetComponent<SceneFader>());
+    }
+
+    /// <summary>
+    /// Factorを更新する
+    /// </summary>
     private void UpdateShader()
     {
-        fadeFactor -= 0.01f;
-
-        if (fadeFactor <= -0.1f)
-            fadeFactor = -0.1f;
+        fadeFactor += speed;                                    //Fadeする
+        fadeFactor = Mathf.Clamp(fadeFactor, - 0.1f, 1.1f);     //クランプする
     }
 
+    /// <summary>
+    /// 画像処理
+    /// </summary>
+    /// <param name="source">元画像</param>
+    /// <param name="destination">出力先</param>
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        UpdateShader();
-        shaderMaterial.SetFloat("_Factor", fadeFactor);
-        Graphics.Blit(source, destination, shaderMaterial);
+        UpdateShader();                                         //Factor更新
+        shaderMaterial.SetFloat("_Factor", fadeFactor);         //Shader内の変数設定
+        Graphics.Blit(source, destination, shaderMaterial);     //画像処理
     }
 
+    /// <summary>
+    /// フェイド終了か
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnd()
+    {
+        return fadeFactor >= 1.1f;
+    }
 }

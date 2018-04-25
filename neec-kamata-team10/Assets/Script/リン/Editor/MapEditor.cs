@@ -6,6 +6,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 public class MapEditor : EditorWindow
 {
@@ -132,6 +133,8 @@ public class MapEditor : EditorWindow
             e.keyCode == KeyCode.Space)                             //Spaceキーが押したら
         {
             CreateMouseObj();                                       //設置
+            Scene currentScene = SceneManager.GetActiveScene();     //scene取得
+            EditorSceneManager.MarkSceneDirty(currentScene);        //変更があると表記する
         }
     }
 

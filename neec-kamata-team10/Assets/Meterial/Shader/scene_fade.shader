@@ -50,7 +50,7 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				fixed4 mask = tex2D(_FaderMask, i.uv);
 				
-				if (mask.r <= _Factor)
+				if (mask.r >= _Factor)
 					discard;
 
 				col.a = 1.0;

@@ -2,4 +2,6 @@
 {
     TitleTest,
     PlayTest,
+    Stage1,
+    Stage2,
 }
