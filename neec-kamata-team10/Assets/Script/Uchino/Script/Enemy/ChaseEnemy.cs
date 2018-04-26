@@ -2,23 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 向き
-/// </summary>
-public enum Direction
+
+public class ChaseEnemy : MoveEnemy
 {
-    RIGHT =  1,
-    LEFT  = -1
-};
-
-
-public class ChaseEnemy : Enemy
-{
-    [SerializeField]
-    float moveSpeed = 1; //移動スピード
-    Direction direction; //向き
-    Rigidbody rigidBody; //剛体
-
+    private Rigidbody rigidBody; //剛体
 
     // Use this for initialization
     void Start()
@@ -54,29 +41,6 @@ public class ChaseEnemy : Enemy
         HorizontalMove();
     }
 
-    /// <summary>
-    /// 任意の横方向に一定のスピードで移動
-    /// </summary>
-    private void HorizontalMove()
-    {
-        float distance = (int)direction * moveSpeed * Time.deltaTime;   //毎フレームの移動距離を計算
-        PositionChangeX(distance);                                      //横に移動させる
-        
-    }
-
-    /// <summary>
-    /// 現在の位置にXをを足し込む
-    /// </summary>
-    /// <param name="X"></param>
-    void PositionChangeX(float X)
-    {
-        //自分の位置を一旦保存 
-        Vector3 newPosition =                                           
-           new Vector3(transform.position.x + X, transform.position.y, transform.position.z);  
-
-        transform.position = newPosition; //新しいPositionにする                            
-
-    }
 
     /// <summary>
     /// 移動方向の決定
@@ -143,15 +107,6 @@ public class ChaseEnemy : Enemy
     private bool IsNotPlayerleave(float differenceY)
     {
         return !(IsPlayerleaveY(differenceY));
-    }
-
-    /// <summary>
-    /// 向きを反転させる
-    /// </summary>
-    public void ReverseDirection()
-    {
-        //左向きなら右に、右向きだったら左向きにする。
-        direction = (direction == Direction.LEFT) ? (Direction.RIGHT) : (Direction.LEFT);
     }
 
 

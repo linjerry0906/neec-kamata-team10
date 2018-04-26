@@ -20,8 +20,6 @@ public class DetectEmpty : MonoBehaviour
         groundInfo.SetEdgeOfTheGround(ground.transform);            //GroundInfoに地面の端を求めてもらう。
     }
 
-
-    /// <summary>
     /// 地面の端まで来たら方向を反転させる。(落ちないように)
     /// </summary>
     /// <param name="other"></param>
@@ -30,9 +28,9 @@ public class DetectEmpty : MonoBehaviour
         if (other.tag == "mirror")
             return;
 
-        Debug.Log(other.name);
-        GetComponentInParent<ChaseEnemy>().ReverseDirection();      //移動方向を反転させる。
+        Debug.Log(name);
+        GetComponentInParent<NormalEnemy>().ReverseDirection();      //移動方向を反転させる。
     }
 
-    
+
 }

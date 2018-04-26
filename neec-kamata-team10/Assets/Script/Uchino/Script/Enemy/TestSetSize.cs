@@ -11,6 +11,6 @@ public class TestSetSize : MonoBehaviour {
         ObjectSize size = other.GetComponent<ObjectSize>();
         size.SetSize(SizeEnum.Small_X);
 
-        Debug.Log(size.GetSize());
+
     }
 }
