@@ -8,17 +8,20 @@ using UnityEngine;
 
 public class MirrorSetting : MonoBehaviour
 {
-    private readonly static Vector2 MIRROR_SIZE = new Vector2Int(5, 4);
-    private readonly static int INTERVAL_MASS = 2;
+    private readonly static Vector2Int MIRROR_SIZE = new Vector2Int(5, 4);          //鏡のサイズ
+    private readonly static int INTERVAL_MASS = 2;                                  //おける間隔
+    private readonly static float MIRROR_Z = 0.1f;                                  //鏡が置ける深度
 
     [SerializeField]
-    private GameObject player;
+    private GameObject player;                      //プレイヤー
     [SerializeField]
-    private GameObject[] mirrors;
-    private int currentMirror;
+    private GameObject[] mirrors;                   //鏡の種類
+    [SerializeField]
+    private static int maxMirror = 3;               //最大置ける数
+    private int currentMirror;                      //現在選択中の鏡
 
-    private Queue usedMirrors;
-    private ICharacterController controller;
+    private Queue usedMirrors;                      //ステージ上にある鏡
+    private ICharacterController controller;        //コントローラー
 
 	void Start ()
     {
@@ -29,10 +32,13 @@ public class MirrorSetting : MonoBehaviour
 	
 	void Update ()
     {
-        ChangeMirror();
-        SetMirror();
+        ChangeMirror();                             //鏡の種類を切り替え
+        SetMirror();                                //鏡を設置
 	}
 
+    /// <summary>
+    /// 鏡の種類を切り替え
+    /// </summary>
     private void ChangeMirror()
     {
         int amount = mirrors.Length;
@@ -41,9 +47,9 @@ public class MirrorSetting : MonoBehaviour
         if (controller.SwitchToTheRight())
             currentMirror++;
 #region Index Clamp
-        if (currentMirror >= amount)
+        if (currentMirror >= amount)                //正数の場合は余りを取る
             currentMirror %= amount;
-        if(currentMirror < 0)
+        if(currentMirror < 0)                       //負数の場合は余り+最大数（数-左を押した回数）
         {
             currentMirror %= amount;
             currentMirror += amount;
@@ -51,32 +57,49 @@ public class MirrorSetting : MonoBehaviour
 #endregion
     }
 
+    /// <summary>
+    /// 鏡を設置
+    /// </summary>
     private void SetMirror()
     {
-        if (!controller.OperateTheMirror())
+        if (!controller.OperateTheMirror())         //設置ボタンを押してなかったら何もしない
             return;
 
-        Vector3 pos = player.transform.position;
-        pos.z = 0.1f;
-        GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);
-        if (!CheckMirrorPos(newMirror))
-        {
-            Destroy(newMirror);
+        Vector3 pos = player.transform.position;    //Todo：左右を取る
+        ClampGrid(ref pos);                         //グリッド上に設定
+        
+        if (!CheckMirrorPos(pos))                   //この位置に置けるかを確認
             return;
-        }
-        usedMirrors.Enqueue(newMirror);
-        RemoveExpiredMirror();
+
+        GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
+        usedMirrors.Enqueue(newMirror);             //Queueに追加
+        RemoveExpiredMirror();                      //多すぎる分を削除
     }
 
+    /// <summary>
+    /// グリッド上に設定
+    /// </summary>
+    /// <param name="pos">位置</param>
+    private void ClampGrid(ref Vector3 pos)
+    {
+        pos.x = Mathf.FloorToInt(pos.x) + 0.5f;
+        pos.y = Mathf.FloorToInt(pos.y) + 2;
+        pos.z = MIRROR_Z;                           //深度設定
+    }
 
-    private bool CheckMirrorPos(GameObject newMirror)
+    /// <summary>
+    /// 置けるかを確認
+    /// </summary>
+    /// <param name="newMirror">新しい鏡</param>
+    /// <returns></returns>
+    private bool CheckMirrorPos(Vector3 pos)
     {
         foreach(GameObject mirror in usedMirrors.ToArray())
         {
-            Vector3 diff = newMirror.transform.position - mirror.transform.position;
-            int diffX = (int)Mathf.Abs(diff.x);
+            Vector3 diff = pos - mirror.transform.position;     //差分
+            int diffX = (int)Mathf.Abs(diff.x);                 //正数を取る
             int diffY = (int)Mathf.Abs(diff.y);
-            if (diffX < MIRROR_SIZE.x + INTERVAL_MASS &&
+            if (diffX < MIRROR_SIZE.x + INTERVAL_MASS &&        //両方範囲内なら置けない
                 diffY < MIRROR_SIZE.y + INTERVAL_MASS)
             {
                 return false;
@@ -85,12 +108,15 @@ public class MirrorSetting : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// 制限数より多い場合は古い順から削除
+    /// </summary>
     private void RemoveExpiredMirror()
     {
-        if (usedMirrors.Count <= 3)
+        if (usedMirrors.Count <= maxMirror)     //少ない場合は何もしない
             return;
 
-        GameObject expired = usedMirrors.Dequeue() as GameObject;
-        Destroy(expired);
+        GameObject expired = usedMirrors.Dequeue() as GameObject;   //古い順を取り出す
+        Destroy(expired);                                           //削除
     }
 }
