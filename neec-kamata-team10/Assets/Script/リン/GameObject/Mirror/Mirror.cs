@@ -83,35 +83,46 @@ public class Mirror : MonoBehaviour
     private void AddReflectObj(GameObject origin, bool unresizable)
     {
         Vector3 dest_size = ReflectSize(unresizable);       //サイズ指定
-
         GameObject reflect = Instantiate(origin);           //像のObjectを生成
         Destroy(reflect.GetComponent<Collider>());          //必要がないコンポーネントを削除
-        reflect.tag = "reflect";                            //Tag追加
+        SetReflectMaterial(ref reflect);                    //マテリアル設定
         for (int i = 0; i < reflect.transform.childCount; ++i)                      //子供全体追加
         {
-            Transform child = reflect.transform.GetChild(i);
-            child.tag = "reflect";
-            MeshRenderer mesh = child.GetComponent<MeshRenderer>();                 //モデル
-            SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();           //Sprite
-            if (mesh)
-                mesh.material = reflectMaterial;
-            if (sprite)
-                sprite.material = spriteMaterial;
+            GameObject child = reflect.transform.GetChild(i).gameObject;            //子供取得
+            SetReflectMaterial(ref child);                                          //マテリアル設定
         }
-
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
-        MeshRenderer reflectMesh = reflect.GetComponent<MeshRenderer>();                 //モデル
-        SpriteRenderer reflectSprite = reflect.GetComponent<SpriteRenderer>();           //Sprite
-        if (reflectMesh)
-            reflectMesh.material = reflectMaterial;
-        if (reflectSprite)
-            reflectSprite.material = spriteMaterial;
+
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
         reflect.GetComponent<ReflectObject>().Reflect();                            //映す
 
         reflectObj.Add(reflect);                           //管理リストに追加
     }
+
+    /// <summary>
+    /// マテリアル設定
+    /// </summary>
+    /// <param name="obj">目標オブジェクト</param>
+    private void SetReflectMaterial(ref GameObject obj)
+    {
+        obj.tag = "reflect";                                                  //Tag修正
+        MeshRenderer mesh = obj.GetComponent<MeshRenderer>();                 //モデル
+        SpriteRenderer sprite = obj.GetComponent<SpriteRenderer>();           //Sprite
+        if (mesh)                                                             //メッシュレンダラーがある場合
+        {
+            Texture mTex = mesh.material.mainTexture;                         //テクスチャ取得
+            mesh.material = reflectMaterial;                                  //マテリアル設定
+            mesh.material.SetTexture("_MainTex", mTex);                       //テクスチャ設定
+        }
+        if (sprite)                                                           //スプライトがある場合
+        {
+            Texture sTex = sprite.material.mainTexture;                       //テクスチャ取得
+            sprite.material = spriteMaterial;                                 //マテリアル設定
+            sprite.material.SetTexture("_MainTex", sTex);                     //テクスチャ設定
+        }
+    }
+
     /// <summary>
     /// 映すサイズ
     /// </summary>
