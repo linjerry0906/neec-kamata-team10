@@ -100,7 +100,12 @@ public class Mirror : MonoBehaviour
         }
 
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
-        reflect.GetComponent<MeshRenderer>().material = reflectMaterial;            //マテリアル設定
+        MeshRenderer reflectMesh = reflect.GetComponent<MeshRenderer>();                 //モデル
+        SpriteRenderer reflectSprite = reflect.GetComponent<SpriteRenderer>();           //Sprite
+        if (reflectMesh)
+            reflectMesh.material = reflectMaterial;
+        if (reflectSprite)
+            reflectSprite.material = spriteMaterial;
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
         reflect.GetComponent<ReflectObject>().Reflect();                            //映す
