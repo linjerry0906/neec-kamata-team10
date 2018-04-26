@@ -10,7 +10,8 @@
 		Stencil
 		{
 			Ref 0
-			Comp Equal
+			Comp equal
+			Pass replace
 		}
 
 		Pass
@@ -48,6 +49,9 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
+				if (col.a < 0.01)
+					discard;
+
 				return col;
 			}
 			ENDCG

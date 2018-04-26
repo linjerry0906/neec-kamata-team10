@@ -69,9 +69,8 @@ public class MirrorSetting : MonoBehaviour
         if (!controller.OperateTheMirror())         //設置ボタンを押してなかったら何もしない
             return;
 
-        Vector3 pos = player.transform.position;    //Todo：左右を取る
+        Vector3 pos = MirrorPos();                  //設置位置を計算
         ClampGrid(ref pos);                         //グリッド上に設定
-        
         if (!CheckMirrorPos(pos))                   //この位置に置けるかを確認
             return;
 
@@ -81,13 +80,26 @@ public class MirrorSetting : MonoBehaviour
     }
 
     /// <summary>
+    /// 鏡の位置を計算
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 MirrorPos()
+    {
+        EDirection d = player.GetComponent<Player>().GetDirection();        //向き
+        int interval = MIRROR_SIZE.x / 2 + 2;                               //プレイヤーとの間隔
+        if (d == EDirection.LEFT)                                           //左の場合
+            interval *= -1;
+        return player.transform.position + new Vector3(interval, 0, 0);     //位置+間隔
+    }
+
+    /// <summary>
     /// グリッド上に設定
     /// </summary>
     /// <param name="pos">位置</param>
     private void ClampGrid(ref Vector3 pos)
     {
         pos.x = Mathf.FloorToInt(pos.x) + 0.5f;
-        pos.y = Mathf.FloorToInt(pos.y) + 2;
+        pos.y = Mathf.FloorToInt(pos.y) + MIRROR_SIZE.y / 2;
         pos.z = MIRROR_Z;                           //深度設定
     }
 
