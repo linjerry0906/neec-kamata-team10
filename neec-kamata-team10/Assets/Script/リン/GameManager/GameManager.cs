@@ -3,8 +3,6 @@
 // 作成者：林 佳叡
 // 内容：ゲームマネージャー
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -13,13 +11,16 @@ public class GameManager : MonoBehaviour {
 
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
+    private StageManager stageManager;                      //ステージマネージャー
 
     private void Awake()
     {
         CheckInstance();                                    //Instanceをチェックする
 
-        controllerManager = new ControllerManager();        //実体生成
-        sceneManager = new SceneChange();                   //実体生成
+        controllerManager = new ControllerManager();
+        sceneManager = new SceneChange();
+        stageManager = new StageManager();
+        stageManager.Initialize(0);                         //Debug Test
     }
 
     /// <summary>
@@ -40,8 +41,9 @@ public class GameManager : MonoBehaviour {
     {
 	}
 	
-	void Update () {
-		
+	void Update ()
+    {
+        stageManager.Update();                              //Stage時間を更新
 	}
 
     /// <summary>
@@ -65,4 +67,27 @@ public class GameManager : MonoBehaviour {
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
+
+#region Stage関連
+
+    /// <summary>
+    /// 次のステージを指定
+    /// </summary>
+    /// <param name="stage">ステージ数</param>
+    public void SelectStage(int stage)
+    {
+        sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
+        stageManager.Initialize(stage);                     //ステージ初期化
+    }
+
+    /// <summary>
+    /// ステージマネージャーを取得
+    /// </summary>
+    /// <returns></returns>
+    public StageManager GetStageManager()
+    {
+        return stageManager;
+    }
+
+#endregion
 }
