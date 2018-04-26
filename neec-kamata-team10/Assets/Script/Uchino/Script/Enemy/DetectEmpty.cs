@@ -34,19 +34,5 @@ public class DetectEmpty : MonoBehaviour
         GetComponentInParent<ChaseEnemy>().ReverseDirection();      //移動方向を反転させる。
     }
 
-    private void PositionCorrection()
-    {
-        if(transform.position.y == -1) { return; }
-
-        transform.position =
-            new Vector3(transform.position.x, -1, transform.position.z);
-        Debug.Log(transform.position.y);
-    }
-
-    private void ScaleOrSizeCorrection()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-    }
     
 }
-

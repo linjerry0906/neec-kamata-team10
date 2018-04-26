@@ -70,6 +70,8 @@ public class Mirror : MonoBehaviour
             return true;
         if (tag.Equals("stage_block"))
             return true;
+        if (tag.Equals("player"))
+            return true;
         return false;
     }
 
