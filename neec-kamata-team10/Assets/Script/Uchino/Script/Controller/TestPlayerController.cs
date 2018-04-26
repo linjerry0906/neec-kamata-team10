@@ -8,12 +8,12 @@ public class TestPlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        controller = GetComponent<PadController>();
+        controller = new KeboardController();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(controller.HorizontalMove());
+        Debug.Log(controller.ThrowMirror());
 	}
 }

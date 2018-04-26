@@ -67,6 +67,20 @@ public class KeboardController : ICharacterController
     }
 
     /// <summary>
+    /// 鏡を投げる（長押しした分だけ距離を延ばす）
+    /// </summary>
+    /// <returns></returns>
+    public bool ThrowMirror()
+    {
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// ジャンプ
     /// </summary>
     /// <returns></returns>
@@ -79,6 +93,5 @@ public class KeboardController : ICharacterController
 
         return false;
     }
-
 
 }

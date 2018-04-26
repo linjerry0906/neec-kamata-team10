@@ -81,6 +81,18 @@ public class PadController : ICharacterController
         return false;
     }
 
+    /// <summary>
+    /// 鏡を投げる（長押しした分だけ距離を延ばす）
+    /// </summary>
+    /// <returns></returns>
+    public bool ThrowMirror()
+    {
+        if (Input.GetKey(KeyCode.JoystickButton2)) //X
+        {
+            return true;
+        }
 
+        return false;
+    }
 
 }

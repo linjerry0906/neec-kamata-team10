@@ -9,5 +9,5 @@ public interface ICharacterController
     bool SwitchToTheRight();  //鏡を右に切り替える
     bool SwitchToTheLeft();   //鏡を左に切り替える
     bool OperateTheMirror();　//鏡の操作
-
+    bool ThrowMirror();       //鏡を投げる（長押し）
 }
