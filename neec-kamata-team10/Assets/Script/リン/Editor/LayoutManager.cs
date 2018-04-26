@@ -12,6 +12,7 @@ public class LayoutManager
     private GameObject stagePrefab;                    //Stage
     private GameObject gameManagerPrefab;              //GameManager
     private GameObject cameraPrefab;                   //カメラ
+    private GameObject canvasPrefab;                   //キャンバス
 
     public LayoutManager() { }
 
@@ -52,6 +53,7 @@ public class LayoutManager
         stagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/BackgroundLayer.prefab");
         gameManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/GameManager/GameManager.prefab");
         cameraPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Main Camera.prefab");
+        canvasPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Canvas.prefab");
     }
 
     /// <summary>
@@ -61,12 +63,12 @@ public class LayoutManager
     {
         GameObject gameManager = Object.Instantiate(gameManagerPrefab, Vector3.zero, Quaternion.identity); //GameManagerを作成
         gameManager.name = "GameManager";
-
         GameObject stage = Object.Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);             //編集レイヤー
         stage.name = "BackgroundLayer";
-
         GameObject camera = Object.Instantiate(cameraPrefab);                                              //カメラ
         camera.name = "Main Camera";
+        GameObject canvas = Object.Instantiate(canvasPrefab);                                              //キャンバス
+        canvas.name = "Canvas";
     }
 
     /// <summary>
