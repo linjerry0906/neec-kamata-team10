@@ -11,19 +11,26 @@ public class SceneFader : MonoBehaviour
     private Material shaderMaterial;                //フェイドShader
     [SerializeField]
     private float speed;                            //変換スピード
-
     private float fadeFactor = 0.0f;                //Factor
+
+    private StageManager stageManager;              //ステージマネージャー
+
+    private void Start()
+    {
+        stageManager = GameManager.Instance.GetStageManager();  //ステージマネージャーを取得
+    }
 
     private void Update()
     {
-        if (!IsEnd())
+        if (!IsEnd())                               //終了してない場合
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0;                     //タイムスケールを静止
             return;
         }
 
-        Time.timeScale = 1;
-        Destroy(gameObject.GetComponent<SceneFader>());
+        Time.timeScale = 1;                         //タイムを正常
+        stageManager.StartStage();                  //Time計算開始
+        Destroy(gameObject.GetComponent<SceneFader>());         //Faderを削除
     }
 
     /// <summary>

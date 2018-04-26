@@ -3,6 +3,7 @@
 // 作成者：林 佳叡
 // 内容：鏡を設置する機能
 //------------------------------------------------------
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class MirrorSetting : MonoBehaviour
     private readonly static Vector2Int MIRROR_SIZE = new Vector2Int(5, 4);          //鏡のサイズ
     private readonly static int INTERVAL_MASS = 2;                                  //おける間隔
     private readonly static float MIRROR_Z = 0.1f;                                  //鏡が置ける深度
+
+    [SerializeField]
+    Dictionary<Sprite, GameObject> mirrorList;
 
     [SerializeField]
     private GameObject player;                      //プレイヤー
