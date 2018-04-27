@@ -11,7 +11,6 @@
 		{
 			Ref 0
 			Comp equal
-			Pass replace
 		}
 
 		Pass
