@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class ChangeScale
 {
-    private Mirror mirror;                 //対象の鏡
     private bool isChange = false;         //変形しているか
-    private float changeTime;          //鏡の範囲外に行ってから元の大きさに戻るまでの時間
+    private float changeTime;              //鏡の範囲外に行ってから元の大きさに戻るまでの時間
     private float timer = 0;               //changeTimeをカウントするためのタイマー
+    private Vector3 mirrorSize;
 
-    public ChangeScale(Mirror mirror,float changeTime)
+    public ChangeScale(Vector3 mirrorSize,float changeTime)
     {
-        this.mirror = mirror;
+        this.mirrorSize = mirrorSize;
         this.changeTime = changeTime;
     }
 
-    //mirrorの設定
-    public void SetMirror(Mirror mirror)
+    //mirrorSizeの設定
+    public void SetMirrorSize(Vector3 mirrorSize)
     {
-        this.mirror = mirror;
+        this.mirrorSize = mirrorSize;
     }
 
     //changeTimeの設定
@@ -28,9 +28,9 @@ public class ChangeScale
     }
 
     //オブジェクトの変形
-    public Vector3 Scale(Vector2 position)
+    public Vector3 Scale(SizeEnum size)
     {
-        if (CheckReflect(position))
+        if (CheckReflect(size))
         {
             isChange = true;
             timer = changeTime;
@@ -38,18 +38,15 @@ public class ChangeScale
         if (isChange)
         {
             TimerUpdate();
-            return mirror.ReflectSize();
+            return mirrorSize;
         }
         else return new Vector3(1, 1, 1);
     }
 
     //鏡の範囲内にオブジェクトがあるか
-    bool CheckReflect(Vector2 position)
+    bool CheckReflect(SizeEnum size)
     {
-        if (mirror.GetSide().xMin > position.x) return false;
-        if (mirror.GetSide().xMax < position.x) return false;
-        if (mirror.GetSide().yMax < position.y) return false;
-        if (mirror.GetSide().yMin > position.y) return false;
+        if (size == SizeEnum.Normal) return false;
         return true;
     }
 

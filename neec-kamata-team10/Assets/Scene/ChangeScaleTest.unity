@@ -872,7 +872,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &502965314
 MonoBehaviour:
@@ -897,8 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad7a9a796562174ea05a01d2b483cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mirror: {fileID: 0}
-  changeTime: 0
+  changeTime: 1
 --- !u!1 &516065314 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 767d59fe0fccb994893894ebd570b00b, type: 3}
@@ -2448,6 +2447,7 @@ GameObject:
   - component: {fileID: 1297999810}
   - component: {fileID: 1297999809}
   - component: {fileID: 1297999808}
+  - component: {fileID: 1297999813}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2486,7 +2486,6 @@ MonoBehaviour:
   eController: 0
   maxSpeed: 10
   acceleration: 0.3
-  changeTime: 1
 --- !u!54 &1297999809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2501,7 +2500,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!23 &1297999810
 MeshRenderer:
@@ -2559,6 +2558,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1297999806}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1297999813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1297999806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e56beaac9545ed41abd832584a290e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 0
 --- !u!1001 &1298692629
 Prefab:
   m_ObjectHideFlags: 0
