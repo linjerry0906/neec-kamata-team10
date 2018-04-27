@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class DetectEmpty : MonoBehaviour
 {
-    bool isFirstOnTrigger = false; //衝突したか否か
+    GroundInfo groundInfo;                                                  //地面端の位置クラス
 
-    /// <summary>
-    /// 地面の端を取得
-    /// </summary>
-    /// <param name="ground"></param>
-    private void OnTriggerEnter(Collider ground)
+    private void Start()
     {
-        if (isFirstOnTrigger){ return; }                             //最初の一回だけ実行
-
-        isFirstOnTrigger = true;                                    //trueにして二度実行させない
-
-        GroundInfo groundInfo = GetComponentInParent<GroundInfo>(); 
-        groundInfo.SetEdgeOfTheGround(ground.transform);            //GroundInfoに地面の端を求めてもらう。
+        groundInfo = GetComponentInParent<GroundInfo>();                    //実体を取得
     }
 
     /// 地面の端まで来たら方向を反転させる。(落ちないように)
@@ -27,10 +18,26 @@ public class DetectEmpty : MonoBehaviour
     {
         if (other.tag == "mirror")
             return;
+        if (other.transform.parent.name.Contains("Stage")) { return; }
 
-        Debug.Log(name);
-        GetComponentInParent<NormalEnemy>().ReverseDirection();      //移動方向を反転させる。
+        Debug.Log(other.name);
+
+        GetComponentInParent<MoveEnemy>().ReverseDirection();                   //移動方向を反転させる。
+
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other == null) { Debug.Log("null"); }
+    }
+
+    private void SetGroundEdge()
+    {
+        if (groundInfo.IsSetEdge()) { return; }                                 //地面端の位置が保存されていたら実行しない
+        Debug.Log("Set");
+        Direction dir = GetComponentInParent<MoveEnemy>().Direction;            //ChaseEnemyの向きを取得
+        groundInfo.SetEdgeOfTheGround(dir, transform.position.x);               //地面端の位置を保存
+            
+    }
 
 }
