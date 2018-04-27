@@ -5,19 +5,30 @@ using UnityEngine;
 public class GroundInfo : MonoBehaviour
 {
 
-    float leftEdgeX;    //地面の左端
-    float rightEdgeX;   //地面の右端
+    float leftEdgeX  =0;    //地面の左端
+    float rightEdgeX =0;    //地面の右端
+
+    /// <summary>
+    /// セットされているか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSetEdge()
+    {
+        if (leftEdgeX  == 0) return false;
+        if (rightEdgeX == 0) return false;
+
+        return true;
+    }
 
     /// <summary>
     /// 地面端のX座標をセット
     /// </summary>
     /// <param name="transform"></param>
-    public void SetEdgeOfTheGround(Transform transform)
+    public void SetEdgeOfTheGround(Direction direction,float edge)
     {
-        Vector3 groundPos = transform.position;                 //地面の位置を一時保存
-
-        leftEdgeX  = groundPos.x - transform.localScale.x / 2;  //左端を求める
-        rightEdgeX = groundPos.x + transform.localScale.x / 2;  //右端を求める
+        Debug.Log(direction);
+        if (direction == Direction.LEFT)  { leftEdgeX  = edge; /*Debug.Log(LeftEdgeX); */}
+        if (direction == Direction.RIGHT) { rightEdgeX = edge; /*Debug.Log(rightEdgeX);*/ }
     }
 
     /// <summary>

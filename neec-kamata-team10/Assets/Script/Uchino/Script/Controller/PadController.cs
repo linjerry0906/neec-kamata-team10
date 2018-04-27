@@ -87,12 +87,46 @@ public class PadController : ICharacterController
     /// <returns></returns>
     public bool ThrowMirror()
     {
-        if (Input.GetKey(KeyCode.JoystickButton2)) //X
+        if (Input.GetKeyUp(KeyCode.JoystickButton2)) //X
         {
             return true;
         }
 
         return false;
     }
+
+    int pressFlame = 0;
+    /// <summary>
+    /// カウント数を数える
+    /// </summary>
+    public void CountFlameUpdate()
+    {
+        if(Input.GetKey(KeyCode.JoystickButton2))
+        {
+            pressFlame++;
+            return;
+        }
+
+        CountFlameInit();
+    }
+
+    /// <summary>
+    /// フレーム数を初期化する。
+    /// </summary>
+    public void CountFlameInit()
+    {
+        pressFlame = 0;
+    }
+
+    /// <summary>
+    /// フレーム数を取得する。
+    /// </summary>
+    /// <returns></returns>
+    public int GetFlameCount()
+    {
+        return pressFlame;
+    }
+
+
 
 }

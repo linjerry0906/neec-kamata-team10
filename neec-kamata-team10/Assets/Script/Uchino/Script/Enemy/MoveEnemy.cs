@@ -55,4 +55,11 @@ public class MoveEnemy : MonoBehaviour
         transform.position = newPosition; //新しいPositionにする                            
     }
 
+    /// <summary>
+    /// 向きを得る
+    /// </summary>
+    public Direction Direction
+    {
+        get { return direction; }
+    }
 }

@@ -14,7 +14,6 @@ public class DetectRange : MonoBehaviour {
   
         ChaseEnemy chaseEnemy = GetComponentInParent<ChaseEnemy>();  //ChaseEnemyを取得
 
-
         if (WhetherChaisingOrNot(other))                             //追いかけるか否か
         {
             chaseEnemy.ChaseMove(other);                             //追いかける
@@ -49,7 +48,7 @@ public class DetectRange : MonoBehaviour {
     {
         GroundInfo groundInfo = GetComponentInParent<GroundInfo>();      //地面の情報を取得s
 
-
+        if (!groundInfo.IsSetEdge()) { return false; }                    //セットしていなければ追尾するようにする。
         if (playerPosition.x < groundInfo.LeftEdgeX)  { return true; }   //プレイヤーが地面の左端より左にいる
         if (playerPosition.x > groundInfo.RightEdgeX) { return true; }   //プレイヤーが地面の右端より右にいる
 

@@ -11,6 +11,7 @@ public class ChaseEnemy : MoveEnemy
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        direction = Direction.LEFT;
     }
 
 
@@ -29,7 +30,6 @@ public class ChaseEnemy : MoveEnemy
 
             if (IsCloseThePlayerX(offsetPosX)) { return; }              //プレイヤーに近すぎたら移動させない
         }
-
         HorizontalMove();                                               //移動
     }
 
@@ -38,6 +38,7 @@ public class ChaseEnemy : MoveEnemy
     /// </summary>
     public void AutoMove()
     {
+
         HorizontalMove();
     }
 

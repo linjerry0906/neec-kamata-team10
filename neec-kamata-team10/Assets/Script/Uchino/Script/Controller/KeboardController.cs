@@ -66,19 +66,6 @@ public class KeboardController : ICharacterController
         return false;
     }
 
-    /// <summary>
-    /// 鏡を投げる（長押しした分だけ距離を延ばす）
-    /// </summary>
-    /// <returns></returns>
-    public bool ThrowMirror()
-    {
-        if(Input.GetKey(KeyCode.UpArrow))
-        {
-            return true;
-        }
-
-        return false;
-    }
 
     /// <summary>
     /// ジャンプ
@@ -94,4 +81,53 @@ public class KeboardController : ICharacterController
         return false;
     }
 
+    /// <summary>
+    /// 鏡を投げる（長押しした分だけ距離を延ばす）
+    /// </summary>
+    /// <returns></returns>
+    public bool ThrowMirror()
+    {
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    
+    int pressFlame = 0;
+    /// <summary>
+    /// フレーム数を数える。
+    /// </summary>
+    public void CountFlameUpdate()
+    {
+        if(Input.GetKey(KeyCode.UpArrow))   //↑キーを押していたら数える
+        {
+            pressFlame++;
+            return;
+        }
+
+        CountFlameInit();                   //押していない間は数えない
+    }
+    
+    /// <summary>
+    /// フレーム数を取得する。
+    /// </summary>
+    /// <returns></returns>
+    public int GetFlameCount()
+    {
+        return pressFlame;
+    }
+
+
+    /// <summary>
+    /// フレーム数を初期化する。
+    /// </summary>
+    public void CountFlameInit()
+    {
+        pressFlame = 0;
+    }
+
+    
 }
