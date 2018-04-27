@@ -14,9 +14,6 @@ public class MirrorSetting : MonoBehaviour
     private readonly static float MIRROR_Z = 0.1f;                                  //鏡が置ける深度
 
     [SerializeField]
-    Dictionary<Sprite, GameObject> mirrorList;
-
-    [SerializeField]
     private GameObject player;                      //プレイヤー
     [SerializeField]
     private GameObject[] mirrors;                   //鏡の種類
