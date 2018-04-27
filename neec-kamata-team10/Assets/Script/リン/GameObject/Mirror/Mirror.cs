@@ -52,6 +52,8 @@ public class Mirror : MonoBehaviour
         if (other.GetComponent<ObjectSize>())
             other.GetComponent<ObjectSize>().SetSize(SizeEnum.Normal);
         int index = originObj.IndexOf(other.gameObject);   //削除Indexを確保
+        Debug.Log(index);
+        Debug.Log(reflectObj.Count);
         if(reflectObj[index])
             Destroy(reflectObj[index]);                    //像のGameObjectを破壊
 
@@ -70,7 +72,7 @@ public class Mirror : MonoBehaviour
             return true;
         if (tag.Equals("stage_block"))
             return true;
-        if (tag.Equals("player"))
+        if (tag.Equals("Player"))
             return true;
         return false;
     }
@@ -85,10 +87,12 @@ public class Mirror : MonoBehaviour
         Vector3 dest_size = ReflectSize(unresizable);       //サイズ指定
         GameObject reflect = Instantiate(origin);           //像のObjectを生成
         Destroy(reflect.GetComponent<Collider>());          //必要がないコンポーネントを削除
+        DestroyComponent(reflect);
         SetReflectMaterial(ref reflect);                    //マテリアル設定
         for (int i = 0; i < reflect.transform.childCount; ++i)                      //子供全体追加
         {
             GameObject child = reflect.transform.GetChild(i).gameObject;            //子供取得
+            DestroyComponent(child);
             SetReflectMaterial(ref child);                                          //マテリアル設定
         }
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
@@ -98,6 +102,14 @@ public class Mirror : MonoBehaviour
         reflect.GetComponent<ReflectObject>().Reflect();                            //映す
 
         reflectObj.Add(reflect);                           //管理リストに追加
+    }
+
+    private void DestroyComponent(GameObject obj)
+    {
+        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>())
+        {
+            Destroy(m);
+        }
     }
 
     /// <summary>
