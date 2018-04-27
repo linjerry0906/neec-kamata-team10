@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
         Vector3 temp = GetComponent<Rigidbody>().velocity;
         temp.x = velocity.x;
         GetComponent<Rigidbody>().velocity = temp;
+        //GetComponent<Rigidbody>().AddForce(100 * (directionX - temp.x), 0, 0);
         //transform.position += direction * speed * Time.deltaTime;
     }
 
