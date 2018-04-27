@@ -23,15 +23,17 @@ public class MirrorSetting : MonoBehaviour
     [SerializeField]
     private static int maxMirror = 3;               //最大置ける数
     private int currentMirror;                      //現在選択中の鏡
+    private bool onHand;                            //手に持っているか
 
     private Queue usedMirrors;                      //ステージ上にある鏡
     private ICharacterController controller;        //コントローラー
 
-	void Start ()
+    void Start ()
     {
         controller = GameManager.Instance.GetController(EController.KEYBOARD);
         usedMirrors = new Queue();
         currentMirror = 0;
+        onHand = false;
 	}
 	
 	void Update ()
@@ -45,6 +47,9 @@ public class MirrorSetting : MonoBehaviour
     /// </summary>
     private void ChangeMirror()
     {
+        if (onHand)                                 //手に持っていれば変えられない
+            return;
+
         int amount = mirrors.Length;
         if (controller.SwitchToTheLeft())
             currentMirror--;
@@ -72,10 +77,14 @@ public class MirrorSetting : MonoBehaviour
         Vector3 pos = MirrorPos();                  //設置位置を計算
         ClampGrid(ref pos);                         //グリッド上に設定
         if (!CheckMirrorPos(pos))                   //この位置に置けるかを確認
+        {
+            onHand = true;                          //手に持つ
             return;
+        }
 
         GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
         usedMirrors.Enqueue(newMirror);             //Queueに追加
+        onHand = false;
         RemoveExpiredMirror();                      //多すぎる分を削除
     }
 
