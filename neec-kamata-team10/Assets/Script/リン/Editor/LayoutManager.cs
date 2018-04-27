@@ -66,7 +66,7 @@ public class LayoutManager
         GameObject gameManager = Object.Instantiate(gameManagerPrefab, Vector3.zero, Quaternion.identity); //GameManagerを作成
         gameManager.name = "GameManager";
         GameObject gameSystem = Object.Instantiate(gameSystemPrefab, Vector3.zero, Quaternion.identity);   //GameSystemを作成
-        gameManager.name = "GameSystem";
+        gameSystem.name = "GameSystem";
         GameObject stage = Object.Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);             //編集レイヤー
         stage.name = "BackgroundLayer";
         GameObject camera = Object.Instantiate(cameraPrefab);                                              //カメラ
