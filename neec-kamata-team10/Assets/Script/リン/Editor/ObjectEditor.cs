@@ -14,7 +14,7 @@ public class ObjectEditor
     private GameObject currentObject = null;                            //現在選択中のオブジェクト
 
     private Vector2 scrollPos = Vector2.zero;                           //スクロール用
-    private string tag = "Untagged";                                    //タグ
+    private string tag = "stage_block";                                 //タグ
 
     public ObjectEditor() { }
 
@@ -150,6 +150,8 @@ public class ObjectEditor
             {
                 currentObject = g;                                  //クリックされたら記録
                 tag = currentObject.tag;
+                if(tag == "Untagged")
+                    tag = "stage_block";
             }
             EditorGUILayout.EndVertical();
             ++count;                                                //数追加

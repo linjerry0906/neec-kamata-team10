@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 54766057633008544}
   - component: {fileID: 114852709872181864}
   - component: {fileID: 114716762621957960}
+  - component: {fileID: 114377760099009514}
   m_Layer: 0
   m_Name: ChaseEnemy
   m_TagString: Enemy
@@ -125,8 +126,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500695245439326}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.7, y: 2.91, z: -1.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19.5, y: 1.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4831260522292110}
@@ -412,6 +413,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de32f6e02c7fa04683a53389624b165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114377760099009514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1500695245439326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b982e16bbe7767a4585dc3fd0c1eac3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTime: 0.5
 --- !u!114 &114688429380110230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,6 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72631c3209c0b9d49a8008e947680547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 1
 --- !u!114 &114716762621957960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,6 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e56beaac9545ed41abd832584a290e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: 0
 --- !u!114 &114830299083169910
 MonoBehaviour:
   m_ObjectHideFlags: 1

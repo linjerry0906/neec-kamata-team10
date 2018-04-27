@@ -49,6 +49,15 @@ public class ReflectObject : MonoBehaviour {
     }
 
     /// <summary>
+    /// 映し元またあるかをチェック
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckInstance()
+    {
+        return originObj != null;
+    }
+
+    /// <summary>
     /// 映し元を反映
     /// </summary>
     private void ReflectToOrigin()
