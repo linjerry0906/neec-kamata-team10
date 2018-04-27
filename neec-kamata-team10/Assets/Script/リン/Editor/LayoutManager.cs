@@ -26,6 +26,7 @@ public class LayoutManager
 
         OpenNewScene();                                //新しいSceneを作る
         OpenPalette();                                 //マップチップを開く
+        AddDefaultObj();
 
         EditorGUILayout.EndVertical();
     }
@@ -63,16 +64,51 @@ public class LayoutManager
     /// </summary>
     private void InitNewScene()
     {
-        GameObject gameManager = Object.Instantiate(gameManagerPrefab, Vector3.zero, Quaternion.identity); //GameManagerを作成
-        gameManager.name = "GameManager";
-        GameObject gameSystem = Object.Instantiate(gameSystemPrefab, Vector3.zero, Quaternion.identity);   //GameSystemを作成
-        gameSystem.name = "GameSystem";
-        GameObject stage = Object.Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);             //編集レイヤー
-        stage.name = "BackgroundLayer";
-        GameObject camera = Object.Instantiate(cameraPrefab);                                              //カメラ
-        camera.name = "Main Camera";
-        GameObject canvas = Object.Instantiate(canvasPrefab);                                              //キャンバス
-        canvas.name = "Canvas";
+        CreateObj("GameManager", gameManagerPrefab);            //GameManager
+        CreateObj("GameSystem", gameSystemPrefab);              //GameSystem
+        CreateObj("BackgroundLayer", stagePrefab);              //Background
+        CreateObj("Main Camera", cameraPrefab);                 //カメラ
+        CreateObj("Canvas", canvasPrefab);                      //キャンバス
+    }
+
+    /// <summary>
+    /// デフォルトオブジェクトを追加
+    /// </summary>
+    private void AddDefaultObj()
+    {
+        if (!GUILayout.Button("デフォルト オブジェクト"))                   //新しいステージボタン
+            return;
+
+        LoadPrefab();
+        GameObject[] rootObj = EditorSceneManager.GetActiveScene().GetRootGameObjects();
+        string name = "";
+        for (int i = 0; i < rootObj.Length; i++)
+        {
+            name += rootObj[i].name;
+            name += ",";
+        }
+
+        if (!name.Contains("GameManager"))
+            CreateObj("GameManager", gameManagerPrefab);            //GameManager
+        if (!name.Contains("GameSystem"))
+            CreateObj("GameSystem", gameSystemPrefab);              //GameSystem
+        if (!name.Contains("BackgroundLayer"))
+            CreateObj("BackgroundLayer", stagePrefab);              //Background
+        if (!name.Contains("Main Camera"))
+            CreateObj("Main Camera", cameraPrefab);                 //カメラ
+        if (!name.Contains("Canvas"))
+            CreateObj("Canvas", canvasPrefab);                      //キャンバス
+    }
+
+    /// <summary>
+    /// オブジェクトを作成
+    /// </summary>
+    /// <param name="name">名前</param>
+    /// <param name="obj">クローン先</param>
+    private void CreateObj(string name, GameObject obj)
+    {
+        GameObject clone = Object.Instantiate(obj);
+        clone.name = name;
     }
 
     /// <summary>
