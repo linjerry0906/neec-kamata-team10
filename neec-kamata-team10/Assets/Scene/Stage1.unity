@@ -2006,15 +2006,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 41
       objectReference: {fileID: 0}
-    - target: {fileID: 1514943859130078, guid: d466e9100d9309e4ba6c2b4316e8fd15, type: 2}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 114399351665144644, guid: d466e9100d9309e4ba6c2b4316e8fd15,
+        type: 2}
+      propertyPath: jumpPower
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114399351665144644, guid: d466e9100d9309e4ba6c2b4316e8fd15,
         type: 2}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1001654699}
+      propertyPath: maxSpeed
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d466e9100d9309e4ba6c2b4316e8fd15, type: 2}
   m_IsPrefabParent: 0
@@ -4490,7 +4491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb017282704b4d42af6cc0b6ed1407a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 2115482930}
   mirrors:
   - {fileID: 1748790131734024, guid: e7ffd7f4fd0ce2845904bea301ae99de, type: 2}
   - {fileID: 1708958540360942, guid: 8fbc2942b7e930c45a9a325c54658e4b, type: 2}
