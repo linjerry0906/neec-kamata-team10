@@ -31,7 +31,6 @@ public class ReflectObject : MonoBehaviour {
         transform.parent = parent_obj.transform;
         this.size = size;
         */
-
         this.originObj = originObj;
         this.size = sizeEnum;
         reflectSize = originObj.transform.localScale;     //映し元のサイズ指定

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestObject : MonoBehaviour {
+public class ChangeObjectSize : MonoBehaviour {
     [SerializeField]
-    private float changeTime;
+    private float changeTime;             //鏡の範囲外に行ってから元の大きさに戻るまでの時間
 
     private ChangeScale changeScale;
 
@@ -20,14 +20,16 @@ public class TestObject : MonoBehaviour {
         ChangeScale();
     }
 
+    //スケールの変更
     void ChangeScale()
     {
         if (tag == "reflect")
             return;
         SizeEnum size = GetComponent<ObjectSize>().GetSize();
-        transform.localScale = changeScale.Scale(size/*new Vector2(transform.position.x, transform.position.y)*/);
+        transform.localScale = changeScale.Scale(size);
     }
 
+    //ミラーと衝突していたらchangeScaleにミラーサイズをセットする
     void OnTriggerEnter(Collider t)
     {
         if (t.gameObject.CompareTag("mirror"))
