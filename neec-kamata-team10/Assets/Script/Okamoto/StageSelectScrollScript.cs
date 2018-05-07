@@ -22,10 +22,12 @@ public class StageSelectScrollScript : MonoBehaviour {
     public void OnClickRight()
     {
         minAnchor.x--;
+        Debug.Log("Pushed Right");
     }
 
     public void OnClickLeft()
     {
         minAnchor.x++;
+        Debug.Log("Pushed Left");
     }
 }

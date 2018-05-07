@@ -11,7 +11,7 @@ public class StageButtonCreate : MonoBehaviour {
     [SerializeField]
     private int buttonCount;
 
-    List<Button> buttons;
+    //List<Button> buttons;
 	// Use this for initialization
 	void Start () {
         for (int i = 0; i < buttonCount; i++)
