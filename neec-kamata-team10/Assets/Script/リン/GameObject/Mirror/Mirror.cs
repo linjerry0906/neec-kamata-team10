@@ -22,6 +22,8 @@ public class Mirror : MonoBehaviour
     [SerializeField]
     private List<GameObject> reflectObj;        //映した像
 
+    private bool isHand = false;
+
     void Start()
     {
         originObj = new List<GameObject>();
@@ -34,7 +36,7 @@ public class Mirror : MonoBehaviour
         {
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
-                reflectObj[i].GetComponent<ReflectObject>().Reflect();         //位置、サイズ、回転を修正
+                reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);   //位置、サイズ、回転を修正
                 ++i;
                 continue;
             }
@@ -50,8 +52,11 @@ public class Mirror : MonoBehaviour
             other.tag.Equals("mirror"))                                    //鏡無視
             return;
 
-        originObj.Add(other.gameObject);                                   //映したい物を保存
         bool unresizable = IsUnresizableTag(other.tag);
+        if (isHand && !unresizable)
+            return;
+
+        originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
     }
 
@@ -98,8 +103,9 @@ public class Mirror : MonoBehaviour
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
 
         reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加
+        reflect.GetComponent<ReflectObject>().SetMirror(gameObject);
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
-        reflect.GetComponent<ReflectObject>().Reflect();                            //映す
+        reflect.GetComponent<ReflectObject>().Reflect(false);                      //映す
 
         reflectObj.Add(reflect);                           //管理リストに追加
     }
@@ -191,5 +197,37 @@ public class Mirror : MonoBehaviour
         float x = transform.position.x - xScale;                                            //左上のX座標
         float y = transform.position.y - yScale;                                            //左上のY座標
         return new Rect(x, y, xScale * 2, yScale * 2);
+    }
+
+    /// <summary>
+    /// 手に持っているか
+    /// </summary>
+    /// <param name="isHand">手に持っているか</param>
+    public void SetHand(bool isHand)
+    {
+        this.isHand = isHand;
+        BindObject();
+    }
+
+    private void BindObject()
+    {
+        for(int i = 0; i < originObj.Count; ++i)
+        {
+            if (IsUnresizableTag(originObj[i].tag))
+                continue;
+
+            reflectObj[i].GetComponent<ReflectObject>().SetMirror(gameObject);
+            reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);
+            //originObj[i].SetActive(!isHand);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (GameObject g in reflectObj)
+        {
+            Destroy(g);
+        }
+        reflectObj.Clear();
     }
 }

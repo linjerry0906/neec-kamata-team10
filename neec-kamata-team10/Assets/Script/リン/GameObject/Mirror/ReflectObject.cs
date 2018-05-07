@@ -7,11 +7,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReflectObject : MonoBehaviour {
+public class ReflectObject : MonoBehaviour
+{
 
     private SizeEnum size;
     private GameObject originObj;      //映し元
     private Vector3 reflectSize;       //指定サイズ
+    private GameObject mirror;
+    private Vector3 relativePos = Vector3.zero;
 
     /*別仕様
     private GameObject parent_obj;
@@ -40,9 +43,12 @@ public class ReflectObject : MonoBehaviour {
     /// <summary>
     /// 映した像の形を反映する
     /// </summary>
-    public void Reflect()
+    public void Reflect(bool isHand)
     {
-        ReflectToOrigin();
+        if (isHand)
+            UpdateOnHand();
+
+        ReflectToOrigin(isHand);
         ReflectPosition();      //位置を反映する
         ReflectRotation();      //回転を反映する
         ReflectScale();         //大きさを反映する
@@ -57,11 +63,25 @@ public class ReflectObject : MonoBehaviour {
         return originObj != null;
     }
 
+    private void UpdateOnHand()
+    {
+        if(size != SizeEnum.Normal)
+            transform.position = mirror.transform.position + relativePos;
+    }
+
     /// <summary>
     /// 映し元を反映
     /// </summary>
-    private void ReflectToOrigin()
+    private void ReflectToOrigin(bool isHand)
     {
+        if (isHand)
+        {
+            Vector3 originPos = originObj.transform.position;
+            originPos.x = transform.position.x;
+            originPos.y = transform.position.y;
+            originObj.transform.position = originPos;
+            return;
+        }
         ObjectSize objSize = originObj.GetComponent<ObjectSize>();
         if (objSize)
             objSize.SetSize(size);
@@ -81,7 +101,7 @@ public class ReflectObject : MonoBehaviour {
     /// </summary>
     private void ReflectRotation()
     {
-        Quaternion reflect_rotation = originObj.transform.rotation;    //回転状態記録
+        Quaternion reflect_rotation = originObj.transform.rotation;     //回転状態記録
         reflect_rotation.y *= -1;                                       //Z軸以外の回転を反対側にする
         reflect_rotation.x *= -1;                                       //Z軸以外の回転を反対側にする
         transform.eulerAngles = reflect_rotation.eulerAngles;           //像の回転を設定
@@ -91,12 +111,18 @@ public class ReflectObject : MonoBehaviour {
     /// </summary>
     private void ReflectScale()
     {
-        Vector3 reflect_scale = reflectSize;                   //サイズ記録
+        Vector3 reflect_scale = reflectSize;                    //サイズ記録
         reflect_scale.z *= -1;                                  //サイズのZ軸を反対側にする
         transform.localScale = reflect_scale;                   //サイズ設定
 
         /*別仕様
         parent_obj.transform.localScale = size;
         */
+    }
+
+    public void SetMirror(GameObject mirror)
+    {
+        this.mirror = mirror;
+        relativePos = transform.position - mirror.transform.position;
     }
 }
