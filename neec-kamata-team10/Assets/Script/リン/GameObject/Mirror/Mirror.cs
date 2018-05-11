@@ -47,7 +47,7 @@ public class Mirror : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag.Equals("reflect") ||                                 //像は無視
             other.tag.Equals("mirror"))                                    //鏡無視
@@ -57,6 +57,8 @@ public class Mirror : MonoBehaviour
         if (isHand && !unresizable)
             return;
 
+        if (originObj.Contains(other.gameObject))
+            return;
         originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
     }
@@ -108,7 +110,7 @@ public class Mirror : MonoBehaviour
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
         reflect.GetComponent<ReflectObject>().Reflect(false);                      //映す
 
-        reflectObj.Add(reflect);                           //管理リストに追加
+        reflectObj.Add(reflect);                            //管理リストに追加
     }
 
     /// <summary>
@@ -223,6 +225,30 @@ public class Mirror : MonoBehaviour
     }
 
     private void OnDestroy()
+    {
+        DestroyReflects();
+    }
+
+    /// <summary>
+    /// 像の情報などをリリース
+    /// </summary>
+    public void Release()
+    {
+        DestroyReflects();
+
+        foreach (GameObject g in originObj)
+        {
+            ObjectSize objSize = g.GetComponent<ObjectSize>();
+            if (objSize)
+                objSize.SetSize(SizeEnum.Normal);
+        }
+        originObj.Clear();
+    }
+
+    /// <summary>
+    /// 像を消す
+    /// </summary>
+    private void DestroyReflects()
     {
         foreach (GameObject g in reflectObj)
         {

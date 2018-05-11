@@ -108,6 +108,7 @@ public class MirrorSetting : MonoBehaviour
         onHand = false;
         handMirror.GetComponent<Mirror>().SetHand(onHand);
         handMirror.transform.position = pos;                    //位置設定
+        handMirror.GetComponent<Mirror>().Release();
         handMirror = null;
     }
 

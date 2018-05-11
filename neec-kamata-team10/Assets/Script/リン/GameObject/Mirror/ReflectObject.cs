@@ -38,6 +38,9 @@ public class ReflectObject : MonoBehaviour
         this.originObj = originObj;
         this.size = sizeEnum;
         reflectSize = originObj.transform.localScale;      //映し元のサイズ指定
+        ObjectSize objSize = originObj.GetComponent<ObjectSize>();
+        if (objSize)
+            reflectSize = objSize.DefaultSize();
         reflectSize.Scale(size);                           //拡大縮小したサイズ
     }
 
@@ -107,21 +110,29 @@ public class ReflectObject : MonoBehaviour
         FlipComponent(ref originObj, !isHand);
     }
 
+    /// <summary>
+    /// Componentをオン・オフにする
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="flag"></param>
     private void FlipComponent(ref GameObject obj, bool flag)
     {
-        Renderer renderer = obj.GetComponent<Renderer>();
+        Renderer renderer = obj.GetComponent<Renderer>();               //描画
         if (renderer)
             renderer.enabled = flag;
-        Collider collider = obj.GetComponent<Collider>();
+        Collider collider = obj.GetComponent<Collider>();               //コライダー
         if (collider)
             collider.enabled = flag;
+        Rigidbody rigid = obj.GetComponent<Rigidbody>();                //RigidBody
+        if (rigid)
+            rigid.velocity = Vector3.zero;
 
-        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>())
+        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>()) //コンポーネント
         {
             m.enabled = !onHand;
         }
 
-        for (int i = 0; i < obj.transform.childCount; i++)
+        for (int i = 0; i < obj.transform.childCount; i++)              //子供
         {
             GameObject child = obj.transform.GetChild(i).gameObject;
             FlipComponent(ref child, flag);
