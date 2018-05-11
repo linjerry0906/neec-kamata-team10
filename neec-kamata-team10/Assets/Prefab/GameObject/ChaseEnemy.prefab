@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4844879876554810}
   - component: {fileID: 65302126020182528}
-  - component: {fileID: 114871062442512858}
   - component: {fileID: 23297025544824208}
+  - component: {fileID: 114513559262088162}
   m_Layer: 0
   m_Name: LowerRight
   m_TagString: reflect
@@ -38,8 +38,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4958411345647038}
   - component: {fileID: 65160333746104344}
-  - component: {fileID: 114830299083169910}
   - component: {fileID: 23536600706679322}
+  - component: {fileID: 114676022387889808}
   m_Layer: 0
   m_Name: LowerLeft
   m_TagString: reflect
@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 54766057633008544}
   - component: {fileID: 114852709872181864}
   - component: {fileID: 114716762621957960}
+  - component: {fileID: 114439123295313460}
   m_Layer: 0
   m_Name: ChaseEnemy
   m_TagString: Enemy
@@ -111,7 +112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1704708902542444}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4958411345647038}
@@ -126,7 +127,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500695245439326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.7, y: 2.91, z: -1.6}
+  m_LocalPosition: {x: -10.92, y: 0.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4831260522292110}
@@ -363,7 +364,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!65 &65160333746104344
 BoxCollider:
@@ -412,6 +413,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de32f6e02c7fa04683a53389624b165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114439123295313460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1500695245439326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ad2e61bcb61e947907f4b87abd1d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisonEdge: {fileID: 1748863283728264, guid: 6eb0ae1d5bea79c42a25455e966e603c,
+    type: 2}
+--- !u!114 &114513559262088162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1042991120161144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348fd6e1fe99d9f4ea9e17cc2318e5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114676022387889808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1304741401842966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348fd6e1fe99d9f4ea9e17cc2318e5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114688429380110230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72631c3209c0b9d49a8008e947680547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 1
 --- !u!114 &114716762621957960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,17 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e56beaac9545ed41abd832584a290e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114830299083169910
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1304741401842966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 348fd6e1fe99d9f4ea9e17cc2318e5cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  size: 0
 --- !u!114 &114852709872181864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,17 +493,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18aea5d89507efc4e9815eaee8d4a027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114871062442512858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1042991120161144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 348fd6e1fe99d9f4ea9e17cc2318e5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &135321484201213592

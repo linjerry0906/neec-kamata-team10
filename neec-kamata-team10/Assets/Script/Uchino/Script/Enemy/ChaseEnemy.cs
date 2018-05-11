@@ -14,6 +14,46 @@ public class ChaseEnemy : MoveEnemy
         direction = Direction.LEFT;
     }
 
+    private void Update()
+    {
+        CoStart();
+    }
+
+    float time = 0.0f;
+    readonly float twoFrame = 0.034f;
+    private void CoStart()
+    {
+
+        time += Time.deltaTime;
+
+        //1フレーム遅れて実行
+        if (time >= twoFrame)
+        {
+            time = 0.0f;
+
+            DetectEmpty detectEmptyLeft = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
+
+
+
+            //地面に当たってなかったら
+            if (!detectEmptyLeft.IsCollison())
+            {
+                detectEmptyLeft.SetGroundEdge(Direction.LEFT);
+                SetDirection(Direction.RIGHT);                     //移動方向を反転させる
+            }
+            if (!detectEmptyRight.IsCollison())                    
+            {
+                detectEmptyLeft.SetGroundEdge(Direction.RIGHT);
+                SetDirection(Direction.LEFT);                      //移動方向を反転させる
+            }
+
+            detectEmptyLeft.MyUpdate();
+            detectEmptyRight.MyUpdate();
+        }
+    }
+
+
 
     /// <summary>
     /// 移動
@@ -25,7 +65,6 @@ public class ChaseEnemy : MoveEnemy
 
         if (IsNotPlayerleave(offsetPosY))                               //Y軸に2タイル以上離れていなかったら
         {
-
             DirectionDetermination(offsetPosX);                         //プレイヤーのいる方向を判断する
 
             if (IsCloseThePlayerX(offsetPosX)) { return; }              //プレイヤーに近すぎたら移動させない
@@ -117,7 +156,7 @@ public class ChaseEnemy : MoveEnemy
     /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない。
+        if (other.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない。
 
         ObjectSize size = GetComponent<ObjectSize>();    //エネミーのサイズ
 

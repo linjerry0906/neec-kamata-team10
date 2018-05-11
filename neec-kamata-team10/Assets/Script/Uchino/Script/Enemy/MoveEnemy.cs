@@ -24,6 +24,15 @@ public class MoveEnemy : MonoBehaviour
     }
 
     /// <summary>
+    /// 向きをセット
+    /// </summary>
+    /// <param name="direction"></param>
+    public void SetDirection(Direction direction)
+    {
+        this.direction = direction;
+    }
+
+    /// <summary>
     /// 向きを反転させる
     /// </summary>
     public void ReverseDirection()
@@ -37,6 +46,7 @@ public class MoveEnemy : MonoBehaviour
     /// </summary>
     protected void HorizontalMove()
     {
+        //Debug.Log(direction);
         float distance = (int)direction * moveSpeed * Time.deltaTime;   //毎フレームの移動距離を計算
         PositionChangeX(distance);                                      //横に移動させる
 

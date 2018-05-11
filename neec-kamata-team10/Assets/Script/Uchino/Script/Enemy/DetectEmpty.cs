@@ -18,26 +18,39 @@ public class DetectEmpty : MonoBehaviour
     {
         if (other.tag == "mirror")
             return;
-        if (other.transform.parent.name.Contains("Stage")) { return; }
 
-        Debug.Log(other.name);
-
-        GetComponentInParent<MoveEnemy>().ReverseDirection();                   //移動方向を反転させる。
-
+        //Debug.Log(name);
+        //GetComponentInParent<MoveEnemy>().ReverseDirection();                   //移動方向を反転させる。
+        //Debug.Log(GetComponentInParent<MoveEnemy>().Direction);
     }
 
-    private void OnTriggerEnter(Collider other)
+    bool isCollison = true;
+    private void OnTriggerStay(Collider other)
     {
-        if(other == null) { Debug.Log("null"); }
+        isCollison = true;
     }
 
-    private void SetGroundEdge()
+    public void MyUpdate()
     {
-        if (groundInfo.IsSetEdge()) { return; }                                 //地面端の位置が保存されていたら実行しない
-        Debug.Log("Set");
-        Direction dir = GetComponentInParent<MoveEnemy>().Direction;            //ChaseEnemyの向きを取得
-        groundInfo.SetEdgeOfTheGround(dir, transform.position.x);               //地面端の位置を保存
+        isCollison = false;
+    }
+
+    /// <summary>
+    /// 当たっているか否か
+    /// </summary>
+    /// <returns></returns>
+    public bool IsCollison()
+    {
+        return isCollison;
+    }
+
+
+    public void SetGroundEdge(Direction direction)
+    {
+
+        groundInfo.SetEdgeOfTheGround(direction, transform.position.x);               //地面端の位置を保存
             
     }
+
 
 }
