@@ -11,32 +11,23 @@ public class DetectEmpty : MonoBehaviour
         groundInfo = GetComponentInParent<GroundInfo>();                    //実体を取得
     }
 
-    /// 地面の端まで来たら方向を反転させる。(落ちないように)
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "mirror")
-            return;
-
-        //Debug.Log(name);
-        //GetComponentInParent<MoveEnemy>().ReverseDirection();                   //移動方向を反転させる。
-        //Debug.Log(GetComponentInParent<MoveEnemy>().Direction);
-    }
-
     bool isCollison = true;
     private void OnTriggerStay(Collider other)
     {
+        //地面に触れている間は常にtrue
         isCollison = true;
     }
 
+    /// <summary>
+    /// 地面の接触判定用メソッド
+    /// </summary>
     public void MyUpdate()
     {
-        isCollison = false;
+        isCollison = false; //常にfalse
     }
 
     /// <summary>
-    /// 当たっているか否か
+    /// 地面に接触しているか否か
     /// </summary>
     /// <returns></returns>
     public bool IsCollison()
@@ -44,12 +35,13 @@ public class DetectEmpty : MonoBehaviour
         return isCollison;
     }
 
-
+    /// <summary>
+    /// 地面端の位置を保存
+    /// </summary>
+    /// <param name="direction"></param>
     public void SetGroundEdge(Direction direction)
     {
-
         groundInfo.SetEdgeOfTheGround(direction, transform.position.x);               //地面端の位置を保存
-            
     }
 
 

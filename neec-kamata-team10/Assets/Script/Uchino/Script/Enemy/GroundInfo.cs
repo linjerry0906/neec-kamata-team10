@@ -69,8 +69,8 @@ public class GroundInfo : MonoBehaviour
     {
         if (IsSetEdge(direction)) return;
 
-        if (direction == Direction.LEFT)  { leftEdgeX  = edge; Debug.Log(LeftEdgeX);  }
-        if (direction == Direction.RIGHT) { rightEdgeX = edge; Debug.Log(rightEdgeX); }
+        if (direction == Direction.LEFT)  { leftEdgeX  = edge; }
+        if (direction == Direction.RIGHT) { rightEdgeX = edge; }
     }
 
     /// <summary>

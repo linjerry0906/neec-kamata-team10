@@ -49,14 +49,15 @@ public class DetectRange : MonoBehaviour
     {
         GroundInfo groundInfo = GetComponentInParent<GroundInfo>();         //地面の情報を取得
 
-        //if (!groundInfo.IsAllSet()) { return false; }                     //セットしていなければ追尾するようにする。
-        if(groundInfo.IsSetLeft())
+        if(groundInfo.IsSetLeft())                                          //左地面端の位置がセットされているか
         {
-            if (playerPosition.x < groundInfo.LeftEdgeX) { return true; }   //プレイヤーが地面の左端より左にいる
+            if (playerPosition.x < groundInfo.LeftEdgeX)
+            { return true; }                                                //プレイヤーが地面の左端より左にいる
         }
-        if(groundInfo.IsSetRight())
+        if(groundInfo.IsSetRight())                                         //右地面端の位置がセットされているか
         {
-            if (playerPosition.x > groundInfo.RightEdgeX) { return true; }  //プレイヤーが地面の右端より右にいる
+            if (playerPosition.x > groundInfo.RightEdgeX)
+            { return true; }                                                //プレイヤーが地面の右端より右にいる
         }
 
         return false;                                                       //プレイヤーは地面の上にいる

@@ -16,25 +16,23 @@ public class ChaseEnemy : MoveEnemy
 
     private void Update()
     {
-        CoStart();
+        SetGroundEdge();            //地面端をセット
     }
 
-    float time = 0.0f;
-    readonly float twoFrame = 0.034f;
-    private void CoStart()
+    /// <summary>
+    /// 地面端の設定
+    /// </summary>
+    protected override void SetGroundEdge()
     {
-
-        time += Time.deltaTime;
+        time += Time.deltaTime;                                    //タイマーの更新
 
         //1フレーム遅れて実行
         if (time >= twoFrame)
         {
-            time = 0.0f;
+            time = 0.0f;                                           //タイマーの初期化
 
-            DetectEmpty detectEmptyLeft = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
             DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
-
-
 
             //地面に当たってなかったら
             if (!detectEmptyLeft.IsCollison())
@@ -48,12 +46,10 @@ public class ChaseEnemy : MoveEnemy
                 SetDirection(Direction.LEFT);                      //移動方向を反転させる
             }
 
-            detectEmptyLeft.MyUpdate();
-            detectEmptyRight.MyUpdate();
+            detectEmptyLeft.MyUpdate();                            //地面との接触判定に必要
+            detectEmptyRight.MyUpdate();                           //地面との接触判定に必要
         }
     }
-
-
 
     /// <summary>
     /// 移動
@@ -77,7 +73,6 @@ public class ChaseEnemy : MoveEnemy
     /// </summary>
     public void AutoMove()
     {
-
         HorizontalMove();
     }
 
