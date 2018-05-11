@@ -5,18 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class StageSelectScript : MonoBehaviour {
 
-    //public string stage;
+    public int stage;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//if(Input.GetMouseButtonDown(0))
-  //      {
-  //          SceneManager.LoadScene(stage);
-  //      }
-	}
+    //ステージをセットするメソッドを書く
+    public void StageSet(int currentStageCount)
+    {
+        stage = currentStageCount;
+    }
+    //クリックされたらそのintを返す
+    public void ReturnStage()
+    {
+        Debug.Log(stage + "がクリックされた");
+    }
 }
