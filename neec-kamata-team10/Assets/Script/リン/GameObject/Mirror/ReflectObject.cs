@@ -36,7 +36,7 @@ public class ReflectObject : MonoBehaviour
         */
         this.originObj = originObj;
         this.size = sizeEnum;
-        reflectSize = originObj.transform.localScale;     //映し元のサイズ指定
+        reflectSize = originObj.transform.localScale;      //映し元のサイズ指定
         reflectSize.Scale(size);                           //拡大縮小したサイズ
     }
 
@@ -63,9 +63,12 @@ public class ReflectObject : MonoBehaviour
         return originObj != null;
     }
 
+    /// <summary>
+    /// 手に持っている鏡と一緒に移動
+    /// </summary>
     private void UpdateOnHand()
     {
-        if(size != SizeEnum.Normal)
+        if (size != SizeEnum.Normal)
             transform.position = mirror.transform.position + relativePos;
     }
 
@@ -74,17 +77,31 @@ public class ReflectObject : MonoBehaviour
     /// </summary>
     private void ReflectToOrigin(bool isHand)
     {
-        if (isHand)
-        {
-            Vector3 originPos = originObj.transform.position;
-            originPos.x = transform.position.x;
-            originPos.y = transform.position.y;
-            originObj.transform.position = originPos;
-            return;
-        }
         ObjectSize objSize = originObj.GetComponent<ObjectSize>();
         if (objSize)
+        {
             objSize.SetSize(size);
+            SetRenderer(!isHand);
+        }
+
+        if (!isHand)                     //鏡が手に持っていない場合
+            return;
+
+        Vector3 originPos = originObj.transform.position;
+        originPos.x = transform.position.x;
+        originPos.y = transform.position.y;
+        originObj.transform.position = originPos;
+    }
+
+    /// <summary>
+    /// 描画するかどうかを設定
+    /// </summary>
+    /// <param name="flag"></param>
+    private void SetRenderer(bool flag)
+    {
+        Renderer renderer = originObj.GetComponent<Renderer>();
+        if (renderer)
+            renderer.enabled = flag;
     }
 
     /// <summary>

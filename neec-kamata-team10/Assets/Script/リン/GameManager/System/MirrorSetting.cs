@@ -80,16 +80,16 @@ public class MirrorSetting : MonoBehaviour
 
         if (!CheckMirrorPos(pos))                   //この位置に置けるかを確認
         {
-            if (onHand)                             //手に持っていれば
-            {
-                SetHandMirror(pos);                 //鏡を設置
-                return;
-            }
-
             onHand = true;                          //手に持つ
             handMirror.AddComponent<MirrorOnHand>();                                            //コンポーネント追加
             handMirror.GetComponent<MirrorOnHand>().SetPlayer(player);
             handMirror.GetComponent<Mirror>().SetHand(onHand);
+            return;
+        }
+
+        if (onHand)                                 //手に持っていれば
+        {
+            SetHandMirror(pos);                     //鏡を設置
             return;
         }
 
@@ -108,6 +108,7 @@ public class MirrorSetting : MonoBehaviour
         onHand = false;
         handMirror.GetComponent<Mirror>().SetHand(onHand);
         handMirror.transform.position = pos;                    //位置設定
+        handMirror = null;
     }
 
     /// <summary>
@@ -143,6 +144,8 @@ public class MirrorSetting : MonoBehaviour
     {
         foreach(GameObject mirror in usedMirrors.ToArray())
         {
+            if (handMirror == mirror)
+                continue;
             Vector3 diff = pos - mirror.transform.position;     //差分
             int diffX = (int)Mathf.Abs(diff.x);                 //正数を取る
             int diffY = (int)Mathf.Abs(diff.y);
@@ -165,7 +168,6 @@ public class MirrorSetting : MonoBehaviour
         if (usedMirrors.Count <= maxMirror)     //少ない場合は何もしない
             return;
 
-        GameObject expired = usedMirrors.Dequeue() as GameObject;   //古い順を取り出す
-        Destroy(expired);                                           //削除
+        Destroy(usedMirrors.Dequeue() as GameObject);          //削除
     }
 }
