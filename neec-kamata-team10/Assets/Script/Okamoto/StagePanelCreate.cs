@@ -28,6 +28,7 @@ public class StagePanelCreate : MonoBehaviour {
 	void Start () {
         currentStage = 1;
         panels = new List<GameObject>();
+        
 
         while(currentStage <= stageCount)
         {
@@ -42,9 +43,9 @@ public class StagePanelCreate : MonoBehaviour {
             int index = (currentStage - 1) / panelPerButton;
             Debug.Log(index);
             GameObject b = Instantiate(originButton, panels[index].transform.GetChild(0));
-            
+            //作成されたボタンにステージを割り当てる
+            b.GetComponent<StageSelectScript>().StageSet(currentStage);
             currentStage++;
-
         }
 	}
 	
