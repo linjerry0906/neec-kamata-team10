@@ -152,6 +152,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4257343463898600, guid: 42978fb0cb07f7e4aadf27b98ea4c239, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 42978fb0cb07f7e4aadf27b98ea4c239, type: 2}
   m_IsPrefabParent: 0
@@ -334,7 +338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 15.235001, y: 0, z: 0}
 --- !u!114 &471137862
 MonoBehaviour:
@@ -407,11 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 2072470554}
---- !u!1 &1013209408 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1391157553405656, guid: 42978fb0cb07f7e4aadf27b98ea4c239,
-    type: 2}
-  m_PrefabInternal: {fileID: 51845902}
+  breakMass: 1
 --- !u!1 &1059211213
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +475,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1297471632
 Prefab:
@@ -602,7 +602,7 @@ Transform:
   m_LocalScale: {x: 1000, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1517614526
 Rigidbody:
@@ -651,10 +651,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717c3490f76538e429b6fd464bedd054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1013209408}
   eController: 0
-  maxSpeed: 10
-  acceleration: 0.3
+  jumpPower: 10
+  moveSpeed: 10
+  moveForceMultiplier: 10
 --- !u!54 &2001460317
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -730,11 +730,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2001460315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13, y: 2.321, z: -1.6}
+  m_LocalPosition: {x: 35.13, y: 5.6, z: -1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2001460322
 MonoBehaviour:

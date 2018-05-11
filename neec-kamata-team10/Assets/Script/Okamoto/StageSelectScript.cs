@@ -16,5 +16,6 @@ public class StageSelectScript : MonoBehaviour {
     public void ReturnStage()
     {
         Debug.Log(stage + "がクリックされた");
+        GameManager.Instance.SelectStage(stage);
     }
 }
