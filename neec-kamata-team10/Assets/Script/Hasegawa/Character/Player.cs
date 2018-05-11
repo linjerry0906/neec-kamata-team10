@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private bool isJump = true;
     //private float speed = 0;
     //private float storeDirectionX= 0;
-    private Vector3 direction = new Vector3(0, 0, 0);
+    private Vector3 direction = new Vector3(1, 0, 0);
 
     private ICharacterController controller;
 
@@ -63,8 +63,9 @@ public class Player : MonoBehaviour
         Vector3 moveVector = Vector3.zero;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-        direction = controller.HorizontalMove();
-        moveVector = moveSpeed * direction;
+        //direction = controller.HorizontalMove();
+        if (controller.HorizontalMove() != Vector3.zero) direction = controller.HorizontalMove();
+        moveVector = moveSpeed * controller.HorizontalMove();
 
         Vector3 velocity = new Vector3(rigidbody.velocity.x, 0, 0);
         rigidbody.AddForce(moveForceMultiplier * (moveVector - velocity));
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("Yを固定");
+            //Debug.Log("Yを固定");
             //移動中はYとRotationを固定
             GetComponent<Rigidbody>().constraints =
                 RigidbodyConstraints.FreezePositionY |
