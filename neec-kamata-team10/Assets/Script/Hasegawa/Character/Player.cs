@@ -82,8 +82,9 @@ public class Player : MonoBehaviour
 
         if (isJump)
         {
-            //ジャンプ中はRotationを固定
+            //ジャンプ中はZとRotationを固定
             GetComponent<Rigidbody>().constraints =
+                RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY |
                 RigidbodyConstraints.FreezeRotationZ;
@@ -91,8 +92,9 @@ public class Player : MonoBehaviour
         else
         {
             //Debug.Log("Yを固定");
-            //移動中はYとRotationを固定
+            //移動中はYとZとRotationを固定
             GetComponent<Rigidbody>().constraints =
+                RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezePositionY |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY |
