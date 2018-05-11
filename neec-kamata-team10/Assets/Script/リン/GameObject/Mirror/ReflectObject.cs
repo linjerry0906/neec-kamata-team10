@@ -15,6 +15,7 @@ public class ReflectObject : MonoBehaviour
     private Vector3 reflectSize;       //指定サイズ
     private GameObject mirror;
     private Vector3 relativePos = Vector3.zero;
+    private bool onHand = false;
 
     /*別仕様
     private GameObject parent_obj;
@@ -81,7 +82,7 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
         {
             objSize.SetSize(size);
-            SetRenderer(!isHand);
+            SetOriginActive(isHand);
         }
 
         if (!isHand)                     //鏡が手に持っていない場合
@@ -96,12 +97,35 @@ public class ReflectObject : MonoBehaviour
     /// <summary>
     /// 描画するかどうかを設定
     /// </summary>
-    /// <param name="flag"></param>
-    private void SetRenderer(bool flag)
+    /// <param name="isHand"></param>
+    private void SetOriginActive(bool isHand)
     {
-        Renderer renderer = originObj.GetComponent<Renderer>();
+        if (isHand == onHand)
+            return;
+
+        onHand = isHand;
+        FlipComponent(ref originObj, !isHand);
+    }
+
+    private void FlipComponent(ref GameObject obj, bool flag)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
         if (renderer)
             renderer.enabled = flag;
+        Collider collider = obj.GetComponent<Collider>();
+        if (collider)
+            collider.enabled = flag;
+
+        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>())
+        {
+            m.enabled = !onHand;
+        }
+
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            GameObject child = obj.transform.GetChild(i).gameObject;
+            FlipComponent(ref child, flag);
+        }
     }
 
     /// <summary>
