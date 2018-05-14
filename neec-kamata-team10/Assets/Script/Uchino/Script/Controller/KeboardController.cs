@@ -25,6 +25,27 @@ public class KeboardController : ICharacterController
     }
 
     /// <summary>
+    /// 垂直移動
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 VerticalMove()
+    {
+        Vector3 velocity = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            velocity = new Vector3(0, 1, 0);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            velocity = new Vector3(0, -1, 0);
+        }
+
+        return velocity;
+
+    }
+
+    /// <summary>
     /// 右に切り替えるか
     /// </summary>
     /// <returns></returns>

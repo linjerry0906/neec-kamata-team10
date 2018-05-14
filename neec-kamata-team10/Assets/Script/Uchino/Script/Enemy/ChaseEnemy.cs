@@ -14,6 +14,42 @@ public class ChaseEnemy : MoveEnemy
         direction = Direction.LEFT;
     }
 
+    private void Update()
+    {
+        SetGroundEdge();            //地面端をセット
+    }
+
+    /// <summary>
+    /// 地面端の設定
+    /// </summary>
+    protected override void SetGroundEdge()
+    {
+        time += Time.deltaTime;                                    //タイマーの更新
+
+        //1フレーム遅れて実行
+        if (time >= twoFrame)
+        {
+            time = 0.0f;                                           //タイマーの初期化
+
+            DetectEmpty detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
+
+            //地面に当たってなかったら
+            if (!detectEmptyLeft.IsCollison())
+            {
+                detectEmptyLeft.SetGroundEdge(Direction.LEFT);
+                SetDirection(Direction.RIGHT);                     //移動方向を反転させる
+            }
+            if (!detectEmptyRight.IsCollison())                    
+            {
+                detectEmptyLeft.SetGroundEdge(Direction.RIGHT);
+                SetDirection(Direction.LEFT);                      //移動方向を反転させる
+            }
+
+            detectEmptyLeft.MyUpdate();                            //地面との接触判定に必要
+            detectEmptyRight.MyUpdate();                           //地面との接触判定に必要
+        }
+    }
 
     /// <summary>
     /// 移動
@@ -25,7 +61,6 @@ public class ChaseEnemy : MoveEnemy
 
         if (IsNotPlayerleave(offsetPosY))                               //Y軸に2タイル以上離れていなかったら
         {
-
             DirectionDetermination(offsetPosX);                         //プレイヤーのいる方向を判断する
 
             if (IsCloseThePlayerX(offsetPosX)) { return; }              //プレイヤーに近すぎたら移動させない
@@ -38,7 +73,6 @@ public class ChaseEnemy : MoveEnemy
     /// </summary>
     public void AutoMove()
     {
-
         HorizontalMove();
     }
 
@@ -111,36 +145,4 @@ public class ChaseEnemy : MoveEnemy
     }
 
 
-    /// <summary>
-    /// プレイヤーにぶつかった時
-    /// </summary>
-    /// <param name="other"></param>
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない。
-
-        ObjectSize size = GetComponent<ObjectSize>();    //エネミーのサイズ
-
-        if(IsSmall(size))                                
-        {
-            Destroy(gameObject);                         //小さかったら自分が死ぬ
-            return;
-        }
-
-        other.GetComponent<AliveFlag>().Dead();          //小さくなかったのでプレイヤーが死ぬ
-    }
-
-    /// <summary>
-    /// 小さいか
-    /// </summary>
-    /// <param name="size">エネミーのサイズ</param>
-    /// <returns></returns>
-    private bool IsSmall (ObjectSize size)
-    {
-        if (size.GetSize() == SizeEnum.Small_XY){ return true; }    //全体的に小さいか
-        if (size.GetSize() == SizeEnum.Small_X) { return true; }    //横に縮んでいるか
-        if (size.GetSize() == SizeEnum.Small_Y) { return true; }    //縦に縮んでいるか
-
-        return false;                                               //縮んでいない。
-    }
 }
