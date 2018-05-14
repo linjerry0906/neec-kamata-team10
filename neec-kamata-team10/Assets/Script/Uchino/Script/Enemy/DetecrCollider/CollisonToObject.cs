@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisonToPlayer : MonoBehaviour {
+public class CollisonToObject : MonoBehaviour {
 
     private void Start()
     {
@@ -12,7 +12,7 @@ public class CollisonToPlayer : MonoBehaviour {
     }
 
     /// <summary>
-    /// プレイヤーにぶつかった時
+    /// 他のオブジェクトにぶつかった時
     /// </summary>
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ public class CollisonToPlayer : MonoBehaviour {
     {
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
-        if (size == null)                //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
+        if (size == null)                                     //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
         {
             other.GetComponent<AliveFlag>().Dead();
             return;
