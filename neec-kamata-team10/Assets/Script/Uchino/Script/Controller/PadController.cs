@@ -26,6 +26,27 @@ public class PadController : ICharacterController
     }
 
     /// <summary>
+    /// 水平移動
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 VerticalMove()
+    {
+        Vector3 velocity = Vector3.zero;
+
+        if (Input.GetAxisRaw("Vertical") == -1)
+        {
+            velocity = new Vector3(-1, 0, 0);
+        }
+        if (Input.GetAxisRaw("Vertical") == 1)
+        {
+            velocity = new Vector3(1, 0, 0);
+        }
+
+        return velocity;
+    }
+
+
+    /// <summary>
     /// 右に切り替えるか
     /// </summary>
     /// <returns></returns>
