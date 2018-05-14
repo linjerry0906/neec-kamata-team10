@@ -37,7 +37,8 @@ public class StageUI : MonoBehaviour
     /// <returns></returns>
     private string TimeString()
     {
-        DateTime time = stageManager.PassTime();                                                    //経過時間取得
-        return String.Format("{0:00}:{1:00}:{2:00}", time.Minute, time.Second, time.Millisecond);   //文字列化
+        DateTime time = stageManager.PassTime();                                               //経過時間取得
+        int milliSecond = time.Millisecond / 10;                                               //2桁にする
+        return String.Format("{0:00}:{1:00}:{2:00}", time.Minute, time.Second, milliSecond);   //文字列化
     }
 }

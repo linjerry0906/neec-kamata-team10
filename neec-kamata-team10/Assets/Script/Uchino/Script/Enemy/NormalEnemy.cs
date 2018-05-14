@@ -11,9 +11,9 @@ public class NormalEnemy : MoveEnemy
 
     void Update()
     {
-        HorizontalMove();
+        SetGroundEdge();        //地面端の設定
+        HorizontalMove();       //行ったり来たり
     }
-
 
 }
 

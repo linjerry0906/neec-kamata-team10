@@ -15,6 +15,7 @@ public class ReflectObject : MonoBehaviour
     private Vector3 reflectSize;       //指定サイズ
     private GameObject mirror;
     private Vector3 relativePos = Vector3.zero;
+    private bool onHand = false;
 
     /*別仕様
     private GameObject parent_obj;
@@ -34,9 +35,13 @@ public class ReflectObject : MonoBehaviour
         transform.parent = parent_obj.transform;
         this.size = size;
         */
+        gameObject.layer = 8;
         this.originObj = originObj;
         this.size = sizeEnum;
         reflectSize = originObj.transform.localScale;      //映し元のサイズ指定
+        ObjectSize objSize = originObj.GetComponent<ObjectSize>();
+        if (objSize)
+            reflectSize = objSize.DefaultSize();
         reflectSize.Scale(size);                           //拡大縮小したサイズ
     }
 
@@ -81,7 +86,7 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
         {
             objSize.SetSize(size);
-            SetRenderer(!isHand);
+            SetOriginActive(isHand);
         }
 
         if (!isHand)                     //鏡が手に持っていない場合
@@ -96,12 +101,43 @@ public class ReflectObject : MonoBehaviour
     /// <summary>
     /// 描画するかどうかを設定
     /// </summary>
-    /// <param name="flag"></param>
-    private void SetRenderer(bool flag)
+    /// <param name="isHand"></param>
+    private void SetOriginActive(bool isHand)
     {
-        Renderer renderer = originObj.GetComponent<Renderer>();
+        if (isHand == onHand)
+            return;
+
+        onHand = isHand;
+        FlipComponent(ref originObj, !isHand);
+    }
+
+    /// <summary>
+    /// Componentをオン・オフにする
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="flag"></param>
+    private void FlipComponent(ref GameObject obj, bool flag)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();               //描画
         if (renderer)
             renderer.enabled = flag;
+        Collider collider = obj.GetComponent<Collider>();               //コライダー
+        if (collider)
+            collider.enabled = flag;
+        Rigidbody rigid = obj.GetComponent<Rigidbody>();                //RigidBody
+        if (rigid)
+            rigid.velocity = Vector3.zero;
+
+        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>()) //コンポーネント
+        {
+            m.enabled = !onHand;
+        }
+
+        for (int i = 0; i < obj.transform.childCount; i++)              //子供
+        {
+            GameObject child = obj.transform.GetChild(i).gameObject;
+            FlipComponent(ref child, flag);
+        }
     }
 
     /// <summary>
@@ -111,6 +147,7 @@ public class ReflectObject : MonoBehaviour
     {
         Vector3 reflect_pos = originObj.transform.position;     //位置記録
         reflect_pos.z *= -1;                                    //反対側にする（2D横スクロールなので、Z = 0を反射面にする）
+        reflect_pos.z += 0.1f;
         transform.position = reflect_pos;                       //像の位置を設定
     }
     /// <summary>

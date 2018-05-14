@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     //private float acceleration;
     [SerializeField]
     private float jumpPower;
+    [SerializeField]
+    private float climbSpeed;
 
     [SerializeField]
     private float moveSpeed;
@@ -19,28 +21,33 @@ public class Player : MonoBehaviour
     private float moveForceMultiplier;
 
     private bool isJump = true;
+    private bool isClimb= false;
+
     //private float speed = 0;
     //private float storeDirectionX= 0;
-    private Vector3 direction = new Vector3(0, 0, 0);
+    private Vector3 direction = new Vector3(1, 0, 0);
 
     private ICharacterController controller;
+    private EPlayerState state = EPlayerState.Jump;
 
     // Use this for initialization
     void Start()
     {
-        controller = GameManager.Instance.GetController(eController);
+        controller = GameManager.Instance.GetController();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Move();
+        //FreezePosition();
+        Climb();
         Jump();
     }
 
     void FixedUpdate()
     {
         Move();
+        Debug.Log(state);
     }
 
     //void Move()
@@ -63,8 +70,8 @@ public class Player : MonoBehaviour
         Vector3 moveVector = Vector3.zero;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-        direction = controller.HorizontalMove();
-        moveVector = moveSpeed * direction;
+        if (controller.HorizontalMove() != Vector3.zero) direction = controller.HorizontalMove();
+        moveVector = moveSpeed * controller.HorizontalMove();
 
         Vector3 velocity = new Vector3(rigidbody.velocity.x, 0, 0);
         rigidbody.AddForce(moveForceMultiplier * (moveVector - velocity));
@@ -78,20 +85,35 @@ public class Player : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isJump = true;
         }
+        FreezePosition();
+    }
 
-        if (isJump)
+    void Climb()
+    {
+        if (isClimb)
         {
-            //ジャンプ中はRotationを固定
+            state = EPlayerState.Clamb;
+            GetComponent<Rigidbody>().AddForce(controller.VerticalMove() * climbSpeed,ForceMode.Force);
+        }
+    }
+
+    void FreezePosition()
+    {
+        if (isJump || isClimb) 
+        {
+            //ジャンプ中はZとRotationを固定
             GetComponent<Rigidbody>().constraints =
+                RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY |
                 RigidbodyConstraints.FreezeRotationZ;
         }
         else
         {
-            Debug.Log("Yを固定");
-            //移動中はYとRotationを固定
+            //Debug.Log("Yを固定");
+            //移動中はYとZとRotationを固定
             GetComponent<Rigidbody>().constraints =
+                RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezePositionY |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY |
@@ -99,21 +121,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    //void ChangeDirection(float directionX)
-    //{
-    //    if (directionX != 0) direction.x = directionX;
-    //}
-    //
-    //void ChangeSpeed(float directionX)
-    //{
-    //    if (directionX != storeDirectionX && directionX != 0)  speed = 0;
-    //    storeDirectionX = directionX;
-    //
-    //    if (directionX != 0) speed += acceleration;
-    //    else speed -= acceleration;
-    //
-    //    speed = Mathf.Clamp(speed, 0, maxSpeed);
-    //}
+    void OnCollisionStay(Collision c)
+    {
+        if (!c.gameObject.tag.Contains("ivy")) return;
+
+        if (c.gameObject.tag.Equals("ivy_upSideCollider"))
+        {
+            //Debug.Log("ツタの上");
+            state = EPlayerState.Move;
+            SetIsClimb(false);
+        }
+        else
+        {
+            //Debug.Log("ツタ登り中");
+            SetIsClimb(true);
+        }
+    }
+
+    void OnCollisionExit(Collision c)
+    {
+        //if (c.gameObject.tag.Equals("stage_ivy"))
+        //{
+        //    state = EPlayerState.Jump;
+        //    SetIsClimb(false);
+        //}
+        state = EPlayerState.Jump;
+        SetIsClimb(false);
+    }
 
     public EDirection GetDirection()
     {
@@ -121,8 +155,23 @@ public class Player : MonoBehaviour
         else return EDirection.RIGHT;
     }
 
+    public EPlayerState GetPlayerState()
+    {
+        return state;
+    }
+
     public void SetIsJump(bool isJump)
     {
         this.isJump = isJump;
+    }
+
+    public void SetIsClimb(bool isClimb)
+    {
+        this.isClimb = isClimb;
+    }
+
+    public void SetPlayerState(EPlayerState state)
+    {
+        this.state = state;
     }
 }

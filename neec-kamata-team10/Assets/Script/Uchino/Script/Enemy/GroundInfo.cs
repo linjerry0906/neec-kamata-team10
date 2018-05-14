@@ -9,13 +9,54 @@ public class GroundInfo : MonoBehaviour
     float rightEdgeX =0;    //地面の右端
 
     /// <summary>
+    /// セットされているか(各方向)
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSetEdge(Direction direction)
+    {
+
+        if (direction == Direction.LEFT)  return IsSetLeft();
+        if (direction == Direction.RIGHT) return IsSetRight();
+
+        return false; //到達しない
+    }
+
+    /// <summary>
     /// セットされているか
     /// </summary>
     /// <returns></returns>
-    public bool IsSetEdge()
+    public bool IsAllSet()
     {
-        if (leftEdgeX  == 0) return false;
-        if (rightEdgeX == 0) return false;
+        if(rightEdgeX == 0) { return false; }
+        if(leftEdgeX  == 0) { return false; }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 右端がセットされているか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSetRight()
+    {
+        if (rightEdgeX == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 左端がセットされているか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSetLeft()
+    {
+        if(leftEdgeX == 0)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -26,9 +67,10 @@ public class GroundInfo : MonoBehaviour
     /// <param name="transform"></param>
     public void SetEdgeOfTheGround(Direction direction,float edge)
     {
-        Debug.Log(direction);
-        if (direction == Direction.LEFT)  { leftEdgeX  = edge; /*Debug.Log(LeftEdgeX); */}
-        if (direction == Direction.RIGHT) { rightEdgeX = edge; /*Debug.Log(rightEdgeX);*/ }
+        if (IsSetEdge(direction)) return;
+
+        if (direction == Direction.LEFT)  { leftEdgeX  = edge; }
+        if (direction == Direction.RIGHT) { rightEdgeX = edge; }
     }
 
     /// <summary>

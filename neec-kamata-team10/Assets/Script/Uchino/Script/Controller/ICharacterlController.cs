@@ -5,6 +5,7 @@ using UnityEngine;
 public interface ICharacterController 
 {
     Vector3 HorizontalMove(); //水平移動
+    Vector3 VerticalMove();
     bool Jump();              //ジャンプ
     bool SwitchToTheRight();  //鏡を右に切り替える
     bool SwitchToTheLeft();   //鏡を左に切り替える

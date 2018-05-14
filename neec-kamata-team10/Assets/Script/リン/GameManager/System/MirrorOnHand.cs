@@ -32,7 +32,7 @@ public class MirrorOnHand : MonoBehaviour
             x *= -1;
         Vector3 playerPos = player.transform.position;                      //Playerの位置
         Vector3 pos = playerPos + new Vector3(x, relativePos.y);
-        pos.z = 0;                                                          //Z = 0 の平面
+        pos.z = 0.1f;                                                       //Z = 0.1 の平面
         transform.position = pos;                                           //座標設定
     }
 }

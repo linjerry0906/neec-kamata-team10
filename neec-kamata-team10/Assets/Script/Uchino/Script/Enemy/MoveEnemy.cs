@@ -11,16 +11,24 @@ public enum Direction
     LEFT = -1
 };
 
-
 public class MoveEnemy : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 1; //移動スピード
+    protected float moveSpeed = 1; //移動スピード
     protected Direction direction; //向き
 
     public void DirectionInit()
     {
         direction = Direction.LEFT;
+    }
+
+    /// <summary>
+    /// 向きをセット
+    /// </summary>
+    /// <param name="direction"></param>
+    public void SetDirection(Direction direction)
+    {
+        this.direction = direction;
     }
 
     /// <summary>
@@ -37,6 +45,7 @@ public class MoveEnemy : MonoBehaviour
     /// </summary>
     protected void HorizontalMove()
     {
+        //Debug.Log(direction);
         float distance = (int)direction * moveSpeed * Time.deltaTime;   //毎フレームの移動距離を計算
         PositionChangeX(distance);                                      //横に移動させる
 
@@ -62,4 +71,38 @@ public class MoveEnemy : MonoBehaviour
     {
         get { return direction; }
     }
+
+
+    protected float time = 0.0f;                  //遅延処理用タイマー
+    protected readonly float twoFrame = 0.034f;   //遅れさせる時間
+    /// <summary>
+    /// 地面端の設定
+    /// </summary>
+    protected virtual void SetGroundEdge()
+    {
+        time += Time.deltaTime;         //時間更新
+
+        //1フレーム遅れて実行
+        if (time >= twoFrame)
+        {
+            time = 0.0f;
+
+            DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
+
+            //地面に当たってなかったら
+            if (!detectEmptyLeft.IsCollison())                     //左の地面端から離れたら
+            {
+                SetDirection(Direction.RIGHT);                     //移動方向を反転させる
+            }
+            if (!detectEmptyRight.IsCollison())                    //右の地面端から離れたら
+            {
+                SetDirection(Direction.LEFT);                      //移動方向を反転させる
+            }
+
+            detectEmptyLeft.MyUpdate();     //地面との接触判定のために必要
+            detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
+        }
+    }
+
 }

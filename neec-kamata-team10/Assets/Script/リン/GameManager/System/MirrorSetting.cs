@@ -26,10 +26,14 @@ public class MirrorSetting : MonoBehaviour
     private Queue usedMirrors;                      //ステージ上にある鏡
     private ICharacterController controller;        //コントローラー
 
+    private GameObject reflectParent;               //像の親オブジェクト
+
     void Start ()
     {
-        controller = GameManager.Instance.GetController(EController.KEYBOARD);
+        controller = GameManager.Instance.GetController();
         usedMirrors = new Queue();
+        reflectParent = new GameObject("Reflects");
+
         currentMirror = 0;
         onHand = false;
 	}
@@ -94,9 +98,12 @@ public class MirrorSetting : MonoBehaviour
         }
 
         GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
+        newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
         usedMirrors.Enqueue(newMirror);             //Queueに追加
 
         RemoveExpiredMirror();                      //多すぎる分を削除
+        SetColor();                                 //色設定
+
     }
 
     /// <summary>
@@ -108,6 +115,7 @@ public class MirrorSetting : MonoBehaviour
         onHand = false;
         handMirror.GetComponent<Mirror>().SetHand(onHand);
         handMirror.transform.position = pos;                    //位置設定
+        handMirror.GetComponent<Mirror>().Release();
         handMirror = null;
     }
 
@@ -169,5 +177,24 @@ public class MirrorSetting : MonoBehaviour
             return;
 
         Destroy(usedMirrors.Dequeue() as GameObject);          //削除
+    }
+
+    /// <summary>
+    /// 色設定
+    /// </summary>
+    private void SetColor()
+    {
+        Color[] colors = new Color[3];
+        colors[0] = new Color(1.0f, 0.0f, 0.0f, 0.2f);
+        colors[1] = new Color(1.0f, 1.0f, 0.0f, 0.2f);
+        colors[2] = new Color(0.0f, 0.0f, 1.0f, 0.2f);
+        int index = 0;
+
+        foreach (GameObject mirror in usedMirrors.ToArray())
+        {
+            MeshRenderer mesh = mirror.transform.GetChild(5).GetComponent<MeshRenderer>();
+            mesh.material.color = colors[index];
+            ++index;
+        }
     }
 }
