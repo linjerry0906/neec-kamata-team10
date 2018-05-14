@@ -11,7 +11,6 @@ public enum Direction
     LEFT = -1
 };
 
-
 public class MoveEnemy : MonoBehaviour
 {
     [SerializeField]
