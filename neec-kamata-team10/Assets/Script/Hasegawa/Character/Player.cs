@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private float moveForceMultiplier;
 
     private bool isJump = true;
+    private bool isClimb= false;
+
     //private float speed = 0;
     //private float storeDirectionX= 0;
     private Vector3 direction = new Vector3(1, 0, 0);
@@ -102,6 +104,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Climb()
+    {
+        if (isClimb)
+        {
+            //ツタを登っている時はZとRotationを固定
+            GetComponent<Rigidbody>().constraints =
+                RigidbodyConstraints.FreezePositionZ |
+                RigidbodyConstraints.FreezeRotationX |
+                RigidbodyConstraints.FreezeRotationY |
+                RigidbodyConstraints.FreezeRotationZ;
+
+            GetComponent<Rigidbody>().AddForce(controller.HorizontalMove() * jumpPower, ForceMode.Impulse);
+        }
+    }
+
     //void ChangeDirection(float directionX)
     //{
     //    if (directionX != 0) direction.x = directionX;
@@ -127,5 +144,10 @@ public class Player : MonoBehaviour
     public void SetIsJump(bool isJump)
     {
         this.isJump = isJump;
+    }
+
+    public void SetIsHold(bool isClimb)
+    {
+        this.isClimb = isClimb;
     }
 }
