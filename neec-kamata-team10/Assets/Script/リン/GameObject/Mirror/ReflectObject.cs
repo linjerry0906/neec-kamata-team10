@@ -35,6 +35,7 @@ public class ReflectObject : MonoBehaviour
         transform.parent = parent_obj.transform;
         this.size = size;
         */
+        gameObject.layer = 8;
         this.originObj = originObj;
         this.size = sizeEnum;
         reflectSize = originObj.transform.localScale;      //映し元のサイズ指定
@@ -146,6 +147,7 @@ public class ReflectObject : MonoBehaviour
     {
         Vector3 reflect_pos = originObj.transform.position;     //位置記録
         reflect_pos.z *= -1;                                    //反対側にする（2D横スクロールなので、Z = 0を反射面にする）
+        reflect_pos.z += 0.1f;
         transform.position = reflect_pos;                       //像の位置を設定
     }
     /// <summary>
