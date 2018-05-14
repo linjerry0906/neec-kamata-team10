@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        controller = GameManager.Instance.GetController(eController);
+        controller = GameManager.Instance.GetController();
     }
 
     // Update is called once per frame
