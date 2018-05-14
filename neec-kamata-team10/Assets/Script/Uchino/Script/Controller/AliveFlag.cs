@@ -12,6 +12,7 @@ public class AliveFlag : MonoBehaviour
     public void Dead()
     {
         isDead = true;
+        Dump();
     }
 
     /// <summary>

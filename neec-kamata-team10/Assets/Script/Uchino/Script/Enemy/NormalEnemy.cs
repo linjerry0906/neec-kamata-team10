@@ -15,9 +15,6 @@ public class NormalEnemy : MoveEnemy
         HorizontalMove();       //行ったり来たり
     }
 
-
-
-
 }
 
 
