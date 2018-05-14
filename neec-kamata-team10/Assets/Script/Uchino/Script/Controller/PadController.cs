@@ -35,11 +35,11 @@ public class PadController : ICharacterController
 
         if (Input.GetAxisRaw("Vertical") == -1)
         {
-            velocity = new Vector3(-1, 0, 0);
+            velocity = new Vector3(0, -1, 0);
         }
         if (Input.GetAxisRaw("Vertical") == 1)
         {
-            velocity = new Vector3(1, 0, 0);
+            velocity = new Vector3(0, 1, 0);
         }
 
         return velocity;
