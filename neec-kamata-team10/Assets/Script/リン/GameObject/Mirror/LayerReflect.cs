@@ -17,7 +17,7 @@ public class LayerReflect : MonoBehaviour
 
 	void Start ()
     {
-        if (transform.name.Contains("Clone"))
+        if (transform.name.Contains("Clone"))       //重複作成を防ぐため
             return;
 
         int backgroundLayer = 8;                    //レイヤーの番号

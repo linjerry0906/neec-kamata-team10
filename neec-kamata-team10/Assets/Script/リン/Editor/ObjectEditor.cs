@@ -52,7 +52,7 @@ public class ObjectEditor
             SearchOption.TopDirectoryOnly, true);                         //Mayaコンテンツ
         LoadContents(
             "Assets/Prefab/GameObject/", "*.prefab",
-            SearchOption.TopDirectoryOnly);                               //Prefabコンテンツ
+            SearchOption.AllDirectories);                                 //Prefabコンテンツ
     }
 
     /// <summary>
@@ -142,6 +142,7 @@ public class ObjectEditor
             {
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginHorizontal();
+                count = 0;
             }
             Texture2D texture = AssetPreview.GetAssetPreview(g);    //画像取得
             EditorGUILayout.BeginVertical(GUI.skin.box);            //一セットにする

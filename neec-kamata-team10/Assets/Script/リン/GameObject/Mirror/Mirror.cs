@@ -22,7 +22,8 @@ public class Mirror : MonoBehaviour
     [SerializeField]
     private List<GameObject> reflectObj;        //映した像
 
-    private bool isHand = false;
+    private bool isHand = false;                //手に持っているか
+    private Transform reflectParent;            //像の親オブジェクト
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class Mirror : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < originObj.Count;)                              //鏡側のObjを修正
+        for (int i = 0; i < originObj.Count;)                                  //鏡側のObjを修正
         {
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
@@ -45,6 +46,14 @@ public class Mirror : MonoBehaviour
             originObj.RemoveAt(i);
             reflectObj.RemoveAt(i);
         }
+    }
+
+    /// <summary>
+    /// 像の親オブジェクトを指定
+    /// </summary>
+    public void SetReflectParent(Transform parent)
+    {
+        reflectParent = parent;
     }
 
     private void OnTriggerStay(Collider other)
@@ -100,17 +109,17 @@ public class Mirror : MonoBehaviour
     /// <param name="unresizable">大きさ変えられるか</param>
     private void AddReflectObj(GameObject origin, bool unresizable)
     {
-        Vector3 dest_size = ReflectSize(unresizable);       //サイズ指定
-        GameObject reflect = Instantiate(origin);           //像のObjectを生成
-        DestroyChildCompo(ref reflect);                     //子供のコンポーネントを削除
+        Vector3 dest_size = ReflectSize(unresizable);                       //サイズ指定
+        GameObject reflect = Instantiate(origin, reflectParent);            //像のObjectを生成
+        DestroyChildCompo(ref reflect);                                     //子供のコンポーネントを削除
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
 
-        reflect.AddComponent<ReflectObject>();                                      //像のコンポーネント追加
+        reflect.AddComponent<ReflectObject>();                                     //像のコンポーネント追加
         reflect.GetComponent<ReflectObject>().SetMirror(gameObject);
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
         reflect.GetComponent<ReflectObject>().Reflect(false);                      //映す
 
-        reflectObj.Add(reflect);                            //管理リストに追加
+        reflectObj.Add(reflect);                                                   //管理リストに追加
     }
 
     /// <summary>
@@ -134,14 +143,14 @@ public class Mirror : MonoBehaviour
     /// <param name="obj">オブジェクト</param>
     private void DestroyComponent(ref GameObject obj)
     {
-        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>())
+        foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>())       //MonoBehavior
         {
             Destroy(m);
         }
 
-        Rigidbody r = obj.GetComponent<Rigidbody>();
+        Rigidbody r = obj.GetComponent<Rigidbody>();                          //rigidbody
         if (r) Destroy(r);
-        Collider c = obj.GetComponent<Collider>();
+        Collider c = obj.GetComponent<Collider>();                            //Collider
         if (c) Destroy(c);
     }
 
@@ -209,24 +218,27 @@ public class Mirror : MonoBehaviour
     public void SetHand(bool isHand)
     {
         this.isHand = isHand;
-        BindObject();
+        BindObject();                           //オブジェクトを持って行けるようにする
     }
 
+    /// <summary>
+    /// オブジェクトを持って行けるようにする
+    /// </summary>
     private void BindObject()
     {
         for (int i = 0; i < originObj.Count; ++i)
         {
-            if (IsUnresizableTag(originObj[i].tag))
+            if (IsUnresizableTag(originObj[i].tag))                                 //サイズ変更できないオブジェクトは無視
                 continue;
 
-            reflectObj[i].GetComponent<ReflectObject>().SetMirror(gameObject);
-            reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);
+            reflectObj[i].GetComponent<ReflectObject>().SetMirror(gameObject);      //鏡設定
+            reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);            //手に持っている
         }
     }
 
     private void OnDestroy()
     {
-        DestroyReflects();
+        DestroyReflects();                      //像を消す
     }
 
     /// <summary>
@@ -234,15 +246,15 @@ public class Mirror : MonoBehaviour
     /// </summary>
     public void Release()
     {
-        DestroyReflects();
+        DestroyReflects();                      //像を消す
 
-        foreach (GameObject g in originObj)
+        foreach (GameObject g in originObj)     //オブジェクトのサイズをもとに戻す
         {
             ObjectSize objSize = g.GetComponent<ObjectSize>();
             if (objSize)
                 objSize.SetSize(SizeEnum.Normal);
         }
-        originObj.Clear();
+        originObj.Clear();                      //リストクリア
     }
 
     /// <summary>

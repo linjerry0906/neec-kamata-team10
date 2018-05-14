@@ -26,10 +26,14 @@ public class MirrorSetting : MonoBehaviour
     private Queue usedMirrors;                      //ステージ上にある鏡
     private ICharacterController controller;        //コントローラー
 
+    private GameObject reflectParent;               //像の親オブジェクト
+
     void Start ()
     {
         controller = GameManager.Instance.GetController(EController.KEYBOARD);
         usedMirrors = new Queue();
+        reflectParent = new GameObject("Reflects");
+
         currentMirror = 0;
         onHand = false;
 	}
@@ -94,6 +98,7 @@ public class MirrorSetting : MonoBehaviour
         }
 
         GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
+        newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
         usedMirrors.Enqueue(newMirror);             //Queueに追加
 
         RemoveExpiredMirror();                      //多すぎる分を削除
