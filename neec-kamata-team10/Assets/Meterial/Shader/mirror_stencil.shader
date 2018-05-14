@@ -1,4 +1,8 @@
 ﻿Shader "Custom/mirror_stencil" {
+	Properties
+	{
+		_Color("Color", Color) = (1,1,1,1)
+	}
 	SubShader{
 		Tags { "Queue" = "Geometry-1" }
 		ColorMask 0
@@ -28,9 +32,12 @@
 			o.pos = UnityObjectToClipPos(v.vertex);
 			return o;
 		}
+
+		fixed4 _Color;
+
 		half4 frag(v2f i) : SV_Target
 		{
-			return half4(0, 0, 0, 0);
+			return _Color;
 		}
 		ENDCG
 		}
