@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     //private float acceleration;
     [SerializeField]
     private float jumpPower;
+    [SerializeField]
+    private float climbSpeed;
 
     [SerializeField]
     private float moveSpeed;
@@ -26,23 +28,26 @@ public class Player : MonoBehaviour
     private Vector3 direction = new Vector3(1, 0, 0);
 
     private ICharacterController controller;
+    private EPlayerState state = EPlayerState.Jump;
 
     // Use this for initialization
     void Start()
     {
-        controller = GameManager.Instance.GetController(eController);
+        controller = GameManager.Instance.GetController();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Move();
+        //FreezePosition();
+        Climb();
         Jump();
     }
 
     void FixedUpdate()
     {
         Move();
+        Debug.Log(state);
     }
 
     //void Move()
@@ -65,7 +70,6 @@ public class Player : MonoBehaviour
         Vector3 moveVector = Vector3.zero;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-        //direction = controller.HorizontalMove();
         if (controller.HorizontalMove() != Vector3.zero) direction = controller.HorizontalMove();
         moveVector = moveSpeed * controller.HorizontalMove();
 
@@ -81,8 +85,21 @@ public class Player : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isJump = true;
         }
+        FreezePosition();
+    }
 
-        if (isJump)
+    void Climb()
+    {
+        if (isClimb)
+        {
+            state = EPlayerState.Clamb;
+            GetComponent<Rigidbody>().AddForce(controller.VerticalMove() * climbSpeed,ForceMode.Force);
+        }
+    }
+
+    void FreezePosition()
+    {
+        if (isJump || isClimb) 
         {
             //ジャンプ中はZとRotationを固定
             GetComponent<Rigidbody>().constraints =
@@ -104,36 +121,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Climb()
+    void OnCollisionStay(Collision c)
     {
-        if (isClimb)
-        {
-            //ツタを登っている時はZとRotationを固定
-            GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezePositionZ |
-                RigidbodyConstraints.FreezeRotationX |
-                RigidbodyConstraints.FreezeRotationY |
-                RigidbodyConstraints.FreezeRotationZ;
+        if (!c.gameObject.tag.Contains("ivy")) return;
 
-            GetComponent<Rigidbody>().AddForce(controller.HorizontalMove() * jumpPower, ForceMode.Impulse);
+        if (c.gameObject.tag.Equals("ivy_upSideCollider"))
+        {
+            //Debug.Log("ツタの上");
+            state = EPlayerState.Move;
+            SetIsClimb(false);
+        }
+        else
+        {
+            //Debug.Log("ツタ登り中");
+            SetIsClimb(true);
         }
     }
 
-    //void ChangeDirection(float directionX)
-    //{
-    //    if (directionX != 0) direction.x = directionX;
-    //}
-    //
-    //void ChangeSpeed(float directionX)
-    //{
-    //    if (directionX != storeDirectionX && directionX != 0)  speed = 0;
-    //    storeDirectionX = directionX;
-    //
-    //    if (directionX != 0) speed += acceleration;
-    //    else speed -= acceleration;
-    //
-    //    speed = Mathf.Clamp(speed, 0, maxSpeed);
-    //}
+    void OnCollisionExit(Collision c)
+    {
+        //if (c.gameObject.tag.Equals("stage_ivy"))
+        //{
+        //    state = EPlayerState.Jump;
+        //    SetIsClimb(false);
+        //}
+        state = EPlayerState.Jump;
+        SetIsClimb(false);
+    }
 
     public EDirection GetDirection()
     {
@@ -141,13 +155,23 @@ public class Player : MonoBehaviour
         else return EDirection.RIGHT;
     }
 
+    public EPlayerState GetPlayerState()
+    {
+        return state;
+    }
+
     public void SetIsJump(bool isJump)
     {
         this.isJump = isJump;
     }
 
-    public void SetIsHold(bool isClimb)
+    public void SetIsClimb(bool isClimb)
     {
         this.isClimb = isClimb;
+    }
+
+    public void SetPlayerState(EPlayerState state)
+    {
+        this.state = state;
     }
 }
