@@ -97,6 +97,8 @@ public class MirrorSetting : MonoBehaviour
         usedMirrors.Enqueue(newMirror);             //Queueに追加
 
         RemoveExpiredMirror();                      //多すぎる分を削除
+        SetColor();                                 //色設定
+
     }
 
     /// <summary>
@@ -170,5 +172,24 @@ public class MirrorSetting : MonoBehaviour
             return;
 
         Destroy(usedMirrors.Dequeue() as GameObject);          //削除
+    }
+
+    /// <summary>
+    /// 色設定
+    /// </summary>
+    private void SetColor()
+    {
+        Color[] colors = new Color[3];
+        colors[0] = new Color(1.0f, 0.0f, 0.0f, 0.2f);
+        colors[1] = new Color(1.0f, 1.0f, 0.0f, 0.2f);
+        colors[2] = new Color(0.0f, 0.0f, 1.0f, 0.2f);
+        int index = 0;
+
+        foreach (GameObject mirror in usedMirrors.ToArray())
+        {
+            MeshRenderer mesh = mirror.transform.GetChild(5).GetComponent<MeshRenderer>();
+            mesh.material.color = colors[index];
+            ++index;
+        }
     }
 }
