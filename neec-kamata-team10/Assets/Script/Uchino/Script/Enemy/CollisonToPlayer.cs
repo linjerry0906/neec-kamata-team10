@@ -17,12 +17,22 @@ public class CollisonToPlayer : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
-
         if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
 
+        KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
+    }
+
+    private void KillOrDeath(Collider other)
+    {
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
-        if (IsSmall(size))
+        if (size == null)                //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
+        {
+            other.GetComponent<AliveFlag>().Dead();
+            return;
+        }
+
+        if (IsSmall(size))                                    //エネミーが小さいか
         {
             Destroy(transform.root.gameObject);               //小さかったら自分が死ぬ
             return;
