@@ -30,7 +30,7 @@ public class MirrorSetting : MonoBehaviour
 
     void Start ()
     {
-        controller = GameManager.Instance.GetController(EController.KEYBOARD);
+        controller = GameManager.Instance.GetController();
         usedMirrors = new Queue();
         reflectParent = new GameObject("Reflects");
 

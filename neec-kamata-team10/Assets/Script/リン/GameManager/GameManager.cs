@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;                     //GameManagerのインスタンス
 
+    [SerializeField]
+    private EController debugController;
+
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
@@ -60,9 +63,9 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     /// <param name="eController">キーボードか、パッドか</param>
     /// <returns></returns>
-    public ICharacterController GetController(EController eController)
+    public ICharacterController GetController()
     {
-        if(eController == EController.KEYBOARD)             //キーボードの場合
+        if(debugController == EController.KEYBOARD)         //キーボードの場合
             return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す
