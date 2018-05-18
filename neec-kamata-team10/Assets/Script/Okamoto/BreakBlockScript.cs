@@ -6,6 +6,8 @@ public class BreakBlockScript : MonoBehaviour {
     
     [SerializeField]
     GameObject gameObject;
+    [SerializeField]
+    int breakMass;
 
     // Use this for initialization
     void Start () {
@@ -18,7 +20,7 @@ public class BreakBlockScript : MonoBehaviour {
     //他のコライダと接触した時
     void OnCollisionEnter(Collision col)
     {
-        if (col.rigidbody.mass >= 1)
+        if (col.rigidbody.mass >= breakMass)
         {
             Destroy(gameObject);
         }
