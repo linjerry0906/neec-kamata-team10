@@ -6,10 +6,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private EController eController;
-    //[SerializeField]
-    //private float maxSpeed;
-    //[SerializeField]
-    //private float acceleration;
     [SerializeField]
     private float jumpPower;
     [SerializeField]
@@ -23,47 +19,43 @@ public class Player : MonoBehaviour
     private bool isJump = true;
     private bool isClimb= false;
 
-    //private float speed = 0;
-    //private float storeDirectionX= 0;
     private Vector3 direction = new Vector3(1, 0, 0);
 
     private ICharacterController controller;
     private EPlayerState state = EPlayerState.Jump;
 
+    private RigidbodyConstraints freezeY;
+    private RigidbodyConstraints normal;
+
     // Use this for initialization
     void Start()
     {
         controller = GameManager.Instance.GetController();
+
+        freezeY = RigidbodyConstraints.FreezePositionZ |
+               RigidbodyConstraints.FreezePositionY |
+               RigidbodyConstraints.FreezeRotationX |
+               RigidbodyConstraints.FreezeRotationY |
+               RigidbodyConstraints.FreezeRotationZ;
+
+        normal = RigidbodyConstraints.FreezePositionZ |
+                RigidbodyConstraints.FreezeRotationX |
+                RigidbodyConstraints.FreezeRotationY |
+                RigidbodyConstraints.FreezeRotationZ;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //FreezePosition();
         Climb();
         Jump();
+        Move();
+        FreezePosition();
     }
 
     void FixedUpdate()
     {
-        Move();
-        Debug.Log(state);
     }
-
-    //void Move()
-    //{
-    //    float directionX = controller.HorizontalMove().x;
-    //    ChangeSpeed(directionX);
-    //    ChangeDirection(directionX);
-    //
-    //    //Rigidbodyのvelocity.xだけを変更する
-    //    Vector3 velocity= direction * speed;
-    //    Vector3 temp = GetComponent<Rigidbody>().velocity;
-    //    temp.x = velocity.x;
-    //    GetComponent<Rigidbody>().velocity = temp;
-    //    //GetComponent<Rigidbody>().AddForce(100 * (directionX - temp.x), 0, 0);
-    //    //transform.position += direction * speed * Time.deltaTime;
-    //}
 
     void Move()
     {
@@ -81,11 +73,9 @@ public class Player : MonoBehaviour
     {
         if (controller.Jump() && !isJump)
         {
-            //Debug.Log("ジャンプ");
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isJump = true;
         }
-        FreezePosition();
     }
 
     void Climb()
@@ -99,25 +89,19 @@ public class Player : MonoBehaviour
 
     void FreezePosition()
     {
+       if (GetComponent<Rigidbody>().velocity.y == 0)
+       {
+           Debug.Log("Yを固定");
+            //移動中はYとZとRotationを固定
+            GetComponent<Rigidbody>().constraints = freezeY;
+               
+       }
+
         if (isJump || isClimb) 
         {
             //ジャンプ中はZとRotationを固定
-            GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezePositionZ |
-                RigidbodyConstraints.FreezeRotationX |
-                RigidbodyConstraints.FreezeRotationY |
-                RigidbodyConstraints.FreezeRotationZ;
-        }
-        else
-        {
-            //Debug.Log("Yを固定");
-            //移動中はYとZとRotationを固定
-            GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezePositionZ |
-                RigidbodyConstraints.FreezePositionY |
-                RigidbodyConstraints.FreezeRotationX |
-                RigidbodyConstraints.FreezeRotationY |
-                RigidbodyConstraints.FreezeRotationZ;
+            GetComponent<Rigidbody>().constraints = normal;
+                
         }
     }
 
