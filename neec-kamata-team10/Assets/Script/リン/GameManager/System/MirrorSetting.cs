@@ -88,22 +88,24 @@ public class MirrorSetting : MonoBehaviour
             handMirror.AddComponent<MirrorOnHand>();                                            //コンポーネント追加
             handMirror.GetComponent<MirrorOnHand>().SetPlayer(player);
             handMirror.GetComponent<Mirror>().SetHand(onHand);
+            PlayerAnime();
             return;
         }
 
         if (onHand)                                 //手に持っていれば
         {
             SetHandMirror(pos);                     //鏡を設置
+            PlayerAnime();
             return;
         }
 
         GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
         newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
         usedMirrors.Enqueue(newMirror);             //Queueに追加
+        PlayerAnime();
 
         RemoveExpiredMirror();                      //多すぎる分を削除
         SetColor();                                 //色設定
-
     }
 
     /// <summary>
@@ -196,5 +198,13 @@ public class MirrorSetting : MonoBehaviour
             mesh.material.color = colors[index];
             ++index;
         }
+    }
+
+    /// <summary>
+    /// Playerのアニメーションを起動
+    /// </summary>
+    private void PlayerAnime()
+    {
+        player.GetComponent<PlayerAnime>().ChangeState(EPlayerState.Action);
     }
 }
