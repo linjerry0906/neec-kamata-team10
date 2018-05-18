@@ -20,7 +20,7 @@ public class CameraWork : MonoBehaviour {
     [SerializeField]
     private float radius;                                       //移動しない半径
     [SerializeField]
-    private float charaTraceSpeed;                              //キャラ追尾するスピード
+    private float charaTraceSpeed = 7;                          //キャラ追尾するスピード
 
     private CameraMode cameraMode;                              //動くモード
     private TraceMode previousMode;                             //Debug：前回のモード

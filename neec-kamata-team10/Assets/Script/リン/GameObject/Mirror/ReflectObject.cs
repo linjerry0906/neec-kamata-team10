@@ -82,6 +82,8 @@ public class ReflectObject : MonoBehaviour
     /// </summary>
     private void ReflectToOrigin(bool isHand)
     {
+        if (originObj.tag.Equals("Unresizable"))
+            return;
         ObjectSize objSize = originObj.GetComponent<ObjectSize>();
         if (objSize)
         {
