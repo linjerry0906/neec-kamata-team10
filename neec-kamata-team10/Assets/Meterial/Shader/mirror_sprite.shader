@@ -6,7 +6,7 @@
 	}
 	SubShader
 	{
-		Tags{ "RenderType" = "Opaque" }
+		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 		Stencil
 		{
 			Ref 1
@@ -16,6 +16,7 @@
 		Pass
 		{
 			Blend SrcAlpha OneMinusSrcAlpha
+			Cull Off							//反転するのでOffにする
 
 			CGPROGRAM
 			#pragma vertex vert
