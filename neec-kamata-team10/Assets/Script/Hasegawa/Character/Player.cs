@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         if (state == stateStorage) return;
         GetComponent<PlayerAnime>().ChangeState(state);
         stateStorage = state;
-        Debug.Log(state);
+        //Debug.Log(state);
     }
 
     void CheckStay()
