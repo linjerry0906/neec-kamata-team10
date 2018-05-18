@@ -165,9 +165,15 @@ public class Mirror : MonoBehaviour
         SpriteRenderer sprite = obj.GetComponent<SpriteRenderer>();           //Sprite
         if (mesh)                                                             //メッシュレンダラーがある場合
         {
-            Texture mTex = mesh.material.mainTexture;                         //テクスチャ取得
-            mesh.material = reflectMaterial;                                  //マテリアル設定
-            mesh.material.SetTexture("_MainTex", mTex);                       //テクスチャ設定
+            int length = mesh.materials.Length;
+            Material[] materials = new Material[length];
+            for (int i = 0; i < length; ++i)
+            {
+                Texture mTex = mesh.materials[i].mainTexture;                 //テクスチャ取得
+                materials[i] = new Material(reflectMaterial);                 //マテリアル設定
+                materials[i].SetTexture("_MainTex", mTex);                    //テクスチャ設定
+            }
+            mesh.materials = materials;
         }
         if (sprite)                                                           //スプライトがある場合
         {
