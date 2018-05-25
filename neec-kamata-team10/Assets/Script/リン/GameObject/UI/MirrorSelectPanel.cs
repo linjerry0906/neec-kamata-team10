@@ -6,20 +6,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MirrorSelectPanel : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] mirrors;
 
-    private static readonly int MAX_SIZE = 55;      //最大サイズ
-    private static readonly int MIN_SIZE = 30;      //最小サイズ
+    private static readonly Vector3 START_POS = new Vector3(245, 0, 0);
+    [SerializeField]
+    private int MAX_SIZE = 55;      //最大サイズ
+    [SerializeField]
+    private int MIN_SIZE = 30;      //最小サイズ
+    private float spacing;
 
     private int currentMirror = 0;
 
     private void Start()
     {
         currentMirror = 0;
+        spacing = GetComponent<HorizontalLayoutGroup>().spacing;
         SetCurrentMirror(currentMirror);
     }
 
@@ -38,5 +44,7 @@ public class MirrorSelectPanel : MonoBehaviour
         currentMirror = index;
         mirrors[currentMirror].GetComponent<RectTransform>().localScale = new Vector3(MAX_SIZE, MAX_SIZE, 0);   //大きさ
         mirrors[currentMirror].GetComponent<Animator>().SetBool("Selected", true);                              //アニメション
+
+        GetComponent<RectTransform>().localPosition = START_POS + new Vector3(-spacing * index, 0, 0);
     }
 }

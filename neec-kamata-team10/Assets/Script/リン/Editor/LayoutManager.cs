@@ -88,6 +88,11 @@ public class LayoutManager
             name += ",";
         }
 
+        GameObject gameManager;
+        GameObject gameSystem;
+        GameObject mainCamera;
+        GameObject Canvas;
+
         if (!name.Contains("GameManager"))
             CreateObj("GameManager", gameManagerPrefab);            //GameManager
         if (!name.Contains("GameSystem"))
@@ -105,10 +110,11 @@ public class LayoutManager
     /// </summary>
     /// <param name="name">名前</param>
     /// <param name="obj">クローン先</param>
-    private void CreateObj(string name, GameObject obj)
+    private GameObject CreateObj(string name, GameObject obj)
     {
         GameObject clone = Object.Instantiate(obj);
         clone.name = name;
+        return clone;
     }
 
     /// <summary>
