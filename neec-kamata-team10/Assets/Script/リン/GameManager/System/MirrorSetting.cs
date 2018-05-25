@@ -42,6 +42,9 @@ public class MirrorSetting : MonoBehaviour
 	
 	void Update ()
     {
+        if (controller.IsFade())
+            return;
+
         ChangeMirror();                             //鏡の種類を切り替え
         SetMirror();                                //鏡を設置
 
