@@ -14,6 +14,8 @@ public class MirrorSetting : MonoBehaviour
     private readonly static float MIRROR_Z = 0.1f;                                  //鏡が置ける深度
 
     [SerializeField]
+    private GameObject mirrorUI;
+    [SerializeField]
     private GameObject player;                      //プレイヤー
     [SerializeField]
     private GameObject[] mirrors;                   //鏡の種類
@@ -55,20 +57,26 @@ public class MirrorSetting : MonoBehaviour
         if (onHand)                                 //手に持っていれば変えられない
             return;
 
+        int index = currentMirror;                  //Index
         int amount = mirrors.Length;
         if (controller.SwitchToTheLeft())
-            currentMirror--;
+            index--;
         if (controller.SwitchToTheRight())
-            currentMirror++;
+            index++;
+        if (index == currentMirror)                 //切り替えがない場合
+            return;
 #region Index Clamp
-        if (currentMirror >= amount)                //正数の場合は余りを取る
-            currentMirror %= amount;
-        if(currentMirror < 0)                       //負数の場合は余り+最大数（数-左を押した回数）
+        if (index >= amount)                        //正数の場合は余りを取る
+            index %= amount;
+        if(index < 0)                               //負数の場合は余り+最大数（数-左を押した回数）
         {
-            currentMirror %= amount;
-            currentMirror += amount;
+            index %= amount;
+            index += amount;
         }
-#endregion
+        currentMirror = index;
+        #endregion
+
+        mirrorUI.GetComponent<MirrorSelectPanel>().SetCurrentMirror(currentMirror);
     }
 
     /// <summary>
