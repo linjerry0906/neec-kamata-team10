@@ -82,6 +82,8 @@ public class ReflectObject : MonoBehaviour
     /// </summary>
     private void ReflectToOrigin(bool isHand)
     {
+        if (originObj.tag.Equals("Unresizable"))
+            return;
         ObjectSize objSize = originObj.GetComponent<ObjectSize>();
         if (objSize)
         {
@@ -167,6 +169,9 @@ public class ReflectObject : MonoBehaviour
     {
         Vector3 reflect_scale = reflectSize;                    //サイズ記録
         reflect_scale.z *= -1;                                  //サイズのZ軸を反対側にする
+        float flip = originObj.transform.localScale.x;
+        if (Mathf.Sign(flip) != Mathf.Sign(reflect_scale.x))
+            reflect_scale.x *= -1;
         transform.localScale = reflect_scale;                   //サイズ設定
 
         /*別仕様
