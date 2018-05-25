@@ -42,6 +42,9 @@ public class MirrorSetting : MonoBehaviour
 	
 	void Update ()
     {
+        if (controller.IsFade())
+            return;
+
         ChangeMirror();                             //鏡の種類を切り替え
         SetMirror();                                //鏡を設置
 
@@ -214,5 +217,10 @@ public class MirrorSetting : MonoBehaviour
     private void PlayerAnime()
     {
         player.GetComponent<PlayerAnime>().ChangeState(EPlayerState.Action);
+    }
+
+    public void SetMirrorUI(GameObject mirrorUI)
+    {
+        this.mirrorUI = mirrorUI;
     }
 }
