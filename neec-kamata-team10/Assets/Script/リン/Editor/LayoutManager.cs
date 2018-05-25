@@ -91,18 +91,36 @@ public class LayoutManager
         GameObject gameManager;
         GameObject gameSystem;
         GameObject mainCamera;
-        GameObject Canvas;
+        GameObject canvas;
 
         if (!name.Contains("GameManager"))
-            CreateObj("GameManager", gameManagerPrefab);            //GameManager
+            gameManager = CreateObj("GameManager", gameManagerPrefab);           //GameManager
+        else
+        {
+            gameManager = GameObject.Find("GameManager");
+        }
         if (!name.Contains("GameSystem"))
-            CreateObj("GameSystem", gameSystemPrefab);              //GameSystem
+            gameSystem = CreateObj("GameSystem", gameSystemPrefab);              //GameSystem
+        else
+        {
+            gameSystem = GameObject.Find("GameSystem");
+        }
         if (!name.Contains("BackgroundLayer"))
-            CreateObj("BackgroundLayer", stagePrefab);              //Background
+            CreateObj("BackgroundLayer", stagePrefab);                           //Background
         if (!name.Contains("Main Camera"))
-            CreateObj("Main Camera", cameraPrefab);                 //カメラ
+            mainCamera = CreateObj("Main Camera", cameraPrefab);                 //カメラ
+        else
+        {
+            mainCamera = GameObject.Find("Main Camera");
+        }
         if (!name.Contains("Canvas"))
-            CreateObj("Canvas", canvasPrefab);                      //キャンバス
+            canvas = CreateObj("Canvas", canvasPrefab);                          //キャンバス
+        else
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+
+        canvas.GetComponent<Canvas>().worldCamera = mainCamera.GetComponent<Camera>();
     }
 
     /// <summary>
