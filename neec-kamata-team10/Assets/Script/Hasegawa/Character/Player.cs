@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private EController eController;
+    //[SerializeField]
+    //private EController eController;
     [SerializeField]
     private float jumpPower;
     [SerializeField]
