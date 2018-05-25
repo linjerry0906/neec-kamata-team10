@@ -17,10 +17,14 @@ public class CollisonToObject : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(name);
+
         if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
+
+ 
 
     private void KillOrDeath(Collider other)
     {
@@ -34,7 +38,7 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size))                                    //エネミーが小さいか
         {
-            Destroy(transform.root.gameObject);               //小さかったら自分が死ぬ
+            Destroy(transform.parent.gameObject);                    //小さかったら自分が死ぬ
             return;
         }
 
