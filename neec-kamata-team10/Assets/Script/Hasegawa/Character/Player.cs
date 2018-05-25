@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
 
     void Move()
     {
+        if (controller.IsFade()) return;
+
         Vector3 moveVector = Vector3.zero;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
