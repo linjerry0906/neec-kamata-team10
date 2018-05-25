@@ -218,4 +218,9 @@ public class MirrorSetting : MonoBehaviour
     {
         player.GetComponent<PlayerAnime>().ChangeState(EPlayerState.Action);
     }
+
+    public void SetMirrorUI(GameObject mirrorUI)
+    {
+        this.mirrorUI = mirrorUI;
+    }
 }
