@@ -13,16 +13,17 @@ public class ThrowingEnemy : MoveEnemy {
 
     // Use this for initialization
     void Start () {
-        DirectionInit();
         throwtimer = new Timer(throwInterval);
+        DirectionInit();
+
     }
 
     // Update is called once per frame
     void Update () {
-        SetGroundEdge();                    //地面端の設定
-        HorizontalMove();                   //水平移動
-
         InstanceThrowObj();
+        SetGroundEdge();        //地面端の設定
+        HorizontalMove();       //行ったり来たり
+
     }
 
     /// <summary>
@@ -40,6 +41,6 @@ public class ThrowingEnemy : MoveEnemy {
 
         //自分の向いている方向をセットして　インスタンス
         Instantiate(throwingObject, throwingObjectPos, Quaternion.identity)
-            .GetComponent<Throw>().SetDircetion(Direction);
+            .GetComponent<Throw>().SetDircetion(GetComponent<ThrowingEnemy>().Direction);
     }
 }
