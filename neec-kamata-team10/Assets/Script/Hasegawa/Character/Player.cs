@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         controller = GameManager.Instance.GetController();
 
         freezeY = RigidbodyConstraints.FreezePositionZ |
