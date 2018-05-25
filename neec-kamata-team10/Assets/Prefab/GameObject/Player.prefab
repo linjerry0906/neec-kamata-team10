@@ -42,8 +42,6 @@ GameObject:
   - component: {fileID: 114855767288621312}
   - component: {fileID: 114622648665841230}
   - component: {fileID: 95828149430169928}
-  - component: {fileID: 114792905498000968}
-  - component: {fileID: 65364968232539586}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -58,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1398878802497442}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.351, y: 4.443, z: -0.5}
+  m_LocalPosition: {x: -2.5, y: 1.5, z: -0.5}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4773972257059234}
@@ -105,18 +103,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.20272446, y: 0.08406019, z: 1}
   m_Center: {x: -0.024103612, y: -0.26884866, z: 0}
---- !u!65 &65364968232539586
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398878802497442}
-  m_Material: {fileID: 13400000, guid: fca4f02ff238e95429cd696950cc9e44, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.25277638, y: 0.64, z: 0.2}
-  m_Center: {x: -0.030760735, y: 0, z: 0}
 --- !u!95 &95828149430169928
 Animator:
   serializedVersion: 3
@@ -156,17 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc84ef0de0198af4e9a52554ad42d35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114792905498000968
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398878802497442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d7274db2819bb45a3db38073adc21f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114855767288621312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,7 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eController: 0
   jumpPower: 70
-  climbSpeed: 130
   moveSpeed: 5
   moveForceMultiplier: 30
 --- !u!136 &136091094797930108
@@ -192,7 +166,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: fca4f02ff238e95429cd696950cc9e44, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.15
   m_Height: 0.64
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
