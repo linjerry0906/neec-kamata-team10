@@ -172,6 +172,7 @@ public class Mirror : MonoBehaviour
                 Texture mTex = mesh.materials[i].mainTexture;                 //テクスチャ取得
                 materials[i] = new Material(reflectMaterial);                 //マテリアル設定
                 materials[i].SetTexture("_MainTex", mTex);                    //テクスチャ設定
+                materials[i].color = mesh.materials[i].color;
             }
             mesh.materials = materials;
         }

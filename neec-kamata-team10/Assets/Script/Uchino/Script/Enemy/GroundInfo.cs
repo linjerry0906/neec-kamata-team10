@@ -14,7 +14,6 @@ public class GroundInfo : MonoBehaviour
     /// <returns></returns>
     public bool IsSetEdge(Direction direction)
     {
-
         if (direction == Direction.LEFT)  return IsSetLeft();
         if (direction == Direction.RIGHT) return IsSetRight();
 

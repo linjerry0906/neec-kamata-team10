@@ -30,7 +30,6 @@ public class ChaseEnemy : MoveEnemy
         if (time >= twoFrame)
         {
             time = 0.0f;                                           //タイマーの初期化
-
             DetectEmpty detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
             DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
 
