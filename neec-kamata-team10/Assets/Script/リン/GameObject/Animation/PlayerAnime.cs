@@ -9,16 +9,11 @@ public class PlayerAnime : MonoBehaviour
 {
     private Animator animator;                              //UnityのAnimator
     private IAnimeState currentState;                       //現在のステート
-    private EPlayerState currentStateEnum;
-    private EPlayerState previousStateEnum;
 
     void Start ()
     {
         animator = GetComponent<Animator>();                //Animatorを取得
         currentState = PlayerAnimeFactory.GetState(EPlayerState.Stay);
-
-        currentStateEnum = EPlayerState.Stay;
-        previousStateEnum = EPlayerState.Stay;
     }
 
     private void Update()
@@ -35,8 +30,5 @@ public class PlayerAnime : MonoBehaviour
 
         currentState = PlayerAnimeFactory.GetState(state);  //ステートを取得
         currentState.Execute(animator);                     //ステートを実行
-
-        previousStateEnum = currentStateEnum;
-        currentStateEnum = state;
     }
 }
