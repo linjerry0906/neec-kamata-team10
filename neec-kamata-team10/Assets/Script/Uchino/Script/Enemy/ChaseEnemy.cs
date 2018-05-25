@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-    private Rigidbody rigidBody; //剛体
 
     // Use this for initialization
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
         direction = Direction.LEFT;
     }
 
