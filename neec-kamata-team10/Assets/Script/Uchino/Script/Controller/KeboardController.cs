@@ -150,5 +150,15 @@ public class KeboardController : ICharacterController
         pressFlame = 0;
     }
 
+    bool isFade = false;
+    public bool IsFade()
+    {
+        return isFade;
+    }
+
+    public void SetFadeFlag(bool isFade)
+    {
+        this.isFade = isFade;
+    }
     
 }
