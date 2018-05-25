@@ -8,12 +8,14 @@ public class ChangeObjectSize : MonoBehaviour {
 
     private ChangeScale changeScale;
     private Vector3 normalScale;
+    private float normalMass;
 
     // Use this for initialization
     void Start()
     {
         changeScale = new ChangeScale(new Vector3(1, 1, 1), changeTime);
         normalScale = transform.localScale;
+        normalMass = GetComponent<Rigidbody>().mass;
     }
 
     // Update is called once per frame
@@ -28,7 +30,11 @@ public class ChangeObjectSize : MonoBehaviour {
         if (tag == "reflect")
             return;
         SizeEnum size = GetComponent<ObjectSize>().GetSize();
-        transform.localScale = Vector3.Scale(changeScale.Scale(size), normalScale);
+        Vector3 scale = changeScale.Scale(size);
+        //サイズの変更
+        transform.localScale = Vector3.Scale(scale, normalScale);
+        //質量の変更
+        GetComponent<Rigidbody>().mass = scale.x * scale.y * normalMass;
     }
 
     //ミラーと衝突していたらchangeScaleにミラーサイズをセットする
