@@ -14,7 +14,6 @@ public class PlayerAnime : MonoBehaviour
     {
         animator = GetComponent<Animator>();                //Animatorを取得
         currentState = PlayerAnimeFactory.GetState(EPlayerState.Stay);
-
     }
 
     private void Update()

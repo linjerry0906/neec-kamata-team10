@@ -38,7 +38,7 @@ public class Mirror : MonoBehaviour
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
                 bool hand = IsUnresizableTag(originObj[i].tag) ? false : isHand;
-                reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);   //位置、サイズ、回転を修正
+                reflectObj[i].GetComponent<ReflectObject>().Reflect(hand);     //位置、サイズ、回転を修正
                 ++i;
                 continue;
             }
