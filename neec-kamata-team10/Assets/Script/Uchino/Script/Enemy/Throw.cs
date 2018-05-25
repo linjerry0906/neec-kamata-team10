@@ -30,7 +30,10 @@ public class Throw : MonoBehaviour {
     {
         Vector3 velocity = GetComponent<Rigidbody>().velocity;
 
-        if (velocity.y == 0){ Destroy(gameObject);}             //Yベクトルの大きさが0になれば消去
+        //if (velocity.y == 0 || velocity.x == 0)                 //Yベクトルの大きさが0になれば消去
+        //{
+        //    Destroy(gameObject);
+        //}            
     }
 
     private Direction direction = Direction.LEFT;               //ThrowEnemyの向き
@@ -60,9 +63,20 @@ public class Throw : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player") { return; }
+        //if (other.name == "DetectRange") return;
+        //Debug.Log(other.name);
+        //if (other.tag != "Player") { return; }
 
-        other.GetComponent<AliveFlag>().Dead();                  //プレイヤーに当たったらプレイヤーは倒れる
-        Destroy(gameObject);                                     //自分も死ぬ
+        //other.GetComponent<AliveFlag>().Dead();                  //プレイヤーに当たったらプレイヤーは倒れる
+        //Destroy(gameObject);                                     //自分も死ぬ
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<AliveFlag>().Dead();     //プレイヤーに当たったらプレイヤーは倒れる
+        }
+        Destroy(gameObject);                                       //自分も死ぬ
     }
 }
