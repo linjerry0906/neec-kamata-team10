@@ -6,7 +6,7 @@ public class CollisonToObject : MonoBehaviour {
 
     private void Start()
     {
-        Transform parentTransform = transform.parent.root.transform;
+        Transform parentTransform = transform.parent.transform;
         transform.position = new Vector3(parentTransform.position.x, parentTransform.position.y
             , parentTransform.position.z);
     }
@@ -17,14 +17,16 @@ public class CollisonToObject : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(name);
-
         if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
- 
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(other.gameObject.name);
+    }
+
 
     private void KillOrDeath(Collider other)
     {
