@@ -41,7 +41,7 @@ public class StagePanelCreate : MonoBehaviour {
             }
             //Button作成
             int index = (currentStage - 1) / panelPerButton;
-            Debug.Log(index);
+            //Debug.Log(index);
             GameObject b = Instantiate(originButton, panels[index].transform.GetChild(0));
             //作成されたボタンにステージを割り当てる
             b.GetComponent<StageSelectScript>().StageSet(currentStage);

@@ -17,7 +17,7 @@ public class StageButtonCreate : MonoBehaviour {
         for (int i = 0; i < buttonCount; i++)
         {
             //GUI.Button(new Rect(i, 20, 100, 100), "Button");
-            GameObject b = Instantiate(originButton, transform);
+            Instantiate(originButton, transform);
         }
     }
 	
