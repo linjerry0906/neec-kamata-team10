@@ -4,6 +4,5 @@
     Stage2 = 2,
     TitleTest,
     PlayTest,
-    Clear,
-    Failed,
+    StageSelect,
 }

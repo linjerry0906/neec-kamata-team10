@@ -12,6 +12,16 @@ public class SceneChange {
         SceneManager.LoadScene(scene.ToString());
     }
 
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public string CurrentScene()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
+
     //勉強用メモ
     //public void TestLoad()
     //{

@@ -59,6 +59,15 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// 同じステージを挑戦
+    /// </summary>
+    public void TrySameStage()
+    {
+        sceneManager.ChangeScene(sceneManager.CurrentScene());
+        stageManager.Initialize(stageManager.CurrentStage());
+    }
+
+    /// <summary>
     /// 指定のコントローラーを取得
     /// </summary>
     /// <param name="eController">キーボードか、パッドか</param>
