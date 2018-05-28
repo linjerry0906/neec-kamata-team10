@@ -105,5 +105,4 @@ public class MoveEnemy : MonoBehaviour
             detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
         }
     }
-
 }
