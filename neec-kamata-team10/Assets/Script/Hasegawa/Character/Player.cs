@@ -4,30 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private EController eController;
-    [SerializeField]
-    private float jumpPower;
-    [SerializeField]
-    private float climbSpeed;
-
-    [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
-    private float moveForceMultiplier;
-
-    private bool isJump = true;
-    private bool isClimb= false;
-
-    private Vector3 direction = new Vector3(1, 0, 0);
-
-    private ICharacterController controller;
-
-    private EPlayerState state = EPlayerState.Jump;
-    private EPlayerState stateStorage = EPlayerState.Move;
-
-    private RigidbodyConstraints freezeY;
-    private RigidbodyConstraints normal;
+    //[SerializeField]
+    //private EController eController;                            
+    [SerializeField]                                              
+    private float jumpPower;                                      //ジャンプ力
+    [SerializeField]                                              
+    private float climbSpeed;                                     //登るスピード
+    [SerializeField]                                              
+    private float moveSpeed;                                      //移動スピード
+    [SerializeField]                                              
+    private float moveForceMultiplier;                            //慣性の調整値
+                                                                  
+    private bool isJump = true;                                   //ジャンプフラグ
+    private bool isClimb= false;                                  //ツタ登りフラグ
+    private Vector3 direction = new Vector3(1, 0, 0);             //進行方向
+    private ICharacterController controller;                      //コントローラー
+    private EPlayerState state = EPlayerState.Jump;               //プレイヤーの状態
+    private EPlayerState stateStorage = EPlayerState.Move;        //プレイヤーの状態(保存用)
+    private RigidbodyConstraints freezeY;                         //Y座標の固定
+    private RigidbodyConstraints normal;                          //座標の固定
 
     // Use this for initialization
     void Start()
@@ -61,22 +56,20 @@ public class Player : MonoBehaviour
     {
     }
 
+    //移動
     void Move()
     {
         if (controller.IsFade()) return;
 
         Vector3 moveVector = Vector3.zero;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-
         ChangeDirection();
-        //if (transform.localScale.x > 0 && direction.x < 0) transform.localScale.x *= direction.x;
-
         moveVector = moveSpeed * controller.HorizontalMove();
-
         Vector3 velocity = new Vector3(rigidbody.velocity.x, 0, 0);
         rigidbody.AddForce(moveForceMultiplier * (moveVector - velocity));
     }
 
+    //ジャンプ
     void Jump()
     {
         if (controller.Jump() && !isJump)
@@ -87,6 +80,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //登る(ツタブロック)
     void Climb()
     {
         if (isClimb)
@@ -96,24 +90,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    //ポジションの固定
     void FreezePosition()
     {
+        //移動中はYとZとRotationを固定
        if (GetComponent<Rigidbody>().velocity.y == 0)
        {
-            //Debug.Log("Yを固定");
-            //移動中はYとZとRotationを固定
             GetComponent<Rigidbody>().constraints = freezeY;
                
        }
-
+        //ジャンプ中と登り中はZとRotationを固定
         if (isJump || isClimb) 
         {
-            //ジャンプ中はZとRotationを固定
-            GetComponent<Rigidbody>().constraints = normal;
-                
+            GetComponent<Rigidbody>().constraints = normal;           
         }
     }
 
+    //ツタブロックとの判定
     void OnCollisionStay(Collision c)
     {
         if (!c.gameObject.tag.Contains("ivy")) return;
@@ -131,6 +124,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //ツタブロックとの判定
     void OnCollisionExit(Collision c)
     {
         //if (c.gameObject.tag.Equals("stage_ivy"))
@@ -142,6 +136,7 @@ public class Player : MonoBehaviour
         SetIsClimb(false);
     }
 
+    //進行方向の保存と方向転換
     void ChangeDirection()
     {
         //進んでいた方向の保存
@@ -157,14 +152,16 @@ public class Player : MonoBehaviour
         transform.localScale = scale;    
     }
 
+    //stateが変更されたときにChangeStateを呼ぶ
     void CheckState()
     {
         if (state == stateStorage) return;
         GetComponent<PlayerAnime>().ChangeState(state);
         stateStorage = state;
-        //Debug.Log(state);
+        Debug.Log(state);
     }
 
+    //移動量が小さければ待機状態にする
     void CheckStay()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -172,27 +169,32 @@ public class Player : MonoBehaviour
             state = EPlayerState.Stay;
     }
 
+    //進行方向の取得
     public EDirection GetDirection()
     {
         if (direction.x < 0) return EDirection.LEFT;
         else return EDirection.RIGHT;
     }
 
+    //状態の取得
     public EPlayerState GetPlayerState()
     {
         return state;
     }
 
+    //Jumpフラグの設定
     public void SetIsJump(bool isJump)
     {
         this.isJump = isJump;
     }
 
+    //Climbフラグの設定
     public void SetIsClimb(bool isClimb)
     {
         this.isClimb = isClimb;
     }
 
+    //状態の設定
     public void SetPlayerState(EPlayerState state)
     {
         this.state = state;
