@@ -14,10 +14,14 @@ public class NormalEnemy : MoveEnemy
 
     void Update()
     {
-        SetGroundEdge();        //地面端の設定
-        HorizontalMove();       //行ったり来たり
-        anim.SetInteger("direction", (int)Direction);
+        SetGroundEdge();                                    //地面端の設定
+        HorizontalMove();                                   //行ったり来たり
+
+        anim.SetInteger("direction", (int)Direction);       //向きに合わせてdirectionも変動
+        
     }
+
+
 
 }
 

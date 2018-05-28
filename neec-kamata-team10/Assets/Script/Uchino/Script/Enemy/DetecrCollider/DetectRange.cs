@@ -12,7 +12,7 @@ public class DetectRange : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない
-  
+
         ChaseEnemy chaseEnemy = GetComponentInParent<ChaseEnemy>();  //ChaseEnemyを取得
 
         if (WhetherChaisingOrNot(other))                             //追いかけるか否か
