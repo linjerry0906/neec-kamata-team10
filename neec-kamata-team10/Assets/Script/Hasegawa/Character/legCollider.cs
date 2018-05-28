@@ -23,6 +23,11 @@ public class legCollider : MonoBehaviour {
             transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Move);
             transform.parent.GetComponent<Player>().SetIsJump(false);
         }
+        if (t.gameObject.CompareTag("seasaw"))
+        {
+            transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Move);
+            transform.parent.GetComponent<Player>().SetIsJump(false);
+        }
     }
 
     void OnTriggerExit(Collider t)
