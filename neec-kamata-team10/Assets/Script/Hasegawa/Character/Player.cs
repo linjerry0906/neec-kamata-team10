@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
         if (state == stateStorage) return;
         GetComponent<PlayerAnime>().ChangeState(state);
         stateStorage = state;
-        Debug.Log(state);
+        //Debug.Log(state);
     }
 
     //移動量が小さければ待機状態にする
