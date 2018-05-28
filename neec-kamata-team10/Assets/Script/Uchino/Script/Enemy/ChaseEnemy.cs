@@ -48,6 +48,18 @@ public class ChaseEnemy : MoveEnemy
     }
 
     /// <summary>
+    /// 鏡から離れたとき
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "mirror") return;
+
+        isMirrorColison = false;                //鏡から離れたら初期化
+        previousScale = defaultScale;           //鏡から離れたのでnormalサイズに
+    }
+
+    /// <summary>
     /// 地面端の設定
     /// </summary>
     protected override void SetGroundEdge()
