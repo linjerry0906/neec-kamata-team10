@@ -17,4 +17,6 @@ public class RenderGameView : MonoBehaviour
     {
         Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
     }
+
+    
 }

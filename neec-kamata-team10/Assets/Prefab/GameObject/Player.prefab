@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114855767288621312}
   - component: {fileID: 114622648665841230}
   - component: {fileID: 95828149430169928}
+  - component: {fileID: 114977840197465024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -155,8 +156,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eController: 0
   jumpPower: 70
+  climbSpeed: 0
   moveSpeed: 5
   moveForceMultiplier: 30
+--- !u!114 &114977840197465024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398878802497442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d7274db2819bb45a3db38073adc21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136091094797930108
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -184,7 +197,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2d27ededd8b168e47be5198f0aaef9fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

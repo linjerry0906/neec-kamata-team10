@@ -18,10 +18,6 @@ public class RenderTargetSetter : MonoBehaviour
     public void SetRenderTarget()
     {
         renderTarget = new RenderTexture(Screen.width, Screen.height, 16, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-        
-        GameObject mainCamera = Camera.main.gameObject;
-        mainCamera.transform.GetChild(0).GetComponent<Camera>().targetTexture = renderTarget;    //レンダーターゲットを設定
-        mainCamera.GetComponent<Camera>().targetTexture = renderTarget;                          //レンダーターゲットを設定
     }
 
     /// <summary>
@@ -35,7 +31,13 @@ public class RenderTargetSetter : MonoBehaviour
 
     public void WriteTexture()
     {
-        texture = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
-        texture.ReadPixels(new Rect(0, 0, renderTarget.width, renderTarget.height), 0, 0);
+        RenderTexture currentActiveRT = RenderTexture.active;
+
+        RenderTexture.active = renderTarget;
+
+        texture = new Texture2D(renderTarget.width, renderTarget.height);
+        texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+
+        RenderTexture.active = currentActiveRT;
     }
 }
