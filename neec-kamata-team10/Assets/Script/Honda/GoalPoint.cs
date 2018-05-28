@@ -8,8 +8,15 @@ public class GoalPoint : MonoBehaviour {
     /// ゴール地点のスクリプト(フラグ立てるだけ)
     /// </summary>
 
+    private StageManager stageManager;
+
     //外部から変えられたくない
     private bool isGoal = false; //初期状態は念のためfalseにしておく
+
+    private void Start()
+    {
+        stageManager = GameManager.Instance.GetStageManager();
+    }
 
     void OnTriggerEnter(Collider other) //触れた瞬間
     {
@@ -17,9 +24,9 @@ public class GoalPoint : MonoBehaviour {
 
         //else{
         isGoal = true; //フラグ立てる
-        Debug.Log("Goal!"); //デバッグログ
+        //Debug.Log("Goal!"); //デバッグログ
+        stageManager.EndStage();
+        stageManager.SetClear(isGoal);
         //}
     }
-
-    public bool IsGoal { get { return isGoal; } }
 }

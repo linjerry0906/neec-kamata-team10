@@ -21,6 +21,8 @@ public class Mirror : MonoBehaviour
     private List<GameObject> originObj;         //映し元
     [SerializeField]
     private List<GameObject> reflectObj;        //映した像
+    [SerializeField]
+    private string[] tags;
 
     private bool isHand = false;                //手に持っているか
     private Transform reflectParent;            //像の親オブジェクト
@@ -62,12 +64,13 @@ public class Mirror : MonoBehaviour
             other.tag.Equals("mirror"))                                    //鏡無視
             return;
 
+        if (originObj.Contains(other.gameObject))
+            return;
+
         bool unresizable = IsUnresizableTag(other.tag);
         if (isHand && !unresizable)
             return;
 
-        if (originObj.Contains(other.gameObject))
-            return;
         originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
     }
@@ -93,6 +96,11 @@ public class Mirror : MonoBehaviour
     /// <returns></returns>
     private bool IsUnresizableTag(string tag)
     {
+        for (int i = 0; i < tags.Length; ++i)
+        {
+            if (tag.Equals(tags[i]))
+                return true;
+        }
         if (tag.Equals("Unresizable"))
             return true;
         if (tag.Equals("stage_block"))
