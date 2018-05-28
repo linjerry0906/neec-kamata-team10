@@ -22,7 +22,8 @@ public class ResultDisplay : MonoBehaviour
         int stage = stageManager.CurrentStage();
         stageObj.GetComponent<Text>().text = stage.ToString();
         timeObj.GetComponent<Text>().text = TimeString(ref stageManager);
-        scoreObj.GetComponent<Text>().text = "0";
+        int score = GameManager.Instance.GetScore();
+        scoreObj.GetComponent<Text>().text = score.ToString();
     }
 
     /// <summary>

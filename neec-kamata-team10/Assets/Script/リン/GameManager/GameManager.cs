@@ -5,7 +5,8 @@
 //------------------------------------------------------
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager Instance;                     //GameManagerのインスタンス
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour {
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
+    private Score scoreManager;                             //スコアマネージャー
 
     private void Awake()
     {
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour {
         sceneManager = new SceneChange();
         stageManager = new StageManager();
         stageManager.Initialize(0);                         //Debug Test
+        scoreManager = GetComponent<Score>();
+        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -40,14 +44,14 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);                 //削除されないように
     }
 
-    void Start ()
+    void Start()
     {
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
         stageManager.Update();                              //Stage時間を更新
-	}
+    }
 
     /// <summary>
     /// シーンを切り替わる
@@ -65,6 +69,7 @@ public class GameManager : MonoBehaviour {
     {
         sceneManager.ChangeScene(sceneManager.CurrentScene());
         stageManager.Initialize(stageManager.CurrentStage());
+        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -74,13 +79,13 @@ public class GameManager : MonoBehaviour {
     /// <returns></returns>
     public ICharacterController GetController()
     {
-        if(debugController == EController.KEYBOARD)         //キーボードの場合
+        if (debugController == EController.KEYBOARD)         //キーボードの場合
             return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
 
-#region Stage関連
+    #region Stage関連
 
     /// <summary>
     /// 次のステージを指定
@@ -90,6 +95,7 @@ public class GameManager : MonoBehaviour {
     {
         sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
         stageManager.Initialize(stage);                     //ステージ初期化
+        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -101,5 +107,27 @@ public class GameManager : MonoBehaviour {
         return stageManager;
     }
 
-#endregion
+    #endregion
+
+    #region Score関連
+
+    /// <summary>
+    /// 点数を追加
+    /// </summary>
+    /// <param name="score"></param>
+    public void AddScore(int score)
+    {
+        scoreManager.AddScore(score);
+    }
+
+    /// <summary>
+    /// スコアを取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetScore()
+    {
+        return scoreManager.GetScore();
+    }
+
+    #endregion
 }
