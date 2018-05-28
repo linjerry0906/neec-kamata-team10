@@ -4,12 +4,46 @@ using UnityEngine;
 
 public class CollisonToObject : MonoBehaviour {
 
+    Vector3 defaultScale;
+    Vector3 previousScale;
+
     private void Start()
     {
         Transform parentTransform = transform.parent.transform;
         transform.position = new Vector3(parentTransform.position.x, parentTransform.position.y
             , parentTransform.position.z);
+
+        defaultScale = transform.parent.localScale;
+        previousScale = defaultScale;
+
     }
+
+    bool isMirrorColison = false;
+    private void Update()
+    {
+
+        ////if (transform.parent.localScale != previousScale)
+        ////{
+        ////    if (previousScale != defaultScale)
+        ////    {
+        ////        transform.parent.localScale = previousScale;
+        ////        isMirrorColison = true;
+        ////    }
+        ////}
+
+        ////if(isMirrorColison)
+        ////{
+        ////    transform.parent.localScale = previousScale;
+        ////}
+
+        ////previousScale = transform.parent.localScale;
+        //Debug.Log(transform.parent.localScale + "代入前");
+        //transform.parent.gameObject.transform.localScale = new Vector3(2, 2, 2);
+        //Debug.Log(transform.parent.localScale);
+        //Debug.Log("defaultScale"+defaultScale);
+    }
+
+
 
     /// <summary>
     /// 他のオブジェクトにぶつかった時
@@ -17,10 +51,12 @@ public class CollisonToObject : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
+        
         if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
+
 
     private void OnCollisionEnter(Collision other)
     {
@@ -54,7 +90,7 @@ public class CollisonToObject : MonoBehaviour {
     /// <returns></returns>
     private bool IsSmall(ObjectSize size)
     {
-        if (size.GetSize() == SizeEnum.Small_XY) { return true; }    //全体的に小さいか
+        if (size.GetSize() == SizeEnum.Small_XY){ return true; }    //全体的に小さいか
         if (size.GetSize() == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
         if (size.GetSize() == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
 

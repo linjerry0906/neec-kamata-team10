@@ -151,11 +151,20 @@ public class KeboardController : ICharacterController
     }
 
     bool isFade = false;
+
+    /// <summary>
+    /// シーンフェードしたか
+    /// </summary>
+    /// <returns></returns>
     public bool IsFade()
     {
         return isFade;
     }
 
+    /// <summary>
+    /// フェードしたか否か
+    /// </summary>
+    /// <param name="isFade"></param>
     public void SetFadeFlag(bool isFade)
     {
         this.isFade = isFade;

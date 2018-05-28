@@ -6,7 +6,7 @@ public class CollisonWall : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") { return; }
+        if (other.tag == "Player" || other.tag == "mirror") { return; }
 
         NormalEnemy nomalEnemy = GetComponentInParent<NormalEnemy>();
         if (nomalEnemy != null)

@@ -23,13 +23,6 @@ public class AliveFlag : MonoBehaviour
         return isDead;
     }
 
-    /// <summary>
-    /// デバッグ
-    /// </summary>
-    public void Dump()
-    {
-        Debug.Log(isDead);
-    }
 
 
 }
