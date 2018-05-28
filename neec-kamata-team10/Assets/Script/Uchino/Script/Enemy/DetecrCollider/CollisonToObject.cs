@@ -44,8 +44,10 @@ public class CollisonToObject : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
-        
-        if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
+
+        if (other.tag != "Player" 
+            && other.tag != "Splinter") { return; }           //プレイヤーかトゲじゃなかったら実行しない。
+
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
@@ -59,6 +61,12 @@ public class CollisonToObject : MonoBehaviour {
 
     private void KillOrDeath(Collider other)
     {
+        if(other.tag == "Splinter")                           //相手はトゲ？
+        {
+            Destroy(transform.parent.gameObject);             //無条件で自分が死ぬ
+            return;
+        }
+
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
         if (size == null)                                     //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
