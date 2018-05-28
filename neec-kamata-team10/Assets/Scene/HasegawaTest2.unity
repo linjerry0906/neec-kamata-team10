@@ -1030,6 +1030,11 @@ Prefab:
       propertyPath: jumpPower
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 212215253234644052, guid: 48c93156f89f6ed47863b16129dc9b68,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d27ededd8b168e47be5198f0aaef9fe, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48c93156f89f6ed47863b16129dc9b68, type: 2}
   m_IsPrefabParent: 0
@@ -7063,6 +7068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb017282704b4d42af6cc0b6ed1407a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mirrorUI: {fileID: 0}
   player: {fileID: 1147159391}
   mirrors:
   - {fileID: 1748790131734024, guid: e7ffd7f4fd0ce2845904bea301ae99de, type: 2}
