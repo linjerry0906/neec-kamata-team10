@@ -12,6 +12,8 @@ public class AliveFlag : MonoBehaviour
     public void Dead()
     {
         isDead = true;
+        GameManager.Instance.GetStageManager().EndStage();
+        GameManager.Instance.GetStageManager().SetClear(false);
     }
 
     /// <summary>
