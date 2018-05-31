@@ -251,6 +251,14 @@ public class Mirror : MonoBehaviour
         }
     }
 
+    public void ResetReflectPos()
+    {
+        for (int i = 0; i < originObj.Count; ++i)                                  //鏡側のObjを修正
+        {
+            reflectObj[i].GetComponent<ReflectObject>().ResetPos();                 //位置を修正
+        }
+    }
+
     private void OnDestroy()
     {
         DestroyReflects();                      //像を消す

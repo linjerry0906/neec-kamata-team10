@@ -184,4 +184,14 @@ public class ReflectObject : MonoBehaviour
         this.mirror = mirror;
         relativePos = transform.position - mirror.transform.position;
     }
+
+    public void ResetPos()
+    {
+        UpdateOnHand();
+
+        Vector3 originPos = originObj.transform.position;
+        originPos.x = transform.position.x;
+        originPos.y = transform.position.y;
+        originObj.transform.position = originPos;
+    }
 }
