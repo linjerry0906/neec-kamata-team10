@@ -148,6 +148,10 @@ public class MapEditor : EditorWindow
     {
         if (!objectEditor.CurrentTag().Equals("stage_block"))
             return;
+        Collider collider = onMouse.GetComponent<Collider>();
+        if (collider)
+            return;
+
         onMouse.AddComponent<BoxCollider>();
         Rigidbody rigidbody = onMouse.AddComponent<Rigidbody>();
         rigidbody.useGravity = false;

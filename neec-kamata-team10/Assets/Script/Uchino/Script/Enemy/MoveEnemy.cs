@@ -17,6 +17,7 @@ public class MoveEnemy : MonoBehaviour
     protected float moveSpeed = 1; //移動スピード
     protected Direction direction; //向き
 
+
     public void DirectionInit()
     {
         direction = Direction.LEFT;
@@ -87,7 +88,7 @@ public class MoveEnemy : MonoBehaviour
         {
             time = 0.0f;
 
-            DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyLeft  = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
             DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
 
             //地面に当たってなかったら

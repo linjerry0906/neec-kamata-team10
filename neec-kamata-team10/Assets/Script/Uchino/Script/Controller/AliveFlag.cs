@@ -12,7 +12,8 @@ public class AliveFlag : MonoBehaviour
     public void Dead()
     {
         isDead = true;
-        Dump();
+        GameManager.Instance.GetStageManager().EndStage();
+        GameManager.Instance.GetStageManager().SetClear(false);
     }
 
     /// <summary>
@@ -24,13 +25,6 @@ public class AliveFlag : MonoBehaviour
         return isDead;
     }
 
-    /// <summary>
-    /// デバッグ
-    /// </summary>
-    public void Dump()
-    {
-        Debug.Log(isDead);
-    }
 
 
 }

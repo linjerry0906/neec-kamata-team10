@@ -54,7 +54,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4615314874719760}
   - component: {fileID: 33419474074234478}
-  - component: {fileID: 64805845972090164}
   - component: {fileID: 23703880439289826}
   m_Layer: 8
   m_Name: mask
@@ -477,20 +476,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1332944958230338}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64805845972090164
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1415525301425268}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &65689979294425288
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -537,6 +522,12 @@ MonoBehaviour:
   spriteMaterial: {fileID: 2100000, guid: fb4bdac1a728db4469f033f497a99e18, type: 2}
   originObj: []
   reflectObj: []
+  tags:
+  - Unresizable
+  - stage_block
+  - Player
+  - goal
+  - seasaw
 --- !u!114 &114696488082060984
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,6 +21,8 @@ public class Mirror : MonoBehaviour
     private List<GameObject> originObj;         //映し元
     [SerializeField]
     private List<GameObject> reflectObj;        //映した像
+    [SerializeField]
+    private string[] tags;
 
     private bool isHand = false;                //手に持っているか
     private Transform reflectParent;            //像の親オブジェクト
@@ -38,7 +40,7 @@ public class Mirror : MonoBehaviour
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
                 bool hand = IsUnresizableTag(originObj[i].tag) ? false : isHand;
-                reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);   //位置、サイズ、回転を修正
+                reflectObj[i].GetComponent<ReflectObject>().Reflect(hand);     //位置、サイズ、回転を修正
                 ++i;
                 continue;
             }
@@ -62,12 +64,13 @@ public class Mirror : MonoBehaviour
             other.tag.Equals("mirror"))                                    //鏡無視
             return;
 
+        if (originObj.Contains(other.gameObject))
+            return;
+
         bool unresizable = IsUnresizableTag(other.tag);
         if (isHand && !unresizable)
             return;
 
-        if (originObj.Contains(other.gameObject))
-            return;
         originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
     }
@@ -93,6 +96,11 @@ public class Mirror : MonoBehaviour
     /// <returns></returns>
     private bool IsUnresizableTag(string tag)
     {
+        for (int i = 0; i < tags.Length; ++i)
+        {
+            if (tag.Equals(tags[i]))
+                return true;
+        }
         if (tag.Equals("Unresizable"))
             return true;
         if (tag.Equals("stage_block"))
@@ -165,9 +173,16 @@ public class Mirror : MonoBehaviour
         SpriteRenderer sprite = obj.GetComponent<SpriteRenderer>();           //Sprite
         if (mesh)                                                             //メッシュレンダラーがある場合
         {
-            Texture mTex = mesh.material.mainTexture;                         //テクスチャ取得
-            mesh.material = reflectMaterial;                                  //マテリアル設定
-            mesh.material.SetTexture("_MainTex", mTex);                       //テクスチャ設定
+            int length = mesh.materials.Length;
+            Material[] materials = new Material[length];
+            for (int i = 0; i < length; ++i)
+            {
+                Texture mTex = mesh.materials[i].mainTexture;                 //テクスチャ取得
+                materials[i] = new Material(reflectMaterial);                 //マテリアル設定
+                materials[i].SetTexture("_MainTex", mTex);                    //テクスチャ設定
+                materials[i].color = mesh.materials[i].color;
+            }
+            mesh.materials = materials;
         }
         if (sprite)                                                           //スプライトがある場合
         {

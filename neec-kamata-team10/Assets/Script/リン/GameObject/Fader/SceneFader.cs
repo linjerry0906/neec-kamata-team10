@@ -17,6 +17,7 @@ public class SceneFader : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.GetController().SetFadeFlag(true);
         stageManager = GameManager.Instance.GetStageManager();  //ステージマネージャーを取得
     }
 
@@ -61,5 +62,10 @@ public class SceneFader : MonoBehaviour
     public bool IsEnd()
     {
         return fadeFactor >= 1.1f;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.GetController().SetFadeFlag(false);
     }
 }

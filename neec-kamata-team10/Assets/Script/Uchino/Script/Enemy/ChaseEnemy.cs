@@ -5,18 +5,58 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-    private Rigidbody rigidBody; //剛体
 
     // Use this for initialization
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
         direction = Direction.LEFT;
+
+        defaultScale = transform.localScale;            //デフォルトスケール
+        previousScale = defaultScale;                   //前回のスケール
     }
 
     private void Update()
     {
-        SetGroundEdge();            //地面端をセット
+        SetGroundEdge();                                 //地面端をセット
+
+        NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
+    }
+
+    Vector3 defaultScale;                               //デフォルトスケール
+    Vector3 previousScale;                              //前回のスケール
+    bool isMirrorColison = false;                       //継続して影響を受けさせないためのフラグ
+    /// <summary>
+    /// 鏡の影響を重ねて受けさせない
+    /// </summary>
+    private void NotInfluencedAgain()
+    {
+        if (transform.localScale != previousScale)      //前回のスケールと今のスケールが異なれば
+        {
+            if (previousScale != defaultScale)          //前回のスケールがデフォルトのスケールなら影響を受けさせる
+            {
+                transform.localScale = previousScale;   //スケールを重ねて変更させない
+                isMirrorColison = true;                 //鏡に当たってる間このスケールを維持させるためのフラグ
+            }
+        }
+
+        if (isMirrorColison)                            //一度スケールが変わったら
+        {
+            transform.localScale = previousScale;       //鏡に当たってる間は、このスケールを維持
+        }
+
+        previousScale = transform.localScale;           //前回のスケールを保存
+    }
+
+    /// <summary>
+    /// 鏡から離れたとき
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "mirror") return;
+
+        isMirrorColison = false;                //鏡から離れたら初期化
+        previousScale = defaultScale;           //鏡から離れたのでnormalサイズに
     }
 
     /// <summary>
@@ -30,7 +70,6 @@ public class ChaseEnemy : MoveEnemy
         if (time >= twoFrame)
         {
             time = 0.0f;                                           //タイマーの初期化
-
             DetectEmpty detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
             DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
 

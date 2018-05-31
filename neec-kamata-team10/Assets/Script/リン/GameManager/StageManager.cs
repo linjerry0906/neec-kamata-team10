@@ -14,10 +14,13 @@ public class StageManager
     private bool isStage;                       //ステージ中か
     private DateTime passTime;                  //経過時間
 
+    private bool isClear;
+
     public StageManager()
     {
         currentStage = 0;
         isStage = false;
+        isClear = false;
         passTime = DateTime.MinValue;
     }
 
@@ -28,6 +31,7 @@ public class StageManager
     public void Initialize(int nextStage)
     {
         currentStage = nextStage;               //ステージ指定
+        isClear = false;
         passTime = DateTime.MinValue;           //Reset
     }
 
@@ -75,5 +79,19 @@ public class StageManager
     public DateTime PassTime()
     {
         return passTime;
+    }
+
+    /// <summary>
+    /// クリアかどうかを知らせる
+    /// </summary>
+    /// <param name="isClear">クリアしたか</param>
+    public void SetClear(bool isClear)
+    {
+        GameManager gameManager = GameManager.Instance;
+        gameManager.GetController().SetFadeFlag(true);                      //操作禁止
+        Time.timeScale = 0;
+
+        this.isClear = isClear;
+        gameManager.GetComponent<ResultManager>().GameOver(isClear);
     }
 }
