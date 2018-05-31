@@ -17,8 +17,16 @@ public class NormalEnemy : MoveEnemy
         SetGroundEdge();                                    //地面端の設定
         HorizontalMove();                                   //行ったり来たり
 
-        anim.SetInteger("direction", (int)Direction);       //向きに合わせてdirectionも変動
+        Animation();
+        //anim.SetInteger("direction", (int)Direction);       //向きに合わせてdirectionも変動
         
+    }
+
+    void Animation()
+    {
+        Vector3 scale = transform.localScale;
+
+        transform.localScale = new Vector3(scale.x * -(int)Direction,scale.y,scale.z);
     }
 
 
