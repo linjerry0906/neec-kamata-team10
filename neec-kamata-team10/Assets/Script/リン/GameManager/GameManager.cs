@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         stageManager = new StageManager();
         stageManager.Initialize(0);                         //Debug Test
         scoreManager = GetComponent<Score>();
-        scoreManager.Initialize();
+        //scoreManager.Initialize();
     }
 
     /// <summary>

@@ -13,11 +13,11 @@ public class PadController : ICharacterController
     {
         Vector3 velocity = Vector3.zero;
 
-        if (Input.GetAxisRaw("Horizontal") == -1)
+        if (Input.GetAxisRaw("Horizontal") <= -0.05f)
         {
             velocity = new Vector3(-1, 0, 0);
         }
-        if (Input.GetAxisRaw("Horizontal") == 1)
+        if (Input.GetAxisRaw("Horizontal") >= 0.05f)
         {
             velocity = new Vector3(1, 0, 0);
         }
@@ -33,11 +33,11 @@ public class PadController : ICharacterController
     {
         Vector3 velocity = Vector3.zero;
 
-        if (Input.GetAxisRaw("Vertical") == -1)
+        if (Input.GetAxisRaw("Vertical") <= -0.05f)
         {
             velocity = new Vector3(0, -1, 0);
         }
-        if (Input.GetAxisRaw("Vertical") == 1)
+        if (Input.GetAxisRaw("Vertical") >= 0.05f)
         {
             velocity = new Vector3(0, 1, 0);
         }
