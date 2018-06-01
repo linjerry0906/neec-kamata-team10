@@ -160,6 +160,8 @@ public class Mirror : MonoBehaviour
         if (r) Destroy(r);
         Collider c = obj.GetComponent<Collider>();                            //Collider
         if (c) Destroy(c);
+        Animator a = obj.GetComponent<Animator>();
+        if (a) Destroy(a);
     }
 
     /// <summary>
