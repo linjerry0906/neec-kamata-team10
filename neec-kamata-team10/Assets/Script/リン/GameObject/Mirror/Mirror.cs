@@ -263,6 +263,7 @@ public class Mirror : MonoBehaviour
 
     private void OnDestroy()
     {
+        Release();
         DestroyReflects();                      //像を消す
     }
 

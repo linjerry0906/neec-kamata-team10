@@ -185,10 +185,7 @@ public class ReflectObject : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         if (!sprite)
             return;
-
         sprite.sprite = originObj.GetComponent<SpriteRenderer>().sprite;
-        sprite.material.mainTexture = sprite.sprite.texture;
-        Debug.Log(sprite.sprite.name);
     }
 
     public void SetMirror(GameObject mirror)
