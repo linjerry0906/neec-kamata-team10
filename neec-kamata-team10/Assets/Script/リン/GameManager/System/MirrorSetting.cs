@@ -20,7 +20,7 @@ public class MirrorSetting : MonoBehaviour
     [SerializeField]
     private GameObject[] mirrors;                   //鏡の種類
     [SerializeField]
-    private static int maxMirror = 3;               //最大置ける数
+    private int maxMirror = 1;                      //最大置ける数
     private int currentMirror;                      //現在選択中の鏡
     private bool onHand;                            //手に持っているか
     private GameObject handMirror = null;           //手に持っている鏡

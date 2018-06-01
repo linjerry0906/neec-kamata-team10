@@ -57,6 +57,7 @@ public class ReflectObject : MonoBehaviour
         ReflectPosition();      //位置を反映する
         ReflectRotation();      //回転を反映する
         ReflectScale();         //大きさを反映する
+        ReflectSprite();
     }
 
     /// <summary>
@@ -177,6 +178,14 @@ public class ReflectObject : MonoBehaviour
         /*別仕様
         parent_obj.transform.localScale = size;
         */
+    }
+
+    private void ReflectSprite()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        if (!sprite)
+            return;
+        sprite.sprite = originObj.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void SetMirror(GameObject mirror)
