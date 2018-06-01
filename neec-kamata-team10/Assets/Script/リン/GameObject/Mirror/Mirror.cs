@@ -276,6 +276,8 @@ public class Mirror : MonoBehaviour
 
         foreach (GameObject g in originObj)     //オブジェクトのサイズをもとに戻す
         {
+            if (!g)
+                continue;
             ObjectSize objSize = g.GetComponent<ObjectSize>();
             if (objSize)
                 objSize.SetSize(SizeEnum.Normal);
