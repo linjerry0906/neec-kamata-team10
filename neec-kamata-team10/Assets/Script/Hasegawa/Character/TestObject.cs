@@ -25,7 +25,7 @@ public class TestObject : MonoBehaviour {
         if (tag == "reflect")
             return;
         SizeEnum size = GetComponent<ObjectSize>().GetSize();
-        transform.localScale = changeScale.Scale(size/*new Vector2(transform.position.x, transform.position.y)*/);
+        //transform.localScale = changeScale.Scale(size/*new Vector2(transform.position.x, transform.position.y)*/);
     }
 
     void OnTriggerEnter(Collider t)
