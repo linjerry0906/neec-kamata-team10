@@ -105,4 +105,15 @@ public class MoveEnemy : MonoBehaviour
             detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
         }
     }
+
+    /// <summary>
+    /// 左右の画像反転処理
+    /// </summary>
+    protected void FlipAnimation()
+    {
+        Vector3 scale = transform.localScale;
+        //左右反転
+        transform.localScale = new Vector3(scale.x * -(int)Direction, scale.y, scale.z);
+    }
+
 }

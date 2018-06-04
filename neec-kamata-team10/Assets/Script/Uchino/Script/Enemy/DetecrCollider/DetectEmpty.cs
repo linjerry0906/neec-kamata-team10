@@ -11,6 +11,7 @@ public class DetectEmpty : MonoBehaviour
         groundInfo = GetComponentInParent<GroundInfo>();                    //実体を取得
     }
 
+
     bool isCollison = true;
     private void OnTriggerStay(Collider other)
     {
