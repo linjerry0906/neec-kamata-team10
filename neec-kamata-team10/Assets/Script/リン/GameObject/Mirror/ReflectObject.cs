@@ -60,6 +60,7 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
         {
             objSize.SetSize(size);
+            objSize.SetReflectSize(reflectSize);
         }
     }
 

@@ -11,10 +11,12 @@ public class ObjectSize : MonoBehaviour
     private SizeEnum size = SizeEnum.Normal;
 
     private Vector3 objSize;
+    private Vector3 resize;
 
     private void Start()
     {
         objSize = transform.localScale;
+        resize = new Vector3(1, 1, 1);
     }
 
     public void SetSize(SizeEnum size)
@@ -30,5 +32,15 @@ public class ObjectSize : MonoBehaviour
     public Vector3 DefaultSize()
     {
         return objSize;
+    }
+
+    public Vector3 GetReflectSize()
+    {
+        return resize;
+    }
+
+    public void SetReflectSize(Vector3 resize)
+    {
+        this.resize = resize;
     }
 }
