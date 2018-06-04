@@ -18,8 +18,8 @@ public class ChaseEnemy : MoveEnemy
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-
         NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
+        FlipAnimation();                                
     }
 
     Vector3 defaultScale;                               //デフォルトスケール

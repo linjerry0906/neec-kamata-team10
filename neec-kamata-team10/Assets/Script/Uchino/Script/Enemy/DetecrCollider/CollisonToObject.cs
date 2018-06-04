@@ -28,7 +28,7 @@ public class CollisonToObject : MonoBehaviour {
     /// </summary>
     private void Positioning()
     {
-        if (objectSize.GetSize() != SizeEnum.Big_XY) return;
+        if (!IsBigSize()) return;
 
         Vector3 scale = transform.parent.localScale;
         Vector3 parentPos = transform.parent.position;
@@ -36,6 +36,14 @@ public class CollisonToObject : MonoBehaviour {
         transform.parent.position = 
             new Vector3(parentPos.x, parentPosY + scale.y / 2 /2, parentPos.z);    //スケールが増えた分上に移動させる。
 
+    }
+
+    bool IsBigSize()
+    {
+        if (objectSize.GetSize() == SizeEnum.Big_XY) return true;
+        if (objectSize.GetSize() == SizeEnum.Big_Y)  return true;
+
+        return false;
     }
 
     /// <summary>
@@ -51,13 +59,6 @@ public class CollisonToObject : MonoBehaviour {
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
-
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject.name);
-    }
-
 
     private void KillOrDeath(Collider other)
     {
@@ -77,7 +78,8 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size))                                    //エネミーが小さいか
         {
-            Destroy(transform.parent.gameObject);                    //小さかったら自分が死ぬ
+            //GetComponentInParent<EnemyAliveFlag>().Dead();
+            Destroy(transform.parent.gameObject);             //小さかったら自分が死ぬ
             return;
         }
 
