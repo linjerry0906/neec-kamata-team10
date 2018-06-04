@@ -41,6 +41,7 @@ public class Mirror : MonoBehaviour
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
                 reflectObj[i].GetComponent<ReflectObject>().Reflect();         //位置、サイズ、回転を修正
+                //originObj[i].GetComponent<ChangeObjectSize>().
                 ++i;
                 continue;
             }
