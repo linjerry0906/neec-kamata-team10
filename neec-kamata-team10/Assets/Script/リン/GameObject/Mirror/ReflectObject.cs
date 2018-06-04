@@ -3,24 +3,13 @@
 // 作成者：林 佳叡
 // 内容：生成された像のクラス
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ReflectObject : MonoBehaviour
 {
-
     private SizeEnum size;
     private GameObject originObj;      //映し元
     private Vector3 reflectSize;       //指定サイズ
-    //private GameObject mirror;
-    //private Vector3 relativePos = Vector3.zero;
-    //private bool onHand = false;
-
-    /*別仕様
-    private GameObject parent_obj;
-    private Vector3 size;
-    */
 
     /// <summary>
     /// どのObjを反映するか
@@ -29,12 +18,6 @@ public class ReflectObject : MonoBehaviour
     /// <param name="size">拡大・縮小のサイズ</param>
     public void ReflectFrom(GameObject originObj, Vector3 size, SizeEnum sizeEnum)
     {
-        /*別仕様
-        parent_obj = new GameObject(origin_obj.name + "_reflect");
-        transform.position = parent_obj.transform.position;
-        transform.parent = parent_obj.transform;
-        this.size = size;
-        */
         gameObject.layer = 8;
         this.originObj = originObj;
         this.size = sizeEnum;
@@ -50,9 +33,6 @@ public class ReflectObject : MonoBehaviour
     /// </summary>
     public void Reflect()
     {
-        //if (isHand)
-        //    UpdateOnHand();
-
         ReflectToOrigin();
         ReflectPosition();      //位置を反映する
         ReflectRotation();      //回転を反映する
@@ -70,15 +50,6 @@ public class ReflectObject : MonoBehaviour
     }
 
     /// <summary>
-    /// 手に持っている鏡と一緒に移動
-    /// </summary>
-    //private void UpdateOnHand()
-    //{
-    //    if (size != SizeEnum.Normal)
-    //        transform.position = mirror.transform.position + relativePos;
-    //}
-
-    /// <summary>
     /// 映し元を反映
     /// </summary>
     private void ReflectToOrigin()
@@ -89,59 +60,8 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
         {
             objSize.SetSize(size);
-            //SetOriginActive(isHand);
         }
-
-        //if (!isHand)                     //鏡が手に持っていない場合
-        //    return;
-
-        //Vector3 originPos = originObj.transform.position;
-        //originPos.x = transform.position.x;
-        //originPos.y = transform.position.y;
-        //originObj.transform.position = originPos;
     }
-
-    /// <summary>
-    /// 描画するかどうかを設定
-    /// </summary>
-    /// <param name="isHand"></param>
-    //private void SetOriginActive(bool isHand)
-    //{
-    //    if (isHand == onHand)
-    //        return;
-
-    //    onHand = isHand;
-    //    FlipComponent(ref originObj, !isHand);
-    //}
-
-    /// <summary>
-    /// Componentをオン・オフにする
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="flag"></param>
-    //private void FlipComponent(ref GameObject obj, bool flag)
-    //{
-    //    Renderer renderer = obj.GetComponent<Renderer>();               //描画
-    //    if (renderer)
-    //        renderer.enabled = flag;
-    //    Collider collider = obj.GetComponent<Collider>();               //コライダー
-    //    if (collider)
-    //        collider.enabled = flag;
-    //    Rigidbody rigid = obj.GetComponent<Rigidbody>();                //RigidBody
-    //    if (rigid)
-    //        rigid.velocity = Vector3.zero;
-
-    //    foreach (MonoBehaviour m in obj.GetComponents<MonoBehaviour>()) //コンポーネント
-    //    {
-    //        m.enabled = !onHand;
-    //    }
-
-    //    for (int i = 0; i < obj.transform.childCount; i++)              //子供
-    //    {
-    //        GameObject child = obj.transform.GetChild(i).gameObject;
-    //        FlipComponent(ref child, flag);
-    //    }
-    //}
 
     /// <summary>
     /// 位置を反映する
@@ -173,10 +93,6 @@ public class ReflectObject : MonoBehaviour
         if (Mathf.Sign(flip) != Mathf.Sign(reflect_scale.x))
             reflect_scale.x *= -1;
         transform.localScale = reflect_scale;                   //サイズ設定
-
-        /*別仕様
-        parent_obj.transform.localScale = size;
-        */
     }
 
     private void ReflectSprite()
@@ -186,20 +102,4 @@ public class ReflectObject : MonoBehaviour
             return;
         sprite.sprite = originObj.GetComponent<SpriteRenderer>().sprite;
     }
-
-    //public void SetMirror(GameObject mirror)
-    //{
-    //    this.mirror = mirror;
-    //    relativePos = transform.position - mirror.transform.position;
-    //}
-
-    //public void ResetPos()
-    //{
-    //    UpdateOnHand();
-
-    //    Vector3 originPos = originObj.transform.position;
-    //    originPos.x = transform.position.x;
-    //    originPos.y = transform.position.y;
-    //    originObj.transform.position = originPos;
-    //}
 }

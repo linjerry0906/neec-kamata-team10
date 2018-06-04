@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4743890109030420}
   - component: {fileID: 33115945790713998}
   - component: {fileID: 23151066382769786}
+  - component: {fileID: 114515437301368806}
   m_Layer: 8
   m_Name: mask
   m_TagString: Untagged
@@ -529,6 +530,18 @@ MonoBehaviour:
   - goal
   - seasaw
   - log
+--- !u!114 &114515437301368806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169364425780858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d1cd561aa29f549a3936fc058bccda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maskColor: {r: 1, g: 0, b: 0, a: 0.27450982}
 --- !u!114 &114628687972368014
 MonoBehaviour:
   m_ObjectHideFlags: 1
