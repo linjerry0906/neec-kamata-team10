@@ -42,23 +42,23 @@ public class ChangeObjectSize : MonoBehaviour
     }
 
     //ミラーと衝突していたらchangeScaleにミラーサイズをセットする
-    void OnTriggerEnter(Collider t)
-    {
-        if (t.gameObject.CompareTag("mirror"))
-        {
-            changeScale.SetMirrorSize(t.gameObject.GetComponent<Mirror>().ReflectSize());
-        }
-
-        //if (!t.gameObject.CompareTag("mirror")) return;
-        //
-        //Rect r = t.gameObject.GetComponent<Mirror>().GetSide();
-        //if (changeScale.CheckReflect(r,transform.position))
-        //{
-        //    Debug.Log("変形");
-        //    mirrorRect = r;
-        //    changeScale.SetMirrorSize(t.gameObject.GetComponent<Mirror>().ReflectSize());
-        //}
-    }
+    //void OnTriggerEnter(Collider t)
+    //{
+    //    if (t.gameObject.CompareTag("mirror"))
+    //    {
+    //        changeScale.SetMirrorSize(t.gameObject.GetComponent<Mirror>().ReflectSize());
+    //    }
+    //
+    //    //if (!t.gameObject.CompareTag("mirror")) return;
+    //    //
+    //    //Rect r = t.gameObject.GetComponent<Mirror>().GetSide();
+    //    //if (changeScale.CheckReflect(r,transform.position))
+    //    //{
+    //    //    Debug.Log("変形");
+    //    //    mirrorRect = r;
+    //    //    changeScale.SetMirrorSize(t.gameObject.GetComponent<Mirror>().ReflectSize());
+    //    //}
+    //}
 
     public void SetRec(Rect r)
     {
