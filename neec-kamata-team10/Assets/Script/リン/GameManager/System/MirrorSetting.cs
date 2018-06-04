@@ -11,7 +11,7 @@ public class MirrorSetting : MonoBehaviour
 {
     private readonly static Vector2Int MIRROR_SIZE = new Vector2Int(5, 4);          //鏡のサイズ
     private readonly static int INTERVAL_MASS = 2;                                  //おける間隔
-    private readonly static float MIRROR_Z = 0.1f;                                  //鏡が置ける深度
+    private readonly static float MIRROR_Z = 0.0f;                                  //鏡が置ける深度
 
     [SerializeField]
     private GameObject mirrorUI;
@@ -20,10 +20,10 @@ public class MirrorSetting : MonoBehaviour
     [SerializeField]
     private GameObject[] mirrors;                   //鏡の種類
     [SerializeField]
-    private int maxMirror = 1;                      //最大置ける数
+    private int maxMirror = 2;                      //最大置ける数
     private int currentMirror;                      //現在選択中の鏡
-    private bool onHand;                            //手に持っているか
-    private GameObject handMirror = null;           //手に持っている鏡
+    //private bool onHand;                            //手に持っているか
+    //private GameObject handMirror = null;           //手に持っている鏡
 
     private Queue usedMirrors;                      //ステージ上にある鏡
     private ICharacterController controller;        //コントローラー
@@ -37,7 +37,7 @@ public class MirrorSetting : MonoBehaviour
         reflectParent = new GameObject("Reflects");
 
         currentMirror = 0;
-        onHand = false;
+        //onHand = false;
 	}
 	
 	void Update ()
@@ -48,8 +48,8 @@ public class MirrorSetting : MonoBehaviour
         ChangeMirror();                             //鏡の種類を切り替え
         SetMirror();                                //鏡を設置
 
-        if (onHand)
-            handMirror.GetComponent<MirrorOnHand>().UpdateHand();       //位置更新
+        //if (onHand)
+        //    handMirror.GetComponent<MirrorOnHand>().UpdateHand();       //位置更新
 	}
 
     /// <summary>
@@ -57,8 +57,8 @@ public class MirrorSetting : MonoBehaviour
     /// </summary>
     private void ChangeMirror()
     {
-        if (onHand)                                 //手に持っていれば変えられない
-            return;
+        //if (onHand)                                 //手に持っていれば変えられない
+        //    return;
 
         int index = currentMirror;                  //Index
         int amount = mirrors.Length;
@@ -95,20 +95,20 @@ public class MirrorSetting : MonoBehaviour
 
         if (!CheckMirrorPos(pos))                   //この位置に置けるかを確認
         {
-            onHand = true;                          //手に持つ
-            handMirror.AddComponent<MirrorOnHand>();                                            //コンポーネント追加
-            handMirror.GetComponent<MirrorOnHand>().SetPlayer(player);
-            handMirror.GetComponent<Mirror>().SetHand(onHand);
-            PlayerAnime();
+            //onHand = true;                          //手に持つ
+            //handMirror.AddComponent<MirrorOnHand>();                                            //コンポーネント追加
+            //handMirror.GetComponent<MirrorOnHand>().SetPlayer(player);
+            //handMirror.GetComponent<Mirror>().SetHand(onHand);
+            //PlayerAnime();
             return;
         }
 
-        if (onHand)                                 //手に持っていれば
-        {
-            SetHandMirror(pos);                     //鏡を設置
-            PlayerAnime();
-            return;
-        }
+        //if (onHand)                                 //手に持っていれば
+        //{
+        //    SetHandMirror(pos);                     //鏡を設置
+        //    PlayerAnime();
+        //    return;
+        //}
 
         GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
         newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
@@ -122,16 +122,16 @@ public class MirrorSetting : MonoBehaviour
     /// <summary>
     /// 手に持っている鏡を設置
     /// </summary>
-    private void SetHandMirror(Vector3 pos)
-    {
-        Destroy(handMirror.GetComponent<MirrorOnHand>());       //移動用のコンポーネントを削除
-        onHand = false;
-        handMirror.GetComponent<Mirror>().SetHand(onHand);
-        handMirror.transform.position = pos;                    //位置設定
-        handMirror.GetComponent<Mirror>().ResetReflectPos();
-        handMirror.GetComponent<Mirror>().Release();
-        handMirror = null;
-    }
+    //private void SetHandMirror(Vector3 pos)
+    //{
+    //    Destroy(handMirror.GetComponent<MirrorOnHand>());       //移動用のコンポーネントを削除
+    //    onHand = false;
+    //    handMirror.GetComponent<Mirror>().SetHand(onHand);
+    //    handMirror.transform.position = pos;                    //位置設定
+    //    handMirror.GetComponent<Mirror>().ResetReflectPos();
+    //    handMirror.GetComponent<Mirror>().Release();
+    //    handMirror = null;
+    //}
 
     /// <summary>
     /// 鏡の位置を計算
@@ -166,16 +166,16 @@ public class MirrorSetting : MonoBehaviour
     {
         foreach(GameObject mirror in usedMirrors.ToArray())
         {
-            if (handMirror == mirror)
-                continue;
+            //if (handMirror == mirror)
+            //    continue;
             Vector3 diff = pos - mirror.transform.position;     //差分
             int diffX = (int)Mathf.Abs(diff.x);                 //正数を取る
             int diffY = (int)Mathf.Abs(diff.y);
             if (diffX < MIRROR_SIZE.x + INTERVAL_MASS &&        //両方範囲内なら置けない
                 diffY < MIRROR_SIZE.y + INTERVAL_MASS)
             {
-                if(!onHand)                                     //持っていなければ持つ
-                    handMirror = mirror;                        //持つ鏡を設定
+                //if(!onHand)                                     //持っていなければ持つ
+                //    handMirror = mirror;                        //持つ鏡を設定
                 return false;
             }
         }

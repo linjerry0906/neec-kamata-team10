@@ -24,7 +24,7 @@ public class Mirror : MonoBehaviour
     [SerializeField]
     private string[] tags;
 
-    private bool isHand = false;                //手に持っているか
+    //private bool isHand = false;                //手に持っているか
     private Transform reflectParent;            //像の親オブジェクト
 
     void Start()
@@ -39,8 +39,8 @@ public class Mirror : MonoBehaviour
         {
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
             {
-                bool hand = IsUnresizableTag(originObj[i].tag) ? false : isHand;
-                reflectObj[i].GetComponent<ReflectObject>().Reflect(hand);     //位置、サイズ、回転を修正
+                //bool hand = IsUnresizableTag(originObj[i].tag) ? false : isHand;
+                reflectObj[i].GetComponent<ReflectObject>().Reflect();     //位置、サイズ、回転を修正
                 ++i;
                 continue;
             }
@@ -68,8 +68,6 @@ public class Mirror : MonoBehaviour
             return;
 
         bool unresizable = IsUnresizableTag(other.tag);
-        if (isHand && !unresizable)
-            return;
 
         originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
@@ -101,12 +99,6 @@ public class Mirror : MonoBehaviour
             if (tag.Equals(tags[i]))
                 return true;
         }
-        if (tag.Equals("Unresizable"))
-            return true;
-        if (tag.Equals("stage_block"))
-            return true;
-        if (tag.Equals("Player"))
-            return true;
         return false;
     }
 
@@ -123,9 +115,9 @@ public class Mirror : MonoBehaviour
         SizeEnum reflectSize = unresizable ? SizeEnum.Normal : sizeEnum;
 
         reflect.AddComponent<ReflectObject>();                                     //像のコンポーネント追加
-        reflect.GetComponent<ReflectObject>().SetMirror(gameObject);
+        //reflect.GetComponent<ReflectObject>().SetMirror(gameObject);
         reflect.GetComponent<ReflectObject>().ReflectFrom(origin, dest_size, reflectSize);       //映し元とサイズ設定
-        reflect.GetComponent<ReflectObject>().Reflect(false);                      //映す
+        //reflect.GetComponent<ReflectObject>().Reflect(false);                      //映す
 
         reflectObj.Add(reflect);                                                   //管理リストに追加
     }
@@ -232,34 +224,34 @@ public class Mirror : MonoBehaviour
     /// 手に持っているか
     /// </summary>
     /// <param name="isHand">手に持っているか</param>
-    public void SetHand(bool isHand)
-    {
-        this.isHand = isHand;
-        BindObject();                           //オブジェクトを持って行けるようにする
-    }
+    //public void SetHand(bool isHand)
+    //{
+    //    //this.isHand = isHand;
+    //    BindObject();                           //オブジェクトを持って行けるようにする
+    //}
 
-    /// <summary>
-    /// オブジェクトを持って行けるようにする
-    /// </summary>
-    private void BindObject()
-    {
-        for (int i = 0; i < originObj.Count; ++i)
-        {
-            if (IsUnresizableTag(originObj[i].tag))                                 //サイズ変更できないオブジェクトは無視
-                continue;
+    ///// <summary>
+    ///// オブジェクトを持って行けるようにする
+    ///// </summary>
+    //private void BindObject()
+    //{
+    //    for (int i = 0; i < originObj.Count; ++i)
+    //    {
+    //        if (IsUnresizableTag(originObj[i].tag))                                 //サイズ変更できないオブジェクトは無視
+    //            continue;
 
-            reflectObj[i].GetComponent<ReflectObject>().SetMirror(gameObject);      //鏡設定
-            reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);            //手に持っている
-        }
-    }
+    //        reflectObj[i].GetComponent<ReflectObject>().SetMirror(gameObject);      //鏡設定
+    //        //reflectObj[i].GetComponent<ReflectObject>().Reflect(isHand);            //手に持っている
+    //    }
+    //}
 
-    public void ResetReflectPos()
-    {
-        for (int i = 0; i < originObj.Count; ++i)                                  //鏡側のObjを修正
-        {
-            reflectObj[i].GetComponent<ReflectObject>().ResetPos();                 //位置を修正
-        }
-    }
+    //public void ResetReflectPos()
+    //{
+    //    for (int i = 0; i < originObj.Count; ++i)                                  //鏡側のObjを修正
+    //    {
+    //        reflectObj[i].GetComponent<ReflectObject>().ResetPos();                 //位置を修正
+    //    }
+    //}
 
     private void OnDestroy()
     {
