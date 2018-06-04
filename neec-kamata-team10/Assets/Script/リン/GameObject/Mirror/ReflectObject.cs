@@ -10,6 +10,7 @@ public class ReflectObject : MonoBehaviour
     private SizeEnum size;
     private GameObject originObj;      //映し元
     private Vector3 reflectSize;       //指定サイズ
+    private Vector3 sizeRate;
 
     /// <summary>
     /// どのObjを反映するか
@@ -26,6 +27,7 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
             reflectSize = objSize.DefaultSize();
         reflectSize.Scale(size);                           //拡大縮小したサイズ
+        sizeRate = size;
     }
 
     /// <summary>
@@ -60,7 +62,7 @@ public class ReflectObject : MonoBehaviour
         if (objSize)
         {
             objSize.SetSize(size);
-            objSize.SetReflectSize(reflectSize);
+            objSize.SetReflectSize(sizeRate);
         }
     }
 
