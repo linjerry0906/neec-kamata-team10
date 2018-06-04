@@ -93,17 +93,24 @@ public class Player : MonoBehaviour
     //ポジションの固定
     void FreezePosition()
     {
-        //移動中はYとZとRotationを固定
-       if (GetComponent<Rigidbody>().velocity.y == 0)
-       {
-            GetComponent<Rigidbody>().constraints = freezeY;
-               
-       }
         //ジャンプ中と登り中はZとRotationを固定
-        if (isJump || isClimb) 
+        if (isJump || isClimb)
         {
-            GetComponent<Rigidbody>().constraints = normal;           
+            GetComponent<Rigidbody>().constraints = normal;
         }
+        //移動中はYとZとRotationを固定
+        else //if (GetComponent<Rigidbody>().velocity.y == 0)
+        {
+            GetComponent<Rigidbody>().constraints = freezeY;
+
+        }
+
+        //移動中はYとZとRotationを固定
+        //else
+        //{
+        //    GetComponent<Rigidbody>().constraints = normal;
+        //    //GetComponent<Rigidbody>().constraints = freezeY;
+        //}
     }
 
     //ツタブロックとの判定
@@ -158,7 +165,6 @@ public class Player : MonoBehaviour
         if (state == stateStorage) return;
         GetComponent<PlayerAnime>().ChangeState(state);
         stateStorage = state;
-        //Debug.Log(state);
     }
 
     //移動量が小さければ待機状態にする
@@ -167,6 +173,8 @@ public class Player : MonoBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb.velocity.x < 1 && rb.velocity.x > -1 && rb.velocity.y == 0) 
             state = EPlayerState.Stay;
+        //Debug.Log(state);
+        //Debug.Log(rb.velocity.y);
     }
 
     //進行方向の取得
