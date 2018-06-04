@@ -79,8 +79,9 @@ public class ChangeScale
     public bool CheckReflect(Rect rect, Vector2 position)
     {
         Rect r = rect;
-        if (position.x <= r.x + r.width && position.x >= r.x &&
-            position.y <= r.y + r.height && position.y >= r.y)
+        //if (position.x <= r.x + r.width && position.x >= r.x &&
+        //    position.y <= r.y + r.height && position.y >= r.y)
+        if (r.Contains(position)) 
         {
             return true;
         }
