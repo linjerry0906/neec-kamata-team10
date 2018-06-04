@@ -13,8 +13,6 @@ public class ResultDisplay : MonoBehaviour
     private GameObject stageObj;
     [SerializeField]
     private GameObject timeObj;
-    [SerializeField]
-    private GameObject scoreObj;
 
 	void Start ()
     {
@@ -22,8 +20,6 @@ public class ResultDisplay : MonoBehaviour
         int stage = stageManager.CurrentStage();
         stageObj.GetComponent<Text>().text = stage.ToString();
         timeObj.GetComponent<Text>().text = TimeString(ref stageManager);
-        int score = GameManager.Instance.GetScore();
-        scoreObj.GetComponent<Text>().text = score.ToString();
     }
 
     /// <summary>

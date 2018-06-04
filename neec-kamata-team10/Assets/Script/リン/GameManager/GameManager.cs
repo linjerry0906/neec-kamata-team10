@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
-    private Score scoreManager;                             //スコアマネージャー
 
     private void Awake()
     {
@@ -26,8 +25,6 @@ public class GameManager : MonoBehaviour
         sceneManager = new SceneChange();
         stageManager = new StageManager();
         stageManager.Initialize(0);                         //Debug Test
-        scoreManager = GetComponent<Score>();
-        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -69,7 +66,6 @@ public class GameManager : MonoBehaviour
     {
         sceneManager.ChangeScene(sceneManager.CurrentScene());
         stageManager.Initialize(stageManager.CurrentStage());
-        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -95,7 +91,6 @@ public class GameManager : MonoBehaviour
     {
         sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
         stageManager.Initialize(stage);                     //ステージ初期化
-        scoreManager.Initialize();
     }
 
     /// <summary>
@@ -105,28 +100,6 @@ public class GameManager : MonoBehaviour
     public StageManager GetStageManager()
     {
         return stageManager;
-    }
-
-    #endregion
-
-    #region Score関連
-
-    /// <summary>
-    /// 点数を追加
-    /// </summary>
-    /// <param name="score"></param>
-    public void AddScore(int score)
-    {
-        scoreManager.AddScore(score);
-    }
-
-    /// <summary>
-    /// スコアを取得
-    /// </summary>
-    /// <returns></returns>
-    public int GetScore()
-    {
-        return scoreManager.GetScore();
     }
 
     #endregion

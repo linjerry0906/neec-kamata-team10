@@ -121,7 +121,7 @@ public class LayoutManager
         }
 
         canvas.GetComponent<Canvas>().worldCamera = mainCamera.GetComponent<Camera>();
-        GameObject mirrorUI = canvas.transform.GetChild(0).GetChild(6).GetChild(1).gameObject;
+        GameObject mirrorUI = canvas.transform.GetChild(0).GetChild(4).GetChild(1).gameObject;
         gameSystem.GetComponent<MirrorSetting>().SetMirrorUI(mirrorUI);
     }
 
