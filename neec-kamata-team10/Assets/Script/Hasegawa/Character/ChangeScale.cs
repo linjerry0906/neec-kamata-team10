@@ -28,8 +28,10 @@ public class ChangeScale
     }
 
     //オブジェクトの変形
-    public Vector3 Scale(bool change)
+    public Vector3 Scale(bool change, SizeEnum size)
     {
+        if (size == SizeEnum.Normal) return new Vector3(1, 1, 1);
+
         if (change)
         {
             isChange = true;

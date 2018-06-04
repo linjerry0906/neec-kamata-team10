@@ -34,7 +34,9 @@ public class ChangeObjectSize : MonoBehaviour
         if (tag == "reflect")
             return;
         SizeEnum size = GetComponent<ObjectSize>().GetSize();
-        Vector3 scale = changeScale.Scale(change/*size*//*mirrorRect, transform.position*/);
+
+        changeScale.SetMirrorSize(GetComponent<ObjectSize>().GetReflectSize());
+        Vector3 scale = changeScale.Scale(change, size/*mirrorRect, transform.position*/);
         //サイズの変更
         transform.localScale = Vector3.Scale(scale, normalScale);
         //質量の変更
