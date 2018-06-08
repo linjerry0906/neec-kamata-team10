@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114485009153935682}
   - component: {fileID: 65554258464730138}
   - component: {fileID: 54240143781336270}
+  - component: {fileID: 114540111623193024}
   m_Layer: 0
   m_Name: magic_ block
   m_TagString: magic_block
@@ -57,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1517293222604252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.5, y: 1.5, z: -0.5}
+  m_LocalPosition: {x: -11.5, y: 2.5, z: -0.5}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 4424776501386722}
@@ -174,6 +175,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTime: 0.5
+--- !u!114 &114540111623193024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517293222604252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0488e9ddc7d23dc44abfa3a341f0fe1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxIntensity: 2.5
+  minIntensity: 0
+  flashSpeed: 1.8
 --- !u!114 &114644109449761712
 MonoBehaviour:
   m_ObjectHideFlags: 1
