@@ -62,10 +62,25 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 同じステージを挑戦
     /// </summary>
-    public void TrySameStage()
+    public void TrySameStage(bool isClear)
     {
+        //Vector3 initPos;
+        //if(!isClear)
+
         sceneManager.ChangeScene(sceneManager.CurrentScene());
         stageManager.Initialize(stageManager.CurrentStage());
+
+        //GameObject.Find("Player").GetComponent<Player>().;
+    }
+
+    public void Pause()
+    {
+        sceneManager.ChangeScene(EScene.Pause, true);
+    }
+
+    public void Return()
+    {
+        sceneManager.CloseScene(EScene.Pause);
     }
 
     /// <summary>
@@ -75,7 +90,7 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     public ICharacterController GetController()
     {
-        if (debugController == EController.KEYBOARD)         //キーボードの場合
+        if (debugController == EController.KEYBOARD)        //キーボードの場合
             return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す

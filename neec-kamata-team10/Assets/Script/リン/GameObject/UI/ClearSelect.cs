@@ -80,7 +80,7 @@ public class ClearSelect : MonoBehaviour
 
         if (currentSelect == ESelection.TryAgain)
         {
-            GameManager.Instance.TrySameStage();
+            GameManager.Instance.TrySameStage(true);
             return;
         }
         GameManager.Instance.ChangeScene(EScene.StageSelect);

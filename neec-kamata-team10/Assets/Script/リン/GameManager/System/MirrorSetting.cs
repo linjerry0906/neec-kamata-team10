@@ -42,9 +42,18 @@ public class MirrorSetting : MonoBehaviour
         if (controller.IsFade())
             return;
 
+        Pause();
         ChangeMirror();                             //鏡の種類を切り替え
         SetMirror();                                //鏡を設置
 	}
+
+    private void Pause()
+    {
+        if (!controller.SwitchToTheLeft())
+            return;
+
+        GameManager.Instance.Pause();
+    }
 
     /// <summary>
     /// 鏡の種類を切り替え

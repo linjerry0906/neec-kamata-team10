@@ -36,6 +36,9 @@ public class Mirror : MonoBehaviour
 
     private void Update()
     {
+        if (!isAlive)
+            return;
+
         for (int i = 0; i < originObj.Count;)                                  //鏡側のObjを修正
         {
             if (reflectObj[i].GetComponent<ReflectObject>().CheckInstance())   //削除されてない場合
@@ -265,6 +268,12 @@ public class Mirror : MonoBehaviour
     public void DestroyMirror()
     {
         isAlive = false;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+        Release();
+        transform.GetChild(4).gameObject.SetActive(false);
+        transform.GetChild(5).gameObject.SetActive(false);
+        transform.GetChild(6).gameObject.SetActive(true);
         Destroy(gameObject, 0.7f);
     }
 

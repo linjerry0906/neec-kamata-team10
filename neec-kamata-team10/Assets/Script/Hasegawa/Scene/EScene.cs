@@ -5,4 +5,5 @@
     TitleTest,
     PlayTest,
     StageSelect,
+    Pause,
 }

@@ -13,6 +13,8 @@ public class CameraLightEffect : MonoBehaviour
     private float brightness = 0.4f;        //全体の明るさ
     [SerializeField]
     private float lightStrength = 5.0f;     //ライトの強さ
+    [SerializeField]
+    private float threshold = 0.3f;
 
     [SerializeField]
     private Vector2 offset1x;               //オフセット
@@ -29,7 +31,7 @@ public class CameraLightEffect : MonoBehaviour
         //ハイライトを書き出す
         RenderTexture light = RenderTexture.GetTemporary(Screen.width, Screen.height, 0);
         light.filterMode = FilterMode.Bilinear;
-        highLight.SetFloat("_Threshold", 0.3f);
+        highLight.SetFloat("_Threshold", threshold);
         Graphics.Blit(source, light, highLight, 0);
         //ブラー
         RenderTexture blur1x = RenderTexture.GetTemporary(Screen.width / 2, Screen.height / 2, 0);
