@@ -2093,7 +2093,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.3602941, g: 0.3354462, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -11349,6 +11349,7 @@ GameObject:
   - component: {fileID: 1200624699}
   - component: {fileID: 1200624698}
   - component: {fileID: 1200624704}
+  - component: {fileID: 1200624705}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11460,6 +11461,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc84ef0de0198af4e9a52554ad42d35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1200624705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1200624697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1107fa1f296e0745ba880d312753314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highLight: {fileID: 2100000, guid: 6cc8587a82d4ac343aac3dda2399d802, type: 2}
+  brightness: 0.7
+  lightStrength: 2
+  offset1x: {x: 1, y: 1}
+  offset2x: {x: 5, y: 5}
+  offset4x: {x: 10, y: 10}
 --- !u!1 &1203354488 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 3732ac0580497df4cb98c70fca751ed1, type: 3}
