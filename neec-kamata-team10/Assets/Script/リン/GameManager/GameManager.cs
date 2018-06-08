@@ -3,6 +3,7 @@
 // 作成者：林 佳叡
 // 内容：ゲームマネージャー
 //------------------------------------------------------
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -64,13 +65,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TrySameStage(bool isClear)
     {
-        //Vector3 initPos;
-        //if(!isClear)
+        //Vector3 initPos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().;
 
         sceneManager.ChangeScene(sceneManager.CurrentScene());
+        DateTime time = stageManager.PassTime();
         stageManager.Initialize(stageManager.CurrentStage());
 
-        //GameObject.Find("Player").GetComponent<Player>().;
+        if (isClear)
+            return;
+
+        stageManager.SetPassTime(time);
+        //GameObject.Find("Player").transform.position = initPos;
     }
 
     public void Pause()

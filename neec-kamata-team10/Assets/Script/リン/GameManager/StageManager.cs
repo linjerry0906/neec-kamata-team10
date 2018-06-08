@@ -86,6 +86,11 @@ public class StageManager
         return passTime;
     }
 
+    public void SetPassTime(DateTime time)
+    {
+        passTime = time;
+    }
+
     /// <summary>
     /// クリアかどうかを知らせる
     /// </summary>
