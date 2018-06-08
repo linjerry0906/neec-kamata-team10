@@ -143,6 +143,7 @@ public class Player : MonoBehaviour
         //    SetIsClimb(false);
         //}
         //state = EPlayerState.Jump;
+
         SetIsClimb(false);
     }
 
@@ -168,6 +169,7 @@ public class Player : MonoBehaviour
         if (state == stateStorage) return;
         GetComponent<PlayerAnime>().ChangeState(state);
         stateStorage = state;
+        //Debug.Log(state);
     }
 
     //移動量が小さければ待機状態にする
@@ -178,6 +180,7 @@ public class Player : MonoBehaviour
             state = EPlayerState.Stay;
         //Debug.Log(state);
         //Debug.Log(rb.velocity.y);
+        //Debug.Log(isJump);
     }
 
     //進行方向の取得

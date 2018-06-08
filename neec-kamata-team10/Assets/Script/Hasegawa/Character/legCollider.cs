@@ -30,6 +30,8 @@ public class legCollider : MonoBehaviour {
             p.SetPlayerState(EPlayerState.Move);
             p.SetIsJump(false);
         }
+
+        //Debug.Log(t);
     }
 
     void OnTriggerExit(Collider t)
@@ -37,5 +39,6 @@ public class legCollider : MonoBehaviour {
         Player p = transform.parent.GetComponent<Player>();
         p.SetPlayerState(EPlayerState.Jump);
         p.SetIsJump(true);
+        //Debug.Log(t+"離れた");
     }
 }
