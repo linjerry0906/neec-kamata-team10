@@ -8,6 +8,8 @@ public class BreakBlockScript : MonoBehaviour {
     GameObject gameObject;
     [SerializeField]
     int breakMass;
+    [SerializeField]
+    float breakTime;
 
     // Use this for initialization
     void Start () {
@@ -22,7 +24,8 @@ public class BreakBlockScript : MonoBehaviour {
     {
         if (col.rigidbody.mass >= breakMass)
         {
-            Destroy(gameObject);
+            breakTime--;
+            if (breakTime <= 0)  Destroy(gameObject);
         }
             
     }
@@ -36,4 +39,5 @@ public class BreakBlockScript : MonoBehaviour {
     void OnCollisionExit(Collision col)
     {
     }
+    
 }
