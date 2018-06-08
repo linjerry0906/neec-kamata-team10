@@ -24,7 +24,7 @@ public class PlayerRespawn : MonoBehaviour
         }
     }
 
-    Vector2 GetRespawnPosition()
+    public Vector2 GetRespawnPosition()
     {
         return respawnPos;
     }
