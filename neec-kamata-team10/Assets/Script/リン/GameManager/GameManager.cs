@@ -79,7 +79,8 @@ public class GameManager : MonoBehaviour
         if (isClear)
             return;
 
-        GameObject.Find("Player").transform.position = initPos;
+        Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
+        stageManager.SetStartPos(pos);
     }
 
     public void Pause()

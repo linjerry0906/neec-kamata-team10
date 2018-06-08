@@ -16,6 +16,8 @@ public class StageManager
 
     private bool isClear;
 
+    private Vector3 startPos;
+
     public StageManager()
     {
         currentStage = 0;
@@ -32,8 +34,11 @@ public class StageManager
     {
         currentStage = nextStage;               //ステージ指定
         isClear = false;
-        if(resetTime)
+        if (resetTime)
+        {
             passTime = DateTime.MinValue;       //Reset
+            startPos = Vector3.zero;
+        }
     }
 
     /// <summary>
@@ -93,5 +98,15 @@ public class StageManager
 
         this.isClear = isClear;
         gameManager.GetComponent<ResultManager>().GameOver(isClear);
+    }
+
+    public Vector3 StartPos()
+    {
+        return startPos;
+    }
+
+    public void SetStartPos(Vector3 pos)
+    {
+        startPos = pos;
     }
 }
