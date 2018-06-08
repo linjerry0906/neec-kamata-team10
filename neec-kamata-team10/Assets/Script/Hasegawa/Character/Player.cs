@@ -6,17 +6,17 @@ public class Player : MonoBehaviour
 {
     //[SerializeField]
     //private EController eController;                            
-    [SerializeField]                                              
+    [SerializeField]
     private float jumpPower;                                      //ジャンプ力
-    [SerializeField]                                              
+    [SerializeField]
     private float climbSpeed;                                     //登るスピード
-    [SerializeField]                                              
+    [SerializeField]
     private float moveSpeed;                                      //移動スピード
-    [SerializeField]                                              
+    [SerializeField]
     private float moveForceMultiplier;                            //慣性の調整値
-                                                                  
+
     private bool isJump = true;                                   //ジャンプフラグ
-    private bool isClimb= false;                                  //ツタ登りフラグ
+    private bool isClimb = false;                                  //ツタ登りフラグ
     private Vector3 direction = new Vector3(1, 0, 0);             //進行方向
     private ICharacterController controller;                      //コントローラー
     private EPlayerState state = EPlayerState.Jump;               //プレイヤーの状態
@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Vector3 startPos = GameManager.Instance.GetStageManager().StartPos();
+        if (startPos != Vector3.zero) transform.position = startPos;
+
         controller = GameManager.Instance.GetController();
 
         freezeY = RigidbodyConstraints.FreezePositionZ |
@@ -86,7 +89,7 @@ public class Player : MonoBehaviour
         if (isClimb)
         {
             state = EPlayerState.Clamb;
-            GetComponent<Rigidbody>().AddForce(controller.VerticalMove() * climbSpeed,ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce(controller.VerticalMove() * climbSpeed, ForceMode.Force);
         }
     }
 
@@ -152,11 +155,11 @@ public class Player : MonoBehaviour
         //transform.xとdirection.xを比べて方向が同じだったらreturnする
         if ((transform.localScale.x > 0 && direction.x > 0) ||
             (transform.localScale.x < 0 && direction.x < 0)) return;
-        
+
         //returnされなかったら方向転換する
         Vector3 scale = transform.localScale;
         scale.x *= -1;
-        transform.localScale = scale;    
+        transform.localScale = scale;
     }
 
     //stateが変更されたときにChangeStateを呼ぶ
@@ -171,7 +174,7 @@ public class Player : MonoBehaviour
     void CheckStay()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb.velocity.x < 1 && rb.velocity.x > -1 && rb.velocity.y == 0) 
+        if (rb.velocity.x < 1 && rb.velocity.x > -1 && rb.velocity.y == 0)
             state = EPlayerState.Stay;
         //Debug.Log(state);
         //Debug.Log(rb.velocity.y);
