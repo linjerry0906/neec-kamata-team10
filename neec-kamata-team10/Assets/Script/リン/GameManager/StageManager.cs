@@ -72,6 +72,11 @@ public class StageManager
         isStage = false;
     }
 
+    public void Resume()
+    {
+        isStage = true;
+    }
+
     /// <summary>
     /// 経過時間を取得
     /// </summary>
