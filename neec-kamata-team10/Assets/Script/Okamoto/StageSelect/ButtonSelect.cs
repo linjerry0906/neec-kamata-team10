@@ -21,9 +21,9 @@ public class ButtonSelect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //コントローラー出来次第書き込みます
-        //if () stage++;
-        //if () stage--;
-        //if () stage += panelPerButton.ReturnPanelPerButton() / 4;
-        //if () stage -= panelPerButton.ReturnPanelPerButton() / 4;
+        if (controller.MoveSelectionRight()) stage++;
+        if (controller.MoveSelectionLeft()) stage--;
+        if (controller.MoveSelectionDown()) stage += panelPerButton.ReturnPanelPerButton() / 4;
+        if (controller.MoveSelectionUp()) stage -= panelPerButton.ReturnPanelPerButton() / 4;
     }
 }
