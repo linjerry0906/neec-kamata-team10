@@ -9,7 +9,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager Instance;                     //GameManagerのインスタンス
+    public static GameManager Instance = null;                  //GameManagerのインスタンス
 
     [SerializeField]
     private EController debugController;
@@ -21,11 +21,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         CheckInstance();                                    //Instanceをチェックする
-
-        controllerManager = new ControllerManager();
-        sceneManager = new SceneChange();
-        stageManager = new StageManager();
-        stageManager.Initialize(0);                         //Debug Test
     }
 
     /// <summary>
@@ -35,11 +30,21 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)                               //Nullじゃない場合
         {
-            Destroy(this.gameObject);                       //削除
+            DestroyImmediate(this.gameObject);                       //削除
             return;
         }
         Instance = this;                                    //Instance指定
         DontDestroyOnLoad(this.gameObject);                 //削除されないように
+
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        controllerManager = new ControllerManager();
+        sceneManager = new SceneChange();
+        stageManager = new StageManager();
+        stageManager.Initialize(0, true);                         //Debug Test
     }
 
     void Start()
@@ -65,22 +70,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TrySameStage(bool isClear)
     {
-        //Vector3 initPos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().;
+        Vector3 initPos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
 
-        sceneManager.ChangeScene(sceneManager.CurrentScene());
         DateTime time = stageManager.PassTime();
-        stageManager.Initialize(stageManager.CurrentStage());
+        stageManager.Initialize(stageManager.CurrentStage(), isClear);
+        sceneManager.ChangeScene(sceneManager.CurrentScene());
 
         if (isClear)
             return;
 
-        stageManager.SetPassTime(time);
-        //GameObject.Find("Player").transform.position = initPos;
+        GameObject.Find("Player").transform.position = initPos;
     }
 
     public void Pause()
     {
-        sceneManager.ChangeScene(EScene.Pause, true);
+        sceneManager.ChangeSceneAsync(EScene.Pause);
     }
 
     public void Return()
@@ -110,7 +114,7 @@ public class GameManager : MonoBehaviour
     public void SelectStage(int stage)
     {
         sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
-        stageManager.Initialize(stage);                     //ステージ初期化
+        stageManager.Initialize(stage, true);                     //ステージ初期化
     }
 
     /// <summary>

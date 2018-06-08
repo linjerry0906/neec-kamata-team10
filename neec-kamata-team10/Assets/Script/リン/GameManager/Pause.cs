@@ -32,7 +32,7 @@ public class Pause : MonoBehaviour
             return;
 
         //時間計算開始
-        stageManager.Resume();
+        stageManager.StartStage();
         Time.timeScale = 1;
         //コントローラー操作可能
         controller.SetFadeFlag(false);

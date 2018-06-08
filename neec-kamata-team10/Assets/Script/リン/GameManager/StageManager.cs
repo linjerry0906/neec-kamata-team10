@@ -28,11 +28,12 @@ public class StageManager
     /// ステージ情報初期化
     /// </summary>
     /// <param name="nextStage">次のステージ</param>
-    public void Initialize(int nextStage)
+    public void Initialize(int nextStage, bool resetTime)
     {
         currentStage = nextStage;               //ステージ指定
         isClear = false;
-        passTime = DateTime.MinValue;           //Reset
+        if(resetTime)
+            passTime = DateTime.MinValue;       //Reset
     }
 
     /// <summary>
@@ -61,7 +62,6 @@ public class StageManager
     public void StartStage()
     {
         isStage = true;
-        passTime = DateTime.MinValue;           //Reset
     }
 
     /// <summary>
@@ -72,11 +72,6 @@ public class StageManager
         isStage = false;
     }
 
-    public void Resume()
-    {
-        isStage = true;
-    }
-
     /// <summary>
     /// 経過時間を取得
     /// </summary>
@@ -84,11 +79,6 @@ public class StageManager
     public DateTime PassTime()
     {
         return passTime;
-    }
-
-    public void SetPassTime(DateTime time)
-    {
-        passTime = time;
     }
 
     /// <summary>

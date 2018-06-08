@@ -8,19 +8,22 @@ public class SceneChange {
     //シーンの変更
     public void ChangeScene(EScene scene)
     {
-        Debug.Log(scene.ToString() + "に変更されました");
         SceneManager.LoadScene(scene.ToString());
     }
 
-    public void ChangeScene(EScene scene, bool sync)
+    public void ChangeSceneAsync(EScene scene)
     {
-        Debug.Log(scene.ToString() + "に変更されました");
         SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
     }
 
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ChangeSceneAsync(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 
     public void CloseScene(EScene scene)

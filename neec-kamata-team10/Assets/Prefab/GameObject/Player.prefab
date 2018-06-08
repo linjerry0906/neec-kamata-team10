@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114622648665841230}
   - component: {fileID: 95828149430169928}
   - component: {fileID: 114977840197465024}
+  - component: {fileID: 114922579393174972}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -158,6 +159,17 @@ MonoBehaviour:
   climbSpeed: 0
   moveSpeed: 5
   moveForceMultiplier: 30
+--- !u!114 &114922579393174972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398878802497442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc4da3e9e6a93e4ca723fad17e41a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114977840197465024
 MonoBehaviour:
   m_ObjectHideFlags: 1

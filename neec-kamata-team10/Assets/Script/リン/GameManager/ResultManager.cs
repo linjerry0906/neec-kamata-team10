@@ -19,7 +19,10 @@ public class ResultManager : MonoBehaviour
     public void GameOver(bool isClear)
     {
         if (!isClear)
+        {
             GameManager.Instance.TrySameStage(isClear);
+            return;
+        }
 
         GameObject panel = Instantiate(resultPanel);
         panel.transform.GetChild(0).GetComponent<ResultUI>().SetIsClear(isClear);
