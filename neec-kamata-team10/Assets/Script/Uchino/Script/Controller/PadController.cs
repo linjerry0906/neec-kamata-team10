@@ -159,5 +159,75 @@ public class PadController : ICharacterController
         this.isFade = isFade;
     }
 
+    public bool MoveSelectionUp()
+    {
+        return IsKeyDown(isUp,previousUp);
+    }
 
+    public bool MoveSelectionDown()
+    {
+        return IsKeyDown(isDown, previousDown);
+    }
+
+    public bool MoveSelectionLeft()
+    {
+        return IsKeyDown(isLeft, previousLeft);
+    }
+
+    public bool MoveSelectionRight()
+    {
+        return IsKeyDown(isRight, previousRight);
+    }
+
+    public void Update()
+    {
+        UpdateKey();
+    }
+
+    bool currentKey = false;
+    bool previousKey = false;
+    
+    //現在押されたか
+    bool isRight = false;
+    bool isLeft = false;
+    bool isUp = false;
+    bool isDown = false;
+
+    //前回押されたか
+    bool previousRight = false;
+    bool previousLeft = false;
+    bool previousDown = false;
+    bool previousUp = false;
+
+    //軸
+    string vertical = "Vertical";
+    string horizontal = "Horizontal";
+
+    private void UpdateKey()
+    {
+        previousRight = isRight;
+        previousLeft = isLeft;
+        previousDown = isDown;
+        previousUp = isUp;
+
+        isRight = IsKeyDown(horizontal, 1);
+        isLeft = IsKeyDown(horizontal, -1);
+        isUp = IsKeyDown(vertical, 1);
+        isDown = IsKeyDown(vertical, -1);
+    }
+
+    private bool IsKeyDown(string axisName, int direction)
+    {
+        if (Input.GetAxis(axisName) == direction)
+        {
+            return true;
+        }
+
+        return false;       
+    }
+
+    private bool IsKeyDown(bool isDirKey ,bool previousDirKey)
+    {
+        return isDirKey && !previousDirKey;
+    }
 }

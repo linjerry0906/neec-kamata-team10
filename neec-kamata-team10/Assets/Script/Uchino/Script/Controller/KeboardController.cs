@@ -169,5 +169,30 @@ public class KeboardController : ICharacterController
     {
         this.isFade = isFade;
     }
-    
+
+    public bool MoveSelectionUp()
+    {
+        return Input.GetKeyUp(KeyCode.UpArrow);
+    }
+
+    public bool MoveSelectionDown()
+    {
+        return Input.GetKeyUp(KeyCode.DownArrow);
+    }
+
+    public bool MoveSelectionLeft()
+    {
+        return Input.GetKeyUp(KeyCode.LeftArrow);
+    }
+
+    public bool MoveSelectionRight()
+    {
+        return Input.GetKeyUp(KeyCode.RightArrow);
+    }
+
+    public void Update()
+    {
+
+    }
+
 }
