@@ -40,6 +40,7 @@ public class ReflectObject : MonoBehaviour
         ReflectRotation();      //回転を反映する
         ReflectScale();         //大きさを反映する
         ReflectSprite();
+        ReflectMesh();
     }
 
     /// <summary>
@@ -104,5 +105,15 @@ public class ReflectObject : MonoBehaviour
         if (!sprite)
             return;
         sprite.sprite = originObj.GetComponent<SpriteRenderer>().sprite;
+    }
+
+    private void ReflectMesh()
+    {
+        MeshRenderer mesh = GetComponent<MeshRenderer>();
+        if (!mesh)
+            return;
+
+        Material originMaterial = originObj.GetComponent<MeshRenderer>().material;
+        mesh.material.SetColor("_EmissionColor", originMaterial.GetColor("_EmissionColor"));
     }
 }
