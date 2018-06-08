@@ -14,10 +14,20 @@ public class SoundManager : MonoBehaviour {
 
     private Dictionary<string, AudioClip> bgms;     //BGM
 
+    private GameObject[] soundBuffer;
+
+    private int currentBuffer;
     private string currentBgm = "";
 
     private void Start()
     {
+        currentBuffer = 0;
+        int buffers = transform.childCount;
+        soundBuffer = new GameObject[buffers];
+        for (int i = 0; i < buffers; ++i)
+        {
+            soundBuffer[i] = transform.GetChild(i).gameObject;
+        }
     }
 
     public void PlayBGM(string name)

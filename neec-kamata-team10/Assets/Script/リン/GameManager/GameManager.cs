@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -39,9 +40,13 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     private void Initialize()
     {
         controllerManager = new ControllerManager();
+        soundManager = transform.GetChild(0).GetComponent<SoundManager>();
         sceneManager = new SceneChange();
         stageManager = new StageManager();
         stageManager.Initialize(0, true);                         //Debug Test
@@ -56,7 +61,7 @@ public class GameManager : MonoBehaviour
         stageManager.Update();                              //Stage時間を更新
     }
 
-#region Scene関連
+    #region Scene関連
 
     /// <summary>
     /// シーンを切り替わる
@@ -134,6 +139,16 @@ public class GameManager : MonoBehaviour
         Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
         stageManager.SetStartPos(pos);
         stageManager.SetCameraPos();
+    }
+
+    #endregion
+
+
+    #region Sound関連
+
+    public SoundManager GetSoundManager()
+    {
+        return soundManager;
     }
 
     #endregion
