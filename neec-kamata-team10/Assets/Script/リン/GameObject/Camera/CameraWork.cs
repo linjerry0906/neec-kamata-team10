@@ -76,6 +76,7 @@ public class CameraWork : MonoBehaviour {
     public void SetTarget(GameObject target)
     {
         this.target = target;               //変更
+        cameraMode = ModeFactory(currentMode);
         cameraMode.SetTarget(target);       //設定
     }
 

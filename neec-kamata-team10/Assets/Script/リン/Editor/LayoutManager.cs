@@ -14,6 +14,7 @@ public class LayoutManager
     private GameObject gameSystemPrefab;               //GameSystem
     private GameObject cameraPrefab;                   //カメラ
     private GameObject canvasPrefab;                   //キャンバス
+    private GameObject bgmPlayerPrefab;                //BgmPlayer
 
     public LayoutManager() { }
 
@@ -57,6 +58,7 @@ public class LayoutManager
         gameSystemPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/GameSystem.prefab");
         cameraPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Main Camera.prefab");
         canvasPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/Canvas.prefab");
+        bgmPlayerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Editor/BGMPlayer.prefab");
     }
 
     /// <summary>
@@ -69,6 +71,7 @@ public class LayoutManager
         CreateObj("BackgroundLayer", stagePrefab);              //Background
         CreateObj("Main Camera", cameraPrefab);                 //カメラ
         CreateObj("Canvas", canvasPrefab);                      //キャンバス
+        CreateObj("BGMPlayer", bgmPlayerPrefab);                //キャンバス
     }
 
     /// <summary>
@@ -92,6 +95,7 @@ public class LayoutManager
         GameObject gameSystem;
         GameObject mainCamera;
         GameObject canvas;
+        GameObject bgmPlayer;
 
         if (!name.Contains("GameManager"))
             gameManager = CreateObj("GameManager", gameManagerPrefab);           //GameManager
@@ -118,6 +122,12 @@ public class LayoutManager
         else
         {
             canvas = GameObject.Find("Canvas");
+        }
+        if (!name.Contains("BGMPlayer"))
+            bgmPlayer = CreateObj("BGMPlayer", bgmPlayerPrefab);                          //キャンバス
+        else
+        {
+            bgmPlayer = GameObject.Find("BGMPlayer");
         }
 
         canvas.GetComponent<Canvas>().worldCamera = mainCamera.transform.GetChild(1).GetComponent<Camera>();

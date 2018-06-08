@@ -9,9 +9,14 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    private GameManager gameManager;
-    private StageManager stageManager;
-    private ICharacterController controller;
+    [SerializeField]
+    private float bgmMaxVolume = 0.3f;
+    private float previousVolume;
+
+    private GameManager gameManager;                //GameManager
+    private StageManager stageManager;              //StageManager
+    private SoundManager soundManager;              //SoundManager
+    private ICharacterController controller;        //コントローラー
 
     void Start()
     {
@@ -24,6 +29,10 @@ public class Pause : MonoBehaviour
         controller.SetFadeFlag(true);
         //時間停止
         Time.timeScale = 0;
+        //背景音量設定
+        soundManager = gameManager.GetSoundManager();
+        previousVolume = soundManager.MaxVolume();
+        soundManager.SetMaxVolume(bgmMaxVolume);
     }
 	
 	void Update ()
@@ -38,5 +47,7 @@ public class Pause : MonoBehaviour
         controller.SetFadeFlag(false);
         //シーン切り替え
         gameManager.Return();
+        //背景音量設定
+        gameManager.GetSoundManager().SetMaxVolume(previousVolume);
     }
 }
