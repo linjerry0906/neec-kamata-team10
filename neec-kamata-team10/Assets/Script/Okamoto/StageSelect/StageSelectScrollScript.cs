@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class StageSelectScrollScript : MonoBehaviour {
 
     private Vector2 minAnchor = new Vector2(0, 0);
+    private ICharacterController controller;
 
 	// Use this for initialization
 	void Start () {
+        controller = GameManager.Instance.GetController();
 	}
 	
 	// Update is called once per frame
@@ -17,6 +19,9 @@ public class StageSelectScrollScript : MonoBehaviour {
         min += (minAnchor - min) * 0.1f;
         GetComponent<RectTransform>().anchorMin = min;
         GetComponent<RectTransform>().anchorMax = min + new Vector2(1, 1);
+
+        //if(controller.SwitchToTheRight()) minAnchor.x--;
+        //if (controller.SwitchToTheLeft()) minAnchor.x++;
     }
 
     public void OnClickRight()

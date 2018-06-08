@@ -70,4 +70,9 @@ public class StagePanelCreate : MonoBehaviour {
         rb.GetComponent<Button>().onClick.AddListener(GetComponent<StageSelectScrollScript>().OnClickRight);
         
     }
+
+    public int ReturnPanelPerButton()
+    {
+        return panelPerButton;
+    }
 }
