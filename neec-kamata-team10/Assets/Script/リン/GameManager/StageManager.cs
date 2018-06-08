@@ -16,7 +16,8 @@ public class StageManager
 
     private bool isClear;
 
-    private Vector3 startPos;
+    private Vector3 startPos;                   //Player初期位置
+    private Vector3 cameraPos;                  //カメラ初期位置
 
     public StageManager()
     {
@@ -38,6 +39,7 @@ public class StageManager
         {
             passTime = DateTime.MinValue;       //Reset
             startPos = Vector3.zero;
+            cameraPos = Vector3.zero;
         }
     }
 
@@ -100,13 +102,38 @@ public class StageManager
         gameManager.GetComponent<ResultManager>().GameOver(isClear);
     }
 
+    /// <summary>
+    /// Playerのスタート場所
+    /// </summary>
+    /// <returns></returns>
     public Vector3 StartPos()
     {
         return startPos;
     }
 
+    /// <summary>
+    /// Playerのスタート場所を設定
+    /// </summary>
+    /// <param name="pos">Respawn位置</param>
     public void SetStartPos(Vector3 pos)
     {
         startPos = pos;
+    }
+
+    /// <summary>
+    /// カメラの初期位置
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 CameraPos()
+    {
+        return cameraPos;
+    }
+
+    /// <summary>
+    /// Cameraスタート位置設定
+    /// </summary>
+    public void SetCameraPos()
+    {
+        cameraPos = Camera.main.transform.position;
     }
 }

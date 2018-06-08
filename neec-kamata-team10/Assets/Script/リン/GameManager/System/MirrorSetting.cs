@@ -191,4 +191,9 @@ public class MirrorSetting : MonoBehaviour
     {
         this.mirrorUI = mirrorUI;
     }
+
+    public void SetPlayer(GameObject player)
+    {
+        this.player = player;
+    }
 }

@@ -27,9 +27,26 @@ public class CameraWork : MonoBehaviour {
 
     void Start ()
     {
+        Restart();
+
         previousMode = TraceMode.TRACE_CHARACTER;               //Debug：前回のモードを初期化
         cameraMode = ModeFactory(previousMode);                 //指定モードを生成
 	}
+
+    /// <summary>
+    /// 再開の処理
+    /// </summary>
+    private void Restart()
+    {
+        Vector3 startPos = GameManager.Instance.GetStageManager().CameraPos();
+        if (startPos == Vector3.zero)                           //再開じゃない場合は以下実行しない
+            return;
+
+        transform.position = startPos;
+        Time.timeScale = 1;                         //タイムを正常
+        GameManager.Instance.GetStageManager().StartStage();               //Time計算開始
+        Destroy(transform.GetChild(1).GetComponent<SceneFader>());         //Faderを削除
+    }
 	
 	void Update ()
     {

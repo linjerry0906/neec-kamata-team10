@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
         stageManager.Update();                              //Stage時間を更新
     }
 
+#region Scene関連
+
     /// <summary>
     /// シーンを切り替わる
     /// </summary>
@@ -66,32 +68,22 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 同じステージを挑戦
+    /// Pauseシーンへ
     /// </summary>
-    public void TrySameStage(bool isClear)
-    {
-        Vector3 initPos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
-
-        DateTime time = stageManager.PassTime();
-        stageManager.Initialize(stageManager.CurrentStage(), isClear);
-        sceneManager.ChangeScene(sceneManager.CurrentScene());
-
-        if (isClear)
-            return;
-
-        Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
-        stageManager.SetStartPos(pos);
-    }
-
     public void Pause()
     {
         sceneManager.ChangeSceneAsync(EScene.Pause);
     }
 
+    /// <summary>
+    /// Pauseシーンから戻る
+    /// </summary>
     public void Return()
     {
         sceneManager.CloseScene(EScene.Pause);
     }
+
+#endregion
 
     /// <summary>
     /// 指定のコントローラーを取得
@@ -115,7 +107,7 @@ public class GameManager : MonoBehaviour
     public void SelectStage(int stage)
     {
         sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
-        stageManager.Initialize(stage, true);                     //ステージ初期化
+        stageManager.Initialize(stage, true);               //ステージ初期化
     }
 
     /// <summary>
@@ -125,6 +117,23 @@ public class GameManager : MonoBehaviour
     public StageManager GetStageManager()
     {
         return stageManager;
+    }
+
+
+    /// <summary>
+    /// 同じステージを挑戦
+    /// </summary>
+    public void TrySameStage(bool isClear)
+    {
+        stageManager.Initialize(stageManager.CurrentStage(), isClear);      //StageManager初期化
+        sceneManager.ChangeScene(sceneManager.CurrentScene());              //同じシーンを読み込む
+
+        if (isClear)                                                        //クリアの場合は以下実行しない
+            return;
+        //カメラ位置とRespawn位置を記録
+        Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
+        stageManager.SetStartPos(pos);
+        stageManager.SetCameraPos();
     }
 
     #endregion
