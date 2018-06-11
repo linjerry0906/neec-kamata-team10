@@ -86,6 +86,7 @@ public class AppearBlock : MonoBehaviour
         {
             Judge();
             SetTimer();
+            SetAlpha();        //初回Alpha値設定
         }
 	}
 
@@ -105,7 +106,6 @@ public class AppearBlock : MonoBehaviour
             fadeNow = fadeStatus.fadeout;
         }
 
-        SetAlpha();        //初回Alpha値設定
     }
 
     void SetAlpha()
