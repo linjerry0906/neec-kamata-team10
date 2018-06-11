@@ -11,7 +11,6 @@ public class PlayerAnimDead : IAnimeState
     public void Execute(Animator animator)
     {
         animator.SetTrigger("isDead");
-        GameManager.Instance.GetController().SetFadeFlag(true);
     }
 
     public void Exit(Animator animator)
