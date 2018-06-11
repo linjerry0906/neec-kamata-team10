@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 95728199951870484}
   - component: {fileID: 114075217515889400}
   - component: {fileID: 114451213294973534}
+  - component: {fileID: 114526608288091722}
   - component: {fileID: 82465701014402886}
   m_Layer: 0
   m_Name: Player
@@ -116,7 +117,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 10d2400819164b5459e1c0d23e70da1d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -236,6 +237,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc4da3e9e6a93e4ca723fad17e41a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114526608288091722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936628794170634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d53adaa15666b41a4552e39eb1d01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundList:
+  - {fileID: 8300000, guid: 10d2400819164b5459e1c0d23e70da1d, type: 3}
+  - {fileID: 8300000, guid: 7182798d3473a3d4b8665862b825e2bc, type: 3}
 --- !u!114 &114536357375608046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,8 +277,6 @@ MonoBehaviour:
   climbSpeed: 0
   moveSpeed: 5
   moveForceMultiplier: 30
-  jumpSE: {fileID: 8300000, guid: 10d2400819164b5459e1c0d23e70da1d, type: 3}
-  dethSE: {fileID: 8300000, guid: 7182798d3473a3d4b8665862b825e2bc, type: 3}
 --- !u!136 &136894820160612158
 CapsuleCollider:
   m_ObjectHideFlags: 1
