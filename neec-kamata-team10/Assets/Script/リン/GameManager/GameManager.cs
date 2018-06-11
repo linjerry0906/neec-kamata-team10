@@ -145,6 +145,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PauseRetry()
     {
+        Resume();
         stageManager.Initialize(stageManager.CurrentStage(), true);         //StageManager初期化
         sceneManager.ChangeScene(sceneManager.CurrentScene());              //同じシーンを読み込む
     }

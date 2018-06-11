@@ -10,7 +10,11 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
     [SerializeField]
-    private GameObject PausePanel;
+    private GameObject pausePanel;
+    [SerializeField]
+    private GameObject retryImage;
+    [SerializeField]
+    private GameObject stageSelectImage;
     [SerializeField]
     private float bgmMaxVolume = 0.3f;
     private float previousVolume;
@@ -19,6 +23,8 @@ public class Pause : MonoBehaviour
     private StageManager stageManager;              //StageManager
     private SoundManager soundManager;              //SoundManager
     private ICharacterController controller;        //コントローラー
+
+    private PauseSelectEnum select = PauseSelectEnum.Retry;
 
     void Start()
     {
@@ -36,15 +42,18 @@ public class Pause : MonoBehaviour
         previousVolume = soundManager.MaxVolume();
         soundManager.SetMaxVolume(bgmMaxVolume);
     }
-	
-	void Update ()
-    {
-        if (!controller.SwitchToTheLeft())
-            return;
 
-        PausePanel.GetComponent<PausePanelFade>().SetFadeState(FadeState.FadeOut);
+    void Update()
+    {
+        if (controller.SwitchToTheLeft())
+        {
+            pausePanel.GetComponent<PausePanelFade>().SetFadeState(FadeState.FadeOut);
+        }
     }
 
+    /// <summary>
+    /// ゲーム再開
+    /// </summary>
     public void Resume()
     {
         //時間計算開始
