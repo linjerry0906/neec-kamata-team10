@@ -39,4 +39,12 @@ public class MirrorAnime : MonoBehaviour
         max = Random.Range(minInterval, maxInterval);   //最大値ランダムする
         current = 0;                                    //現在時間を初期化
     }
+
+    public void PauseUpdate()
+    {
+        animator.SetBool("reflect", false);             //光らせないようにする
+        current += Time.unscaledDeltaTime;              //時間加算
+        if (current >= max)                             //最大値超えたら
+            Initalize();                                //初期化
+    }
 }
