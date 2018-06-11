@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour {
                 continue;
 
             SoundBuffer sound = buffer.GetComponent<SoundBuffer>();
-            if (sound.CurrentState() != SoundState.None)
+            if (sound.CurrentState() != FadeState.None)
                 sound.UpdateFade();
         }
 
@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour {
     /// BGMをPlayする
     /// </summary>
     /// <param name="bgm">BGM</param>
-    public void PlayBGM(AudioClip bgm, SoundState state, float fadeSpeed, bool loop, float startVolume = 0.0f)
+    public void PlayBGM(AudioClip bgm, FadeState state, float fadeSpeed, bool loop, float startVolume = 0.0f)
     {
         if (currentBgm.Equals(bgm.name))
             return;
@@ -73,7 +73,7 @@ public class SoundManager : MonoBehaviour {
         foreach (GameObject buffer in buffers)
         {
             SoundBuffer sound = buffer.GetComponent<SoundBuffer>();
-            sound.SetState(SoundState.FadeOut);
+            sound.SetState(FadeState.FadeOut);
         }
     }
 
@@ -86,16 +86,16 @@ public class SoundManager : MonoBehaviour {
         foreach (GameObject buffer in buffers)
         {
             SoundBuffer sound = buffer.GetComponent<SoundBuffer>();
-            if (sound.CurrentState() == SoundState.FadeOut)         //FadeOut処理はそのまま
+            if (sound.CurrentState() == FadeState.FadeOut)         //FadeOut処理はそのまま
                 continue;
 
             sound.SetMaxVolume(maxVolume);                          //最大音量設定
             if (maxVolume == 1.0f)
             {
-                sound.SetState(SoundState.FadeIn);                  //最大の場合はFadeInを使う
+                sound.SetState(FadeState.FadeIn);                  //最大の場合はFadeInを使う
                 continue;
             }
-            sound.SetState(SoundState.LerpToMax);
+            sound.SetState(FadeState.LerpToMax);
         }
     }
 

@@ -10,7 +10,7 @@ public class SceneBGMPlayer : MonoBehaviour
     [SerializeField]
     private AudioClip audioClip;
     [SerializeField]
-    private SoundState fadeState;
+    private FadeState fadeState;
     [SerializeField]
     private float fadeSpeed = 0.005f;
     [SerializeField]

@@ -7,10 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SoundState
+public enum FadeState
 {
     FadeIn,
     None,
     FadeOut,
     LerpToMax,
+    End,
 }

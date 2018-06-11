@@ -10,7 +10,7 @@ using UnityEngine;
 public class SoundBuffer : MonoBehaviour
 {
     private AudioSource audioSource;
-    private SoundState state;               //Fade状態
+    private FadeState state;               //Fade状態
     private float fadeSpeed = 0.01f;        //Fade速度
     private float maxVolume = 1.0f;         //最大音量
 
@@ -19,7 +19,7 @@ public class SoundBuffer : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        state = SoundState.None;
+        state = FadeState.None;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -29,12 +29,12 @@ public class SoundBuffer : MonoBehaviour
     /// <param name="amount"></param>
     public void UpdateFade()
     {
-        if (state == SoundState.LerpToMax)
+        if (state == FadeState.LerpToMax)
         {
             LerpToMax();
             return;
         }
-        if (state == SoundState.FadeIn)
+        if (state == FadeState.FadeIn)
         {
             FadeIn(fadeSpeed);
             return;
@@ -60,7 +60,7 @@ public class SoundBuffer : MonoBehaviour
         float volume = audioSource.volume;
         if (volume >= maxVolume)                 //完全にFadein
         {
-            state = SoundState.None;
+            state = FadeState.None;
             return;
         }
 
@@ -110,7 +110,7 @@ public class SoundBuffer : MonoBehaviour
     /// 現在状態
     /// </summary>
     /// <returns></returns>
-    public SoundState CurrentState()
+    public FadeState CurrentState()
     {
         return state;
     }
@@ -118,7 +118,7 @@ public class SoundBuffer : MonoBehaviour
     /// <summary>
     /// Fade状態を設定
     /// </summary>
-    public void SetState(SoundState state)
+    public void SetState(FadeState state)
     {
         this.state = state;
     }

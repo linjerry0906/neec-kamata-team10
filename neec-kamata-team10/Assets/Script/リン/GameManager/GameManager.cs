@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Pauseシーンから戻る
     /// </summary>
-    public void Return()
+    public void Resume()
     {
         sceneManager.CloseScene(EScene.Pause);
     }
@@ -138,6 +138,15 @@ public class GameManager : MonoBehaviour
         Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
         stageManager.SetStartPos(pos);
         stageManager.SetCameraPos();
+    }
+
+    /// <summary>
+    /// Pauseシーンからリトライする場合
+    /// </summary>
+    public void PauseRetry()
+    {
+        stageManager.Initialize(stageManager.CurrentStage(), true);         //StageManager初期化
+        sceneManager.ChangeScene(sceneManager.CurrentScene());              //同じシーンを読み込む
     }
 
     #endregion

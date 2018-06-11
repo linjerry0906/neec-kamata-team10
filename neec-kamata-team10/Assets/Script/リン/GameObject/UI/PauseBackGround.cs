@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 public class PauseBackGround : MonoBehaviour {
 
-    private SpriteRenderer spriteRenderer;
-    private Image imageRenderer;
-    private Animator animator;
-    private MirrorAnime mirrorAnime;
+    private SpriteRenderer spriteRenderer;      //アニメションが設定されるレンダラー
+    private Image imageRenderer;                //UIのレンダラー
+    private Animator animator;                  //アニメター
+    private MirrorAnime mirrorAnime;            //鏡のリフレクションを制御するスクリプト
 
 	void Start ()
     {
@@ -19,14 +19,14 @@ public class PauseBackGround : MonoBehaviour {
         mirrorAnime = GetComponent<MirrorAnime>();
         imageRenderer = GetComponent<Image>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.enabled = false;
+        spriteRenderer.enabled = false;         //レンダーされないようにOFF
 	}
 	
 	void Update ()
     {
-        mirrorAnime.PauseUpdate();
-        animator.Update(Time.unscaledDeltaTime);
-        Sprite sprite = spriteRenderer.sprite;
-        imageRenderer.sprite = sprite;
+        mirrorAnime.PauseUpdate();                  //Update
+        animator.Update(Time.unscaledDeltaTime);    //Update
+        Sprite sprite = spriteRenderer.sprite;      //Spriteを取得
+        imageRenderer.sprite = sprite;              //UIレンダラーに設定
 	}
 }
