@@ -8,11 +8,8 @@ using UnityEngine;
 
 public class PlayerAnimDead : IAnimeState
 {
-    private Animator animator;
-
     public void Execute(Animator animator)
     {
-        this.animator = animator;
         animator.SetTrigger("isDead");
     }
 
@@ -28,10 +25,6 @@ public class PlayerAnimDead : IAnimeState
 
     void IAnimeState.Update()
     {
-        if (!animator.GetBehaviour<AnimeScriptDead>().IsEnd())
-            return;
-        //終了したらステージ再開
-        GameManager.Instance.GetStageManager().EndStage();
-        GameManager.Instance.GetStageManager().SetClear(false);
+        return;
     }
 }

@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
         return stageManager;
     }
 
-
     /// <summary>
     /// 同じステージを挑戦
     /// </summary>
@@ -137,6 +136,7 @@ public class GameManager : MonoBehaviour
             return;
         //カメラ位置とRespawn位置を記録
         Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
+        pos.z = -0.5f;
         stageManager.SetStartPos(pos);
         stageManager.SetCameraPos();
     }
