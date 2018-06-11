@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
     private float moveSpeed;                                      //移動スピード
     [SerializeField]
     private float moveForceMultiplier;                            //慣性の調整値
+    [SerializeField]
+    private AudioClip jumpSE;
+    [SerializeField]
+    private AudioClip dethSE;
 
     private bool isJump = true;                                   //ジャンプフラグ
     private bool isClimb = false;                                  //ツタ登りフラグ
@@ -23,6 +27,7 @@ public class Player : MonoBehaviour
     private EPlayerState stateStorage = EPlayerState.Move;        //プレイヤーの状態(保存用)
     private RigidbodyConstraints freezeY;                         //Y座標の固定
     private RigidbodyConstraints normal;                          //座標の固定
+    private AudioSource audio;
 
     // Use this for initialization
     void Start()
@@ -31,6 +36,7 @@ public class Player : MonoBehaviour
         if (startPos != Vector3.zero) transform.position = startPos;
 
         controller = GameManager.Instance.GetController();
+        audio = GetComponent<AudioSource>();
 
         freezeY = RigidbodyConstraints.FreezePositionZ |
                RigidbodyConstraints.FreezePositionY |
@@ -77,7 +83,9 @@ public class Player : MonoBehaviour
     {
         if (controller.Jump() && !isJump)
         {
-            GetComponent<AudioSource>().Play();
+            audio.clip = jumpSE;
+            audio.Play();
+
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isJump = true;
             state = EPlayerState.Jump;
