@@ -32,6 +32,8 @@ public class Mirror : MonoBehaviour
         originObj = new List<GameObject>();
         reflectObj = new List<GameObject>();
         isAlive = true;
+
+        GetComponent<MirrorSE>().PlaySetSE();
     }
 
     private void Update()
@@ -270,6 +272,7 @@ public class Mirror : MonoBehaviour
         isAlive = false;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<MirrorSE>().PlayBreakSE();
         Release();
         transform.GetChild(4).gameObject.SetActive(false);
         transform.GetChild(5).gameObject.SetActive(false);

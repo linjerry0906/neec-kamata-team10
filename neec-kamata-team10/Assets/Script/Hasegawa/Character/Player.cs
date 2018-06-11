@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
         CheckStay();
         FreezePosition();
         CheckState();
-        Debug.Log(isMountSeesaw);
     }
 
     void FixedUpdate()
