@@ -28,12 +28,11 @@ public class ButtonSelect : MonoBehaviour {
         {
             constrain = transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>().constraintCount;
             panelButton = GetComponent<StagePanelCreate>().ReturnPanel(page);
-
             return;
         }
 
-        int index = (panelButton + 1) / constrain;
-        //Debug.Log(panelButton);
+        int index = (panelButton) / constrain;
+        Debug.Log(panelButton);
         //Debug.Log(constrain);
         //Debug.Log(index);
         //選択ステージが端っこじゃないとき
@@ -46,13 +45,25 @@ public class ButtonSelect : MonoBehaviour {
             if (controller.MoveSelectionLeft()) stage--;
         }
 
+        //ページ送り
+        if (controller.SwitchToTheRight())
+        {
+            page++;
+            stage = stage + panelButton;
+        }
+        if (controller.SwitchToTheLeft())
+        {
+            page--;
+            stage = stage - panelButton;
+        }
+
         //下にシフトできるとき
-        if (stage + index <= panelButton )
+        if (stage + index <= (panelButton * page))
         {
             if (controller.MoveSelectionDown()) stage += panelButton / constrain;
         }
         //上にシフトできるとき
-        if (stage - index > 0)
+        if (stage - index > ((panelButton * page) - panelButton))
         {
             if (controller.MoveSelectionUp()) stage -= panelButton / constrain;
         }
