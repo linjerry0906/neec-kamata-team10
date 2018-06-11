@@ -11,36 +11,31 @@ public class BreakBlockScript : MonoBehaviour {
     [SerializeField]
     float breakTime;
     float time;
+    bool trigger;
 
     // Use this for initialization
     void Start () {
-        breakTime = time;
+        time = breakTime;
+        trigger = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-    }
-
-    //他のコライダと接触した時
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.rigidbody.mass >= breakMass)
+        if (trigger)
         {
             time--;
-            if (time <= 0)  Destroy(gameObject);
+            if (time <= 0) Destroy(gameObject);
         }
-            
     }
+    
 
-    //他のコライダと接触している時
-    void OnCollisionStay(Collision col)
+    //他のコライダと接触した時
+    void OnTriggerEnter(Collider col)
     {
-    }
-
-    //他のコライダと離れた時
-    void OnCollisionExit(Collision col)
-    {
-        time = breakTime;
+        if (col.gameObject.CompareTag("Player"))
+        {
+            trigger = true;
+        }
     }
     
 }
