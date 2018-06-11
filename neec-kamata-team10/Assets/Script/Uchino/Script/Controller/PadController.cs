@@ -230,4 +230,13 @@ public class PadController : ICharacterController
     {
         return isDirKey && !previousDirKey;
     }
+
+	/// <summary>
+	/// Pauseボタン
+	/// </summary>
+	public bool Pause()
+	{
+		return Input.GetKeyDown(KeyCode.JoystickButton7);		
+	}
+
 }
