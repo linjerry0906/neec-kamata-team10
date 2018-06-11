@@ -5,6 +5,7 @@ using UnityEngine;
 public class CollisonToObject : MonoBehaviour {
 
     ObjectSize objectSize;
+    AudioSource audioSource;
 
     private void Start()
     {
@@ -14,6 +15,7 @@ public class CollisonToObject : MonoBehaviour {
 
         objectSize = GetComponentInParent<ObjectSize>();
         parentPosY = transform.parent.position.y;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -78,7 +80,8 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size))                                    //エネミーが小さいか
         {
-            GetComponentInParent<EnemyDead>().Dead();
+            audioSource.Play();
+            GetComponentInParent<EnemyAliveFlag>().Dead();
             return;
         }
 
