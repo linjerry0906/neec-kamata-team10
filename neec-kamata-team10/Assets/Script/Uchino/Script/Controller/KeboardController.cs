@@ -195,4 +195,12 @@ public class KeboardController : ICharacterController
 
     }
 
+	/// <summary>
+	/// Pauseボタン
+	/// </summary>
+	public bool Pause()
+	{
+		return Input.GetKeyDown (KeyCode.P);			
+	}
+
 }
