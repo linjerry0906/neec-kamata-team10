@@ -47,6 +47,6 @@ public class legCollider : MonoBehaviour {
         Player p = transform.parent.GetComponent<Player>();
         p.SetPlayerState(EPlayerState.Jump);
         p.SetIsJump(true);
-        Debug.Log(t+"を離れた");
+        //Debug.Log(t+"を離れた");
     }
 }
