@@ -15,6 +15,8 @@ public class PlayerAnimeFactory
                 return new PlayerAnimeJump();
             case EPlayerState.Move:
                 return new PlayerAnimeMove();
+            case EPlayerState.Dead:
+                return new PlayerAnimDead();
             default:
                 return new PlayerAnimeIdle();
         }
