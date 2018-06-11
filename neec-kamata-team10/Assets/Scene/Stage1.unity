@@ -433,7 +433,6 @@ GameObject:
   - component: {fileID: 85818852}
   - component: {fileID: 85818851}
   - component: {fileID: 85818850}
-  - component: {fileID: 85818849}
   - component: {fileID: 85818848}
   m_Layer: 0
   m_Name: Main Camera
@@ -460,17 +459,6 @@ MonoBehaviour:
   offset1x: {x: 1, y: 1}
   offset2x: {x: 5, y: 5}
   offset4x: {x: 10, y: 10}
---- !u!114 &85818849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 85818847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc84ef0de0198af4e9a52554ad42d35f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &85818850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19477,6 +19465,11 @@ Prefab:
     - target: {fileID: 4933655637269758, guid: 992ad1b14b41e98448479d369dff6daa, type: 2}
       propertyPath: m_RootOrder
       value: 206
+      objectReference: {fileID: 0}
+    - target: {fileID: 82465701014402886, guid: 992ad1b14b41e98448479d369dff6daa,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 992ad1b14b41e98448479d369dff6daa, type: 2}

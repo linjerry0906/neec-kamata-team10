@@ -15,6 +15,9 @@ public class AliveFlag : MonoBehaviour
             return;
 
         isDead = true;
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.clip = GetComponent<SEManager>().GetSE(1);
+        audio.Play();
         GetComponent<PlayerAnime>().ChangeState(EPlayerState.Dead);
         //GameManager.Instance.GetStageManager().EndStage();
         //GameManager.Instance.GetStageManager().SetClear(false);

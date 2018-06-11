@@ -43,9 +43,9 @@ public class CameraWork : MonoBehaviour {
             return;
 
         transform.position = startPos;
-        Time.timeScale = 1;                         //タイムを正常
+        Time.timeScale = 1;                                     //タイムを正常
         GameManager.Instance.GetStageManager().StartStage();               //Time計算開始
-        Destroy(transform.GetChild(1).GetComponent<SceneFader>());         //Faderを削除
+        //Destroy(transform.GetChild(1).GetComponent<SceneFader>());         //Faderを削除
     }
 	
 	void Update ()

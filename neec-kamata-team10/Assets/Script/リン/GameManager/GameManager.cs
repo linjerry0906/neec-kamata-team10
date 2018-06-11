@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
         return stageManager;
     }
 
-
     /// <summary>
     /// 同じステージを挑戦
     /// </summary>
