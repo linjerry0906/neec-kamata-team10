@@ -20,19 +20,7 @@ public class StageSelectScrollScript : MonoBehaviour {
         GetComponent<RectTransform>().anchorMin = min;
         GetComponent<RectTransform>().anchorMax = min + new Vector2(1, 1);
 
-        //if(controller.SwitchToTheRight()) minAnchor.x--;
-        //if (controller.SwitchToTheLeft()) minAnchor.x++;
-    }
-
-    public void OnClickRight()
-    {
-        minAnchor.x--;
-        Debug.Log("Pushed Right");
-    }
-
-    public void OnClickLeft()
-    {
-        minAnchor.x++;
-        Debug.Log("Pushed Left");
+        if(controller.SwitchToTheRight()) minAnchor.x--;
+        if (controller.SwitchToTheLeft()) minAnchor.x++;
     }
 }
