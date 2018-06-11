@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour
 {
-    private Vector2 respawnPos;
+    private Vector3 respawnPos;
     private int num = 0;
 
     void Start()
@@ -24,8 +24,9 @@ public class PlayerRespawn : MonoBehaviour
         }
     }
 
-    public Vector2 GetRespawnPosition()
+    public Vector3 GetRespawnPosition()
     {
+        Debug.Log(respawnPos);
         return respawnPos;
     }
 }
