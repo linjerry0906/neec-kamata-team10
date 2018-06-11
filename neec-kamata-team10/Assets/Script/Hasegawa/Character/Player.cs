@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
     {
         if (controller.Jump() && !isJump)
         {
+            GetComponent<AudioSource>().Play();
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isJump = true;
             state = EPlayerState.Jump;
