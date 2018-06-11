@@ -14,10 +14,10 @@ public class Player : MonoBehaviour
     private float moveSpeed;                                      //移動スピード
     [SerializeField]
     private float moveForceMultiplier;                            //慣性の調整値
-    [SerializeField]
-    private AudioClip jumpSE;
-    [SerializeField]
-    private AudioClip dethSE;
+    //[SerializeField]
+    //private AudioClip jumpSE;
+    //[SerializeField]
+    //private AudioClip dethSE;
 
     private bool isJump = true;                                   //ジャンプフラグ
     private bool isClimb = false;                                  //ツタ登りフラグ
@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GetComponent<AliveFlag>().IsDead()) return;
         Climb();
         Jump();
         Move();
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour
     {
         if (controller.Jump() && !isJump)
         {
-            audio.clip = jumpSE;
+            audio.clip = GetComponent<SEManager>().GetSE(0);
             audio.Play();
 
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
