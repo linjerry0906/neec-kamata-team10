@@ -15,6 +15,12 @@ public class SceneBGMPlayer : MonoBehaviour
     private float fadeSpeed = 0.005f;
     [SerializeField]
     private float startVolume = 0.0f;
+
+    // 2018.6.11 本田 修正 -> BGMのマスター音量を調整できるようにした
+    [SerializeField]
+    private float masterVolume = 0.5f;
+    // ここまで
+    
     [SerializeField]
     private bool loop = true;
 
@@ -22,6 +28,11 @@ public class SceneBGMPlayer : MonoBehaviour
 	void Start ()
     {
         SoundManager soundManager = GameManager.Instance.GetSoundManager();
+
+        // ここからマスター設定
+        soundManager.SetMaxVolume(masterVolume);
+        // ここまで
+
         soundManager.PlayBGM(audioClip, fadeState, fadeSpeed, loop, startVolume);
 	}
 }
