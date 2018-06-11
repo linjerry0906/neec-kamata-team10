@@ -12,6 +12,7 @@ public class BreakBlockScript : MonoBehaviour {
     float breakTime;
     float time;
     bool trigger;
+    Player player;
 
     // Use this for initialization
     void Start () {
@@ -34,8 +35,15 @@ public class BreakBlockScript : MonoBehaviour {
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            player = col.GetComponent<Player>();
             trigger = true;
         }
+    }
+
+    private void OnDestroy()
+    {
+        player.SetPlayerState(EPlayerState.Jump);
+        player.SetIsJump(true);
     }
     
 }

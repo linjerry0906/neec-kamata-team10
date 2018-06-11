@@ -26,7 +26,6 @@ public class PlayerRespawn : MonoBehaviour
 
     public Vector3 GetRespawnPosition()
     {
-        Debug.Log(respawnPos);
         return respawnPos;
     }
 }
