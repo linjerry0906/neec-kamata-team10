@@ -9,18 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float jumpPower;                                      //ジャンプ力
     [SerializeField]
-    private float climbSpeed;                                     //登るスピード
-    [SerializeField]
     private float moveSpeed;                                      //移動スピード
     [SerializeField]
     private float moveForceMultiplier;                            //慣性の調整値
-    //[SerializeField]
-    //private AudioClip jumpSE;
-    //[SerializeField]
-    //private AudioClip dethSE;
 
     private bool isJump = true;                                   //ジャンプフラグ
-    private bool isClimb = false;                                  //ツタ登りフラグ
+    private bool isMountSeesaw = false;
     private Vector3 direction = new Vector3(1, 0, 0);             //進行方向
     private ICharacterController controller;                      //コントローラー
     private EPlayerState state = EPlayerState.Jump;               //プレイヤーの状態
@@ -54,12 +48,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (GetComponent<AliveFlag>().IsDead()) return;
-        Climb();
         Jump();
         Move();
         CheckStay();
         FreezePosition();
         CheckState();
+        Debug.Log(isMountSeesaw);
     }
 
     void FixedUpdate()
@@ -93,21 +87,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    //登る(ツタブロック)
-    void Climb()
-    {
-        if (isClimb)
-        {
-            state = EPlayerState.Clamb;
-            GetComponent<Rigidbody>().AddForce(controller.VerticalMove() * climbSpeed, ForceMode.Force);
-        }
-    }
-
     //ポジションの固定
     void FreezePosition()
     {
-        //ジャンプ中と登り中はZとRotationを固定
-        if (isJump || isClimb)
+        //ジャンプ中はZとRotationを固定
+        if (isJump || isMountSeesaw)
         {
             GetComponent<Rigidbody>().constraints = normal;
         }
@@ -115,7 +99,6 @@ public class Player : MonoBehaviour
         else //if (GetComponent<Rigidbody>().velocity.y == 0)
         {
             GetComponent<Rigidbody>().constraints = freezeY;
-
         }
 
         //移動中はYとZとRotationを固定
@@ -124,37 +107,6 @@ public class Player : MonoBehaviour
         //    GetComponent<Rigidbody>().constraints = normal;
         //    //GetComponent<Rigidbody>().constraints = freezeY;
         //}
-    }
-
-    //ツタブロックとの判定
-    void OnCollisionStay(Collision c)
-    {
-        if (!c.gameObject.tag.Contains("ivy")) return;
-
-        if (c.gameObject.tag.Equals("ivy_upSideCollider"))
-        {
-            //Debug.Log("ツタの上");
-            state = EPlayerState.Move;
-            SetIsClimb(false);
-        }
-        else
-        {
-            //Debug.Log("ツタ登り中");
-            SetIsClimb(true);
-        }
-    }
-
-    //ツタブロックとの判定
-    void OnCollisionExit(Collision c)
-    {
-        //if (c.gameObject.tag.Equals("stage_ivy"))
-        //{
-        //    state = EPlayerState.Jump;
-        //    SetIsClimb(false);
-        //}
-        //state = EPlayerState.Jump;
-
-        SetIsClimb(false);
     }
 
     //進行方向の保存と方向転換
@@ -212,10 +164,10 @@ public class Player : MonoBehaviour
         this.isJump = isJump;
     }
 
-    //Climbフラグの設定
-    public void SetIsClimb(bool isClimb)
+    //Jumpフラグの設定
+    public void SetIsMountSeesaw(bool isMountSeesaw)
     {
-        this.isClimb = isClimb;
+        this.isMountSeesaw = isMountSeesaw;
     }
 
     //状態の設定

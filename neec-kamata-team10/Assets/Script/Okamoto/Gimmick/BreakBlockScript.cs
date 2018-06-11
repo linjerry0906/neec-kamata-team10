@@ -45,5 +45,4 @@ public class BreakBlockScript : MonoBehaviour {
         player.SetPlayerState(EPlayerState.Jump);
         player.SetIsJump(true);
     }
-    
 }
