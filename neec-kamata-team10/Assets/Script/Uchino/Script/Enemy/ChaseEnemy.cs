@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-
+    EnemyAnime enemyAnime;
     // Use this for initialization
     void Start()
     {
@@ -13,13 +13,18 @@ public class ChaseEnemy : MoveEnemy
 
         defaultScale = transform.localScale;            //デフォルトスケール
         previousScale = defaultScale;                   //前回のスケール
+
+        enemyAnime = GetComponent<EnemyAnime>();
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
         NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
-        FlipAnimation();                                
+        enemyAnime.Animation(this);
+
+        transform.localScale = new Vector3(transform.localScale.x, 
+            transform.localScale.y , 0.8f);
     }
 
     Vector3 defaultScale;                               //デフォルトスケール

@@ -78,7 +78,7 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size))                                    //エネミーが小さいか
         {
-            GetComponentInParent<EnemyDead>().Dead();
+            GetComponentInParent<EnemyAliveFlag>().Dead();
             return;
         }
 
