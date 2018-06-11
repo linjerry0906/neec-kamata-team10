@@ -104,6 +104,8 @@ public class AppearBlock : MonoBehaviour
             isActive = false; //fade終了まで実際のActiveは消さない
             fadeNow = fadeStatus.fadeout;
         }
+
+        SetAlpha();        //初回Alpha値設定
     }
 
     void SetAlpha()
