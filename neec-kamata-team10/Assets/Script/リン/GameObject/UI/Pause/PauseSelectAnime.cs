@@ -17,7 +17,7 @@ public class PauseSelectAnime : MonoBehaviour {
     void Start()
     {
         animator = GetComponent<Animator>();
-        animator.speed = 0.3f;
+        animator.speed = 0.9f;
         imageRenderer = GetComponent<Image>();
         imageRenderer.enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -40,6 +40,9 @@ public class PauseSelectAnime : MonoBehaviour {
     /// <param name="isVisible">見えるか</param>
     public void SetVisible(bool isVisible)
     {
+        if (!imageRenderer)
+            Start();
+
         this.isVisible = isVisible;
         imageRenderer.enabled = isVisible;
     }

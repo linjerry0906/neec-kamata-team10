@@ -8,4 +8,5 @@ public enum PauseSelectEnum
 {
     Retry = 0,
     StageSelect,
+    Null,
 }

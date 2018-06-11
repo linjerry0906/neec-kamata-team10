@@ -49,10 +49,8 @@ public class MirrorSetting : MonoBehaviour
 
     private void Pause()
     {
-        if (!controller.SwitchToTheLeft())
-            return;
-
-        GameManager.Instance.Pause();
+        if (controller.Pause())
+            GameManager.Instance.Pause();
     }
 
     /// <summary>

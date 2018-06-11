@@ -12,9 +12,7 @@ public class Pause : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
-    private GameObject retryImage;
-    [SerializeField]
-    private GameObject stageSelectImage;
+    private GameObject[] uiImage;
     [SerializeField]
     private float bgmMaxVolume = 0.3f;
     private float previousVolume;
@@ -41,14 +39,37 @@ public class Pause : MonoBehaviour
         soundManager = gameManager.GetSoundManager();
         previousVolume = soundManager.MaxVolume();
         soundManager.SetMaxVolume(bgmMaxVolume);
+
+        uiImage[0].GetComponent<PauseSelectAnime>().SetVisible(true);
     }
 
     void Update()
     {
-        if (controller.SwitchToTheLeft())
+        if (controller.Pause())
         {
             pausePanel.GetComponent<PausePanelFade>().SetFadeState(FadeState.FadeOut);
         }
+
+        Select();
+    }
+
+    /// <summary>
+    /// 選択
+    /// </summary>
+    private void Select()
+    {
+        int selectInt = (int)select;
+        if (controller.MoveSelectionDown())         //下
+            selectInt++;
+        if (controller.MoveSelectionUp())           //上
+            selectInt--;
+
+        selectInt = Mathf.Abs(selectInt);
+        selectInt %= (int)PauseSelectEnum.Null;
+
+        uiImage[(int)select].GetComponent<PauseSelectAnime>().SetVisible(false);
+        uiImage[selectInt].GetComponent<PauseSelectAnime>().SetVisible(true);
+        select = (PauseSelectEnum)selectInt;
     }
 
     /// <summary>
