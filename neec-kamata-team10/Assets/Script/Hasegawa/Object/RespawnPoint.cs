@@ -28,7 +28,7 @@ public class RespawnPoint : MonoBehaviour {
 
     void Start() //開始時にRenderer取得
     {
-        spriteRenderer = GetComponent<SpriteRenderer>(); //Renderer取得
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); //Sprite側ObjectのRenderer取得
         spriteRenderer.sprite = notCheckedSprite;        //一応Set
     }
 
