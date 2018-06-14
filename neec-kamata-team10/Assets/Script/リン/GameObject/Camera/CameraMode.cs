@@ -16,4 +16,7 @@ public interface CameraMode
     /// </summary>
     /// <param name="target">ターゲット</param>
     void SetTarget(GameObject target);
+
+    //6.15本田追記 Respawn時の高速追尾Modeに設定
+    void SetRespawnTrace(bool isRespawnTrace = true);
 }

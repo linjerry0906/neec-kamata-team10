@@ -22,6 +22,13 @@ public class CameraWork : MonoBehaviour {
     [SerializeField]
     private float charaTraceSpeed = 7;                          //キャラ追尾するスピード
 
+    //2018.6.15 本田の追記部分
+    [SerializeField]
+    private float respawnTraceSpeed = 50;                       //リスポーン時にキャラクターを追尾するSpeed
+    [SerializeField]
+    private float traceMinValueY = -10;                         //キャラクターのY座標がこの値を超えたら下への追尾をやめる
+    //ここまで
+
     private CameraMode cameraMode;                              //動くモード
     private TraceMode previousMode;                             //Debug：前回のモード
 
@@ -90,12 +97,31 @@ public class CameraWork : MonoBehaviour {
         switch (mode)
         {
             case TraceMode.TRACE_CHARACTER:
-                return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);     //キャラクターを追尾
+
+                //2018.6.15 本田 カメラの仕様変更で加筆
+                return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius, respawnTraceSpeed, traceMinValueY);     //キャラクターを追尾
+                //return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);     //キャラクターを追尾
 
             case TraceMode.TRACE_HINT:
-                return new TraceHint(target, gameObject, dampTime);                                      //指定オブジェクトを追尾
+
+                //2018.6.15 本田 こちらも加筆
+                return new TraceHint(target, gameObject, dampTime, dampTime * charaTraceSpeed / respawnTraceSpeed, traceMinValueY);                                      //指定オブジェクトを追尾
+                //return new TraceHint(target, gameObject, dampTime);                                      //指定オブジェクトを追尾
         }
 
         return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);             //デフォルト
+    }
+
+    //6.15 本田追記 Respawn用の高速追尾に切り替え
+    public void SetRespawnTrace()
+    {
+        if(cameraMode is TraceCharacter)
+        {
+            ((TraceCharacter)cameraMode).SetRespawnTrace(true);
+        }
+        else
+        {
+            Debug.Log("notChara");
+        }
     }
 }
