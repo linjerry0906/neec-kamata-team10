@@ -86,9 +86,11 @@ public class SwitchObject : MonoBehaviour {
 
     public bool IsColliderTarget(string tag) //ぶつかっているColliderがtargetかどうか返す
     {
-        //現状のSwitch対象はPlayerタグとEnemyタグのみ
+        //現状のSwitch対象はPlayer,Enemy,magic_block,Splinter
         if (tag.Equals("Player")) return true;
         else if (tag.Equals("Enemy")) return true;
+        else if (tag.Equals("magic_block")) return true;
+        else if (tag.Equals("Splinter")) return true;
 
         //else
         return false;
