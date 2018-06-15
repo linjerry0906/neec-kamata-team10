@@ -102,6 +102,11 @@ public class GameManager : MonoBehaviour
         if (debugController == EController.KEYBOARD)        //キーボードの場合
             return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
+        if (debugController == EController.AUTO)            //自動判定で
+        { 
+            if(!((PadController)controllerManager.Pad()).IsConnectedPad()) //Padが接続されていない時
+            return controllerManager.Keyboard();                           //キーボードを返す
+        }
         return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
 

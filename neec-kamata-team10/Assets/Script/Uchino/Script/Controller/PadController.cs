@@ -239,4 +239,9 @@ public class PadController : ICharacterController
 		return Input.GetKeyDown(KeyCode.JoystickButton7);		
 	}
 
+    public bool IsConnectedPad()
+    {
+        var ar = Input.GetJoystickNames();
+        return (ar[0] != ""); //コントローラは存在するか?
+    }
 }

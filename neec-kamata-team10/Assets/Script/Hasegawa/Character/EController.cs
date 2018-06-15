@@ -6,4 +6,5 @@ public enum EController
 {
     KEYBOARD,
     CONTROLLER,
+    AUTO,
 }
