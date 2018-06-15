@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114154870361780812}
   - component: {fileID: 114234526866008580}
   - component: {fileID: 114193800710287650}
+  - component: {fileID: 114084826895159752}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -29,6 +30,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114084826895159752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1008533562140076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b1daaf0f753744397397ded305e779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 1008533562140076}
 --- !u!114 &114154870361780812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -44,9 +57,6 @@ MonoBehaviour:
     type: 2}
   buttonPanel: {fileID: 1181765391943778, guid: b3ad1f22bfe65554caa396f2b345504c,
     type: 2}
-  rightButton: {fileID: 1159002374975932, guid: 69f4e4722eec33340891f9d494dcd419,
-    type: 2}
-  leftButton: {fileID: 1036803059278722, guid: 0c7643eb593b41349aa6bf45ff5a1c20, type: 2}
   originButton: {fileID: 1375379420001530, guid: ec85fccdd40545f40b44e73de7cee249,
     type: 2}
   stageCount: 40
