@@ -91,11 +91,24 @@ public class MirrorSetting : MonoBehaviour
         Vector3 pos = MirrorPos();                  //設置位置を計算
         ClampGrid(ref pos);                         //グリッド上に設定
 
-        CheckMirrorPos(pos);
+        /// <summary>
+        /// 6.15 本田 変更部
+        /// </summary>
 
-        GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
-        newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
-        usedMirrors.Enqueue(newMirror);             //Queueに追加
+        //CheckMirrorPos(pos);
+
+        //GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity);   //鏡生成
+        //newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);             //親オブジェクトを設定
+        //usedMirrors.Enqueue(newMirror);             //Queueに追加
+
+        if (!IsCollisionToOtherMirror(pos))         //ぶつかっていない場合
+        {
+            GameObject newMirror = Instantiate(mirrors[currentMirror], pos, Quaternion.identity); //鏡生成
+            newMirror.GetComponent<Mirror>().SetReflectParent(reflectParent.transform);           //親オブジェクトを設定
+            usedMirrors.Enqueue(newMirror);         //Queueに追加
+        }
+        /// ここまで
+
         PlayerAnime();
 
         CheckQueue();
@@ -193,5 +206,33 @@ public class MirrorSetting : MonoBehaviour
     public void SetPlayer(GameObject player)
     {
         this.player = player;
+    }
+
+    /// <summary>
+    /// 6.15 本田 バグ対策で要望の多かった鏡を消す処理
+    /// CheckMirrorPosを改造して実装
+    /// 既にある鏡が範囲内か、結果のboolを返すと同時にTrueなら範囲内の鏡を破壊
+    /// 
+    /// これだと範囲が広すぎるので
+    /// PlayerのChildにCollider持たせたりして範囲を狭めたい
+    /// </summary>
+    private bool IsCollisionToOtherMirror(Vector3 pos)
+    {
+        foreach (GameObject mirror in usedMirrors.ToArray())
+        {
+            if (!mirror)
+                continue;
+            Vector3 diff = pos - mirror.transform.position;     //差分
+            int diffX = (int)Mathf.Abs(diff.x);                 //正数を取る
+            int diffY = (int)Mathf.Abs(diff.y);
+            if (diffX < MIRROR_SIZE.x + INTERVAL_MASS &&        //両方範囲内なら置けない
+                diffY < MIRROR_SIZE.y + INTERVAL_MASS)
+            {
+                mirror.GetComponent<Mirror>().DestroyMirror();  //既存の鏡を破壊
+                return true;                                    //衝突状態を返す
+            }
+        }
+
+        return false;
     }
 }
