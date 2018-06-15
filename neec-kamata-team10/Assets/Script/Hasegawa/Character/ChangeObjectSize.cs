@@ -114,4 +114,10 @@ public class ChangeObjectSize : MonoBehaviour
             audio.Play();
         }
     }
+
+    //6.15 本田 変更:鏡消去時のrelease処理を追加
+    public void ReleaseMirror()
+    {
+        change = false;
+    }
 }

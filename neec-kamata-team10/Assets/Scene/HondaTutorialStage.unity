@@ -445,21 +445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845d9b7ab93f1554db276723bb7dce19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sesSource:
-  - {fileID: 8300000, guid: 8f692b4c6a2b84f478ece9f4fe47ecfa, type: 3}
-  - {fileID: 8300000, guid: 86f02ad880c67b442b01b29a1119eee6, type: 3}
-  - {fileID: 8300000, guid: 230b7a8928b7a664d9834a0a8fec3d06, type: 3}
-  - {fileID: 8300000, guid: 53ae71a0a31bac343963e2c48a96b4e6, type: 3}
-  - {fileID: 8300000, guid: c5a0e94e683dad7418a064f4eaa2a3cc, type: 3}
-  - {fileID: 8300000, guid: edeee8c11eaee734ea9a515706a89713, type: 3}
-  - {fileID: 8300000, guid: 10d2400819164b5459e1c0d23e70da1d, type: 3}
-  - {fileID: 8300000, guid: 11d087f843f5ee1459a1295aeab62d5c, type: 3}
-  - {fileID: 8300000, guid: c81cfe7166c532d469d59595f5904e6e, type: 3}
-  - {fileID: 8300000, guid: a941cdf6585d3dc459f43085610c7261, type: 3}
-  - {fileID: 8300000, guid: c591ddc988496a54695383fe3efdb8a6, type: 3}
-  - {fileID: 8300000, guid: 2e82b01aceb76644d97aeb1ed8d57a18, type: 3}
-  - {fileID: 8300000, guid: 7182798d3473a3d4b8665862b825e2bc, type: 3}
-  - {fileID: 8300000, guid: 9ba04406248f1cb45be2d05ac5eb74f0, type: 3}
   soundBuffer: {fileID: 1620627403763686, guid: 6f74c0aee81918c41aee013fe867d7e9,
     type: 2}
 --- !u!1001 &36466520
@@ -6659,8 +6644,8 @@ MonoBehaviour:
   relativePos: {x: 0, y: 14, z: -30}
   radius: 1
   charaTraceSpeed: 5
-  respawnTraceSpeed: 50
-  traceMinValueY: -1
+  minPos: {x: -1000, y: -100}
+  maxPos: {x: 1000, y: 500}
 --- !u!81 &669976344
 AudioListener:
   m_ObjectHideFlags: 0
@@ -8045,6 +8030,11 @@ Prefab:
     - target: {fileID: 4685293883430188, guid: 4bf768398e23d574292f76cc429b4e98, type: 2}
       propertyPath: m_RootOrder
       value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 114706453985071794, guid: 4bf768398e23d574292f76cc429b4e98,
+        type: 2}
+      propertyPath: changeTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4bf768398e23d574292f76cc429b4e98, type: 2}
@@ -18110,6 +18100,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 126
       objectReference: {fileID: 0}
+    - target: {fileID: 114485009153935682, guid: c68b3b356373d2840ada6cde80dcf72e,
+        type: 2}
+      propertyPath: changeTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c68b3b356373d2840ada6cde80dcf72e, type: 2}
   m_IsPrefabParent: 0
@@ -21191,7 +21186,7 @@ MonoBehaviour:
   fadeState: 3
   fadeSpeed: 0.2
   startVolume: 0
-  masterVolume: 0.5
+  maxVolume: 0.5
   loop: 1
 --- !u!4 &2046662305
 Transform:

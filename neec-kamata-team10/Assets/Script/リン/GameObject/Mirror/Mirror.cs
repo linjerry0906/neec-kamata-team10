@@ -248,6 +248,11 @@ public class Mirror : MonoBehaviour
             ObjectSize objSize = g.GetComponent<ObjectSize>();
             if (objSize)
                 objSize.SetSize(SizeEnum.Normal);
+
+            //6.15 本田 変更:ChangeObjectSizeのBool changeがrelease時にfalseにされずにいた問題を解決
+            ChangeObjectSize cos = g.GetComponent<ChangeObjectSize>();
+            if (cos)
+                cos.ReleaseMirror();                
         }
         originObj.Clear();                      //リストクリア
     }
