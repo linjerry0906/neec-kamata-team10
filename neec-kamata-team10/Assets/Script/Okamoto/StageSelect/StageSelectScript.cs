@@ -15,7 +15,7 @@ public class StageSelectScript : MonoBehaviour {
     //そのintを返す
     public void ReturnStage()
     {
-        Debug.Log(stage + "がクリックされた");
+        //Debug.Log(stage + "がクリックされた");
         GameManager.Instance.SelectStage(stage);
     }
 }
