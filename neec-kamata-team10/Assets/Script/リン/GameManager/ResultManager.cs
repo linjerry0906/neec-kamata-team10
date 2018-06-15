@@ -21,12 +21,6 @@ public class ResultManager : MonoBehaviour
         if (!isClear)
         {
             GameManager.Instance.TrySameStage(isClear);
-
-            //6.15 本田追記 カメラを高速移動モードに更新
-            CameraWork work = Camera.main.GetComponent<CameraWork>();
-            Debug.Log(work != null);
-            work.SetRespawnTrace();
-            //ここまで
             return;
         }
 

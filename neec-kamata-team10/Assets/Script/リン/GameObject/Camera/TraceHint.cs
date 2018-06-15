@@ -16,24 +16,12 @@ public class TraceHint : CameraMode
     private Vector3 velocity = Vector3.zero;    //Velocity
     private float dampTime;                     //ダンプタイム
 
-    //ここから 2018.6.15 本田のフィールド変更部分
-    private float respawnDampTime;              //Playerリスポーン時のDamp
-    private float traceMinValueY;            //追跡するオブジェクトY座標がこれより下に行ったら止める
-    private bool isRespawnTrace;             //リスポーンしたときか？
-    //ここまで
-
-    public TraceHint(GameObject target, GameObject cameraObj, float dampTime, float respawnDampTime = 1f, float traceMinValueY = -100f)
+    public TraceHint(GameObject target, GameObject cameraObj, float dampTime)
     {
         this.target = target;
         this.cameraObj = cameraObj;
         camera = cameraObj.GetComponent<Camera>();
         this.dampTime = dampTime;
-
-        //ここから本田が追記
-        this.respawnDampTime = respawnDampTime;
-        this.traceMinValueY = traceMinValueY;
-        isRespawnTrace = false;
-        //ここまで
     }
 
     /// <summary>
@@ -46,26 +34,11 @@ public class TraceHint : CameraMode
 
         Vector3 targetPos = target.transform.position;                                                  //注目先の位置
 
-        //6.15 本田 ターゲットのYを見て補正
-        if (targetPos.y < traceMinValueY) targetPos.y = traceMinValueY;
-        //ここだけ先に補正
-
         Vector3 point = camera.WorldToViewportPoint(targetPos);                                         //画面上の位置に変換
         Vector3 direct = targetPos - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));     //同じ深度で方向を計算する
-
-        //6.15 本田 移動量一定未満で到達判定
-        if(direct.magnitude < 0.1f)
-        {
-            isRespawnTrace = false;
-        }
-
-        //実際のDampTime
-        float realDampTime = (isRespawnTrace) ? respawnDampTime : dampTime;
-        //ここまで
-
+        direct.z = 0;
         Vector3 destination = cameraObj.transform.position + direct;                                    //目的地を計算
-        cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, destination, ref velocity, realDampTime);   //スムーズダンプさせる
-        //cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, destination, ref velocity, dampTime);   //スムーズダンプさせる
+        cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, destination, ref velocity, dampTime);   //スムーズダンプさせる
     }
 
     /// <summary>
@@ -77,9 +50,17 @@ public class TraceHint : CameraMode
         this.target = target;
     }
 
-    //6.15 本田 メソッドの追加
-    public void SetRespawnTrace(bool isRespawnTrace = true)
+    /// <summary>
+    /// 座標クランプ
+    /// </summary>
+    /// <param name="min">最小</param>
+    /// <param name="max">最大</param>
+    public void Clamp(Vector2 min, Vector2 max)
     {
-        this.isRespawnTrace = isRespawnTrace;
+        Vector3 clampPos = cameraObj.transform.position;
+        clampPos.x = Mathf.Max(min.x, Mathf.Min(clampPos.x, max.x));        //Xクランプ
+        clampPos.y = Mathf.Max(min.y, Mathf.Min(clampPos.y, max.y));        //Yクランプ
+
+        cameraObj.transform.position = clampPos;
     }
 }

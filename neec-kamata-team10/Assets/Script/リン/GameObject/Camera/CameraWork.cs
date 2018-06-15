@@ -3,8 +3,6 @@
 // 作成者：林 佳叡
 // 内容：カメラワーク
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraWork : MonoBehaviour {
@@ -21,23 +19,17 @@ public class CameraWork : MonoBehaviour {
     private float radius;                                       //移動しない半径
     [SerializeField]
     private float charaTraceSpeed = 7;                          //キャラ追尾するスピード
-
-    //2018.6.15 本田の追記部分
     [SerializeField]
-    private float respawnTraceSpeed = 50;                       //リスポーン時にキャラクターを追尾するSpeed
+    private Vector2 minPos = new Vector2(-1000, -100);
     [SerializeField]
-    private float traceMinValueY = -10;                         //キャラクターのY座標がこの値を超えたら下への追尾をやめる
-    //ここまで
+    private Vector2 maxPos = new Vector2(1000, 500);
 
     private CameraMode cameraMode;                              //動くモード
-    private TraceMode previousMode;                             //Debug：前回のモード
 
     void Start ()
     {
         Restart();
-
-        previousMode = TraceMode.TRACE_CHARACTER;               //Debug：前回のモードを初期化
-        cameraMode = ModeFactory(previousMode);                 //指定モードを生成
+        cameraMode = ModeFactory(currentMode);                  //指定モードを生成
 	}
 
     /// <summary>
@@ -52,19 +44,12 @@ public class CameraWork : MonoBehaviour {
         transform.position = startPos;
         Time.timeScale = 1;                                     //タイムを正常
         GameManager.Instance.GetStageManager().StartStage();               //Time計算開始
-        //Destroy(transform.GetChild(1).GetComponent<SceneFader>());         //Faderを削除
     }
 	
 	void Update ()
     {
-        if (previousMode != currentMode)                        //Debug：変更があれば
-        {
-            ChangeMode(currentMode);                            //Debug：現在のモードに変更
-            previousMode = currentMode;                         //Debug：前回のモードを更新
-        }
-
-        cameraMode.SetTarget(target);                           //Debug：ターゲット指定
         cameraMode.Trace();                                     //追尾する
+        cameraMode.Clamp(minPos, maxPos);                       //座標クランプ
     }
 
     /// <summary>
@@ -97,31 +82,12 @@ public class CameraWork : MonoBehaviour {
         switch (mode)
         {
             case TraceMode.TRACE_CHARACTER:
-
-                //2018.6.15 本田 カメラの仕様変更で加筆
-                return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius, respawnTraceSpeed, traceMinValueY);     //キャラクターを追尾
-                //return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);     //キャラクターを追尾
+                return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);     //キャラクターを追尾
 
             case TraceMode.TRACE_HINT:
-
-                //2018.6.15 本田 こちらも加筆
-                return new TraceHint(target, gameObject, dampTime, dampTime * charaTraceSpeed / respawnTraceSpeed, traceMinValueY);                                      //指定オブジェクトを追尾
-                //return new TraceHint(target, gameObject, dampTime);                                      //指定オブジェクトを追尾
+                return new TraceHint(target, gameObject, dampTime);                                      //指定オブジェクトを追尾
         }
 
         return new TraceCharacter(gameObject, target, relativePos, charaTraceSpeed, radius);             //デフォルト
-    }
-
-    //6.15 本田追記 Respawn用の高速追尾に切り替え
-    public void SetRespawnTrace()
-    {
-        if(cameraMode is TraceCharacter)
-        {
-            ((TraceCharacter)cameraMode).SetRespawnTrace(true);
-        }
-        else
-        {
-            Debug.Log("notChara");
-        }
     }
 }
