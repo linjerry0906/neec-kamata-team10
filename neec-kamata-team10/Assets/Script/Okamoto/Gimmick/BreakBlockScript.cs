@@ -24,7 +24,7 @@ public class BreakBlockScript : MonoBehaviour {
 	void Update () {
         if (trigger)
         {
-            time--;
+            time -= Time.deltaTime;
             if (time <= 0) Destroy(gameObject);
         }
     }
@@ -33,16 +33,43 @@ public class BreakBlockScript : MonoBehaviour {
     //他のコライダと接触した時
     void OnTriggerEnter(Collider col)
     {
+        //既に接触が始まった場合->無視する
+        if (trigger) return;
+
         if (col.gameObject.CompareTag("Player"))
         {
             player = col.GetComponent<Player>();
-            trigger = true;
+            trigger = IsMass(col);
+        }
+        else if (IsTrueTag(col.gameObject.tag))
+        {
+            trigger = IsMass(col);
         }
     }
 
     private void OnDestroy()
     {
-        player.SetPlayerState(EPlayerState.Jump);
-        player.SetIsJump(true);
+        //Playerが触れた場合
+        if (player != null)
+        {
+            player.SetPlayerState(EPlayerState.Jump);
+            player.SetIsJump(true);
+        }
+    }
+
+    //6.15 本田 変更:Enemy,MagicBlock,Splinterでも破壊される
+    private bool IsTrueTag(string tag)
+    {
+        if (tag.Equals("Enemy")) return true;
+        else if (tag.Equals("magic_block")) return true;
+        else if (tag.Equals("Splinter")) return true;
+
+        return false;
+    }
+
+    private bool IsMass(Collider col)
+    {
+        Rigidbody rigidbody = col.GetComponent<Rigidbody>();
+        return (breakMass <= rigidbody.mass);
     }
 }
