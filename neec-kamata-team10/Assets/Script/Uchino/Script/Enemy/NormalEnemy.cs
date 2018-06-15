@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class NormalEnemy : MoveEnemy
 {
-    private Animator anim;
+    Animator anim;
+    EnemyAnime enemyAnime;
 
     void Start()
     {
         DirectionInit();
+
         anim = GetComponent<Animator>();
+        enemyAnime = GetComponent<EnemyAnime>();
     }
 
     void Update()
     {
         SetGroundEdge();                                    //地面端の設定
-        HorizontalMove();                                   //行ったり来たり
-
-        anim.SetInteger("direction", (int)Direction);       //向きに合わせてdirectionも変動
-        
+        HorizontalMove();                                   //行ったり来たり                                 
+        enemyAnime.Animation(this);                         //反転アニメーション
     }
 
 

@@ -3,11 +3,13 @@
 // 作成者：林 佳叡
 // 内容：ゲームマネージャー
 //------------------------------------------------------
+using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
-    public static GameManager Instance;                     //GameManagerのインスタンス
+    public static GameManager Instance = null;                  //GameManagerのインスタンス
 
     [SerializeField]
     private EController debugController;
@@ -15,15 +17,12 @@ public class GameManager : MonoBehaviour {
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
+    private SoundManager soundManager;                      //サウンドマネージャー
+    private SystemSE systemSeManager;                       //システム音のマネージャー
 
     private void Awake()
     {
         CheckInstance();                                    //Instanceをチェックする
-
-        controllerManager = new ControllerManager();
-        sceneManager = new SceneChange();
-        stageManager = new StageManager();
-        stageManager.Initialize(0);                         //Debug Test
     }
 
     /// <summary>
@@ -33,21 +32,38 @@ public class GameManager : MonoBehaviour {
     {
         if (Instance != null)                               //Nullじゃない場合
         {
-            Destroy(this.gameObject);                       //削除
+            DestroyImmediate(this.gameObject);                       //削除
             return;
         }
         Instance = this;                                    //Instance指定
         DontDestroyOnLoad(this.gameObject);                 //削除されないように
+
+        Initialize();
     }
 
-    void Start ()
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    private void Initialize()
     {
-	}
-	
-	void Update ()
+        controllerManager = new ControllerManager();
+        soundManager = transform.GetChild(0).GetComponent<SoundManager>();
+        systemSeManager = transform.GetChild(0).GetComponent<SystemSE>();
+        sceneManager = new SceneChange();
+        stageManager = new StageManager();
+        stageManager.Initialize(0, true);                         //Debug Test
+    }
+
+    void Start()
+    {
+    }
+
+    void Update()
     {
         stageManager.Update();                              //Stage時間を更新
-	}
+    }
+
+    #region Scene関連
 
     /// <summary>
     /// シーンを切り替わる
@@ -59,19 +75,37 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// Pauseシーンへ
+    /// </summary>
+    public void Pause()
+    {
+        sceneManager.ChangeSceneAsync(EScene.Pause);
+    }
+
+    /// <summary>
+    /// Pauseシーンから戻る
+    /// </summary>
+    public void Resume()
+    {
+        sceneManager.CloseScene(EScene.Pause);
+    }
+
+#endregion
+
+    /// <summary>
     /// 指定のコントローラーを取得
     /// </summary>
     /// <param name="eController">キーボードか、パッドか</param>
     /// <returns></returns>
     public ICharacterController GetController()
     {
-        if(debugController == EController.KEYBOARD)         //キーボードの場合
+        if (debugController == EController.KEYBOARD)        //キーボードの場合
             return controllerManager.Keyboard();            //キーボードのコントローラーを返す
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
 
-#region Stage関連
+    #region Stage関連
 
     /// <summary>
     /// 次のステージを指定
@@ -80,7 +114,7 @@ public class GameManager : MonoBehaviour {
     public void SelectStage(int stage)
     {
         sceneManager.ChangeScene((EScene)stage);            //シーン切り替え
-        stageManager.Initialize(stage);                     //ステージ初期化
+        stageManager.Initialize(stage, true);               //ステージ初期化
     }
 
     /// <summary>
@@ -92,5 +126,53 @@ public class GameManager : MonoBehaviour {
         return stageManager;
     }
 
-#endregion
+    /// <summary>
+    /// 同じステージを挑戦
+    /// </summary>
+    public void TrySameStage(bool isClear)
+    {
+        stageManager.Initialize(stageManager.CurrentStage(), isClear);      //StageManager初期化
+        sceneManager.ChangeScene(sceneManager.CurrentScene());              //同じシーンを読み込む
+
+        if (isClear)                                                        //クリアの場合は以下実行しない
+            return;
+        //カメラ位置とRespawn位置を記録
+        Vector3 pos = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawn>().GetRespawnPosition();
+        stageManager.SetStartPos(pos);
+        stageManager.SetCameraPos();
+    }
+
+    /// <summary>
+    /// Pauseシーンからリトライする場合
+    /// </summary>
+    public void PauseRetry()
+    {
+        Resume();
+        stageManager.Initialize(stageManager.CurrentStage(), true);         //StageManager初期化
+        sceneManager.ChangeScene(sceneManager.CurrentScene());              //同じシーンを読み込む
+    }
+
+    #endregion
+
+
+    #region Sound関連
+    
+    /// <summary>
+    /// サウンドマネージャー
+    /// </summary>
+    /// <returns></returns>
+    public SoundManager GetSoundManager()
+    {
+        return soundManager;
+    }
+    /// <summary>
+    /// SystemSoundマネージャー
+    /// </summary>
+    /// <returns></returns>
+    public SystemSE GetSystemSE()
+    {
+        return systemSeManager;
+    }
+
+    #endregion
 }

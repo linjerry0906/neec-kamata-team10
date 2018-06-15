@@ -59,7 +59,7 @@ public class SceneFader : MonoBehaviour
     /// フェイド終了か
     /// </summary>
     /// <returns></returns>
-    public bool IsEnd()
+    private bool IsEnd()
     {
         return fadeFactor >= 1.1f;
     }

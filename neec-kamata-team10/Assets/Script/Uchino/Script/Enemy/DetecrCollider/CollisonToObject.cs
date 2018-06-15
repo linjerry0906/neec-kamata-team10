@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CollisonToObject : MonoBehaviour {
 
-    Vector3 defaultScale;
-    Vector3 previousScale;
+    ObjectSize objectSize;
+    AudioSource audioSource;
 
     private void Start()
     {
@@ -13,37 +13,40 @@ public class CollisonToObject : MonoBehaviour {
         transform.position = new Vector3(parentTransform.position.x, parentTransform.position.y
             , parentTransform.position.z);
 
-        defaultScale = transform.parent.localScale;
-        previousScale = defaultScale;
-
+        objectSize = GetComponentInParent<ObjectSize>();
+        parentPosY = transform.parent.position.y;
+        audioSource = GetComponent<AudioSource>();
     }
 
-    bool isMirrorColison = false;
+
     private void Update()
     {
-
-        ////if (transform.parent.localScale != previousScale)
-        ////{
-        ////    if (previousScale != defaultScale)
-        ////    {
-        ////        transform.parent.localScale = previousScale;
-        ////        isMirrorColison = true;
-        ////    }
-        ////}
-
-        ////if(isMirrorColison)
-        ////{
-        ////    transform.parent.localScale = previousScale;
-        ////}
-
-        ////previousScale = transform.parent.localScale;
-        //Debug.Log(transform.parent.localScale + "代入前");
-        //transform.parent.gameObject.transform.localScale = new Vector3(2, 2, 2);
-        //Debug.Log(transform.parent.localScale);
-        //Debug.Log("defaultScale"+defaultScale);
+        Positioning();
     }
 
+    float parentPosY;
+    /// <summary>
+    /// BigXYの時に地面に埋まらないように位置を調整
+    /// </summary>
+    private void Positioning()
+    {
+        if (!IsBigSize()) return;
 
+        Vector3 scale = transform.parent.localScale;
+        Vector3 parentPos = transform.parent.position;
+       
+        transform.parent.position = 
+            new Vector3(parentPos.x, parentPosY + scale.y / 2 /2, parentPos.z);    //スケールが増えた分上に移動させる。
+
+    }
+
+    bool IsBigSize()
+    {
+        if (objectSize.GetSize() == SizeEnum.Big_XY) return true;
+        if (objectSize.GetSize() == SizeEnum.Big_Y)  return true;
+
+        return false;
+    }
 
     /// <summary>
     /// 他のオブジェクトにぶつかった時
@@ -51,21 +54,22 @@ public class CollisonToObject : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
-        
-        if (other.tag != "Player") { return; }                //プレイヤーじゃなかったら実行しない。
+
+        if (other.tag != "Player" 
+            && other.tag != "Splinter") { return; }           //プレイヤーかトゲじゃなかったら実行しない。
+
 
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject.name);
-    }
-
-
     private void KillOrDeath(Collider other)
     {
+        if(other.tag == "Splinter")                           //相手はトゲ？
+        {
+            Destroy(transform.parent.gameObject);             //無条件で自分が死ぬ
+            return;
+        }
+
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
         if (size == null)                                     //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
@@ -76,7 +80,8 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size))                                    //エネミーが小さいか
         {
-            Destroy(transform.parent.gameObject);                    //小さかったら自分が死ぬ
+            audioSource.Play();
+            GetComponentInParent<EnemyAliveFlag>().Dead();
             return;
         }
 

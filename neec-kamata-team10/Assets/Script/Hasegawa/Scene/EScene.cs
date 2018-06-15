@@ -2,8 +2,8 @@
 {
     Stage1 = 1,
     Stage2 = 2,
-    TitleTest,
+    TitleTest = -100,
     PlayTest,
-    Clear,
-    Failed,
+    StageSelect,
+    Pause,
 }

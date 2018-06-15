@@ -13,16 +13,12 @@ public class ResultUI : MonoBehaviour
 
     [SerializeField]
     private GameObject clearObj;            //clearを表示するオブジェクト
-    [SerializeField]
-    private GameObject failedObj;           //failを表示するオブジェクト
 
     [SerializeField]
     private float maxAlpha;                 //最大透明値
     [SerializeField]
     private float alphaChangeValue;         //透明値変化量
     private Color panelColor;               //パネルの色
-
-    private GameObject resultObj;
 
 	void Start ()
     {
@@ -33,11 +29,11 @@ public class ResultUI : MonoBehaviour
 	
 	void Update ()
     {
-        Color resultColor = resultObj.GetComponent<Image>().color;
+        Color resultColor = clearObj.GetComponent<Image>().color;
         if (resultColor.a < 1)
         {
             resultColor.a += alphaChangeValue;
-            resultObj.GetComponent<Image>().color = resultColor;
+            clearObj.GetComponent<Image>().color = resultColor;
         }
 
         if (panelColor.a < maxAlpha)
@@ -56,26 +52,20 @@ public class ResultUI : MonoBehaviour
     {
         if (isClear)
         {
-            SetObjActive(ref clearObj, ref failedObj);
+            SetObjActive();
             return;
         }
-
-        SetObjActive(ref failedObj, ref clearObj);
     }
 
     /// <summary>
     /// Switch機能
     /// </summary>
-    /// <param name="on"></param>
-    /// <param name="off"></param>
-    private void SetObjActive(ref GameObject on, ref GameObject off)
+    private void SetObjActive()
     {
-        on.SetActive(true);
-        off.SetActive(false);
-        resultObj = on;
+        clearObj.SetActive(true);
 
-        Color resultColor = resultObj.GetComponent<Image>().color;
+        Color resultColor = clearObj.GetComponent<Image>().color;
         resultColor.a = 0;
-        resultObj.GetComponent<Image>().color = resultColor;
+        clearObj.GetComponent<Image>().color = resultColor;
     }
 }

@@ -3,8 +3,6 @@
 // 作成者：林 佳叡
 // 内容：カメラワーク
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraWork : MonoBehaviour {
@@ -21,26 +19,37 @@ public class CameraWork : MonoBehaviour {
     private float radius;                                       //移動しない半径
     [SerializeField]
     private float charaTraceSpeed = 7;                          //キャラ追尾するスピード
+    [SerializeField]
+    private Vector2 minPos = new Vector2(-1000, -100);
+    [SerializeField]
+    private Vector2 maxPos = new Vector2(1000, 500);
 
     private CameraMode cameraMode;                              //動くモード
-    private TraceMode previousMode;                             //Debug：前回のモード
 
     void Start ()
     {
-        previousMode = TraceMode.TRACE_CHARACTER;               //Debug：前回のモードを初期化
-        cameraMode = ModeFactory(previousMode);                 //指定モードを生成
+        Restart();
+        cameraMode = ModeFactory(currentMode);                  //指定モードを生成
 	}
+
+    /// <summary>
+    /// 再開の処理
+    /// </summary>
+    private void Restart()
+    {
+        Vector3 startPos = GameManager.Instance.GetStageManager().CameraPos();
+        if (startPos == Vector3.zero)                           //再開じゃない場合は以下実行しない
+            return;
+
+        transform.position = startPos;
+        Time.timeScale = 1;                                     //タイムを正常
+        GameManager.Instance.GetStageManager().StartStage();               //Time計算開始
+    }
 	
 	void Update ()
     {
-        if (previousMode != currentMode)                        //Debug：変更があれば
-        {
-            ChangeMode(currentMode);                            //Debug：現在のモードに変更
-            previousMode = currentMode;                         //Debug：前回のモードを更新
-        }
-
-        cameraMode.SetTarget(target);                           //Debug：ターゲット指定
         cameraMode.Trace();                                     //追尾する
+        cameraMode.Clamp(minPos, maxPos);                       //座標クランプ
     }
 
     /// <summary>
@@ -59,6 +68,7 @@ public class CameraWork : MonoBehaviour {
     public void SetTarget(GameObject target)
     {
         this.target = target;               //変更
+        cameraMode = ModeFactory(currentMode);
         cameraMode.SetTarget(target);       //設定
     }
 

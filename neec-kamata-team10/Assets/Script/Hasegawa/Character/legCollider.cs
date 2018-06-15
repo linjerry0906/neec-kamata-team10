@@ -2,32 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class legCollider : MonoBehaviour {
+public class legCollider : MonoBehaviour
+{
 
     void OnTriggerStay(Collider t)
     {
-        if (t.gameObject.CompareTag("stage_block"))
+        Player p = transform.parent.GetComponent<Player>();
+        string tag = t.gameObject.tag;
+
+        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw")
         {
-            //Debug.Log("stageに衝突");
-            //プレイヤーのジャンプフラグをfalseにする
-            transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Move);
-            transform.parent.GetComponent<Player>().SetIsJump(false);
+            p.SetPlayerState(EPlayerState.Move);
+            p.SetIsJump(false);
         }
-        if (t.gameObject.CompareTag("ivy_upSideCollider"))
+
+        if (tag == "seasaw")
         {
-            transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Move);
-            transform.parent.GetComponent<Player>().SetIsJump(false);
+            p.SetIsMountSeesaw(true);
         }
-        if (t.gameObject.CompareTag("magic_block"))
-        {
-            transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Move);
-            transform.parent.GetComponent<Player>().SetIsJump(false);
-        }
+
+        //if (t.gameObject.CompareTag("stage_block"))
+        //{
+        //    //Debug.Log("stageに衝突");
+        //    //プレイヤーのジャンプフラグをfalseにする
+        //    p.SetPlayerState(EPlayerState.Move);
+        //    p.SetIsJump(false);
+        //}
+        //if (t.gameObject.CompareTag("ivy_upSideCollider"))
+        //{
+        //    p.SetPlayerState(EPlayerState.Move);
+        //    p.SetIsJump(false);
+        //}
+        //if (t.gameObject.CompareTag("magic_block"))
+        //{
+        //    p.SetPlayerState(EPlayerState.Move);
+        //    p.SetIsJump(false);
+        //}
+        //if (t.gameObject.CompareTag("seasaw"))
+        //{
+        //    p.SetPlayerState(EPlayerState.Move);
+        //    p.SetIsJump(false);
+        //}
+
+        //Debug.Log(t);
     }
 
     void OnTriggerExit(Collider t)
     {
-        transform.parent.GetComponent<Player>().SetPlayerState(EPlayerState.Jump);
-        transform.parent.GetComponent<Player>().SetIsJump(true);
+        string tag = t.gameObject.tag;
+        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw")
+        {
+            Player p = transform.parent.GetComponent<Player>();
+            p.SetPlayerState(EPlayerState.Jump);
+            p.SetIsJump(true);
+            //Debug.Log(t + "を離れた");
+        }
+        if (tag == "seasaw")
+        {
+            Player p = transform.parent.GetComponent<Player>();
+            p.SetIsMountSeesaw(false);
+            //Debug.Log("しーそーから離れた");
+        }
     }
 }

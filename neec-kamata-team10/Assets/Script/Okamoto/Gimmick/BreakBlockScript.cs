@@ -8,32 +8,41 @@ public class BreakBlockScript : MonoBehaviour {
     GameObject gameObject;
     [SerializeField]
     int breakMass;
+    [SerializeField]
+    float breakTime;
+    float time;
+    bool trigger;
+    Player player;
 
     // Use this for initialization
     void Start () {
+        time = breakTime;
+        trigger = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (trigger)
+        {
+            time--;
+            if (time <= 0) Destroy(gameObject);
+        }
     }
+    
 
     //他のコライダと接触した時
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-        if (col.rigidbody.mass >= breakMass)
+        if (col.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            player = col.GetComponent<Player>();
+            trigger = true;
         }
-            
     }
 
-    //他のコライダと接触している時
-    void OnCollisionStay(Collision col)
+    private void OnDestroy()
     {
-    }
-
-    //他のコライダと離れた時
-    void OnCollisionExit(Collision col)
-    {
+        player.SetPlayerState(EPlayerState.Jump);
+        player.SetIsJump(true);
     }
 }

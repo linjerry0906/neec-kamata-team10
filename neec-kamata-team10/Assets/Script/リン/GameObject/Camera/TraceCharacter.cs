@@ -52,4 +52,18 @@ public class TraceCharacter : CameraMode
     {
         this.target = target;
     }
+
+    /// <summary>
+    /// 座標クランプ
+    /// </summary>
+    /// <param name="min">最小</param>
+    /// <param name="max">最大</param>
+    public void Clamp(Vector2 min, Vector2 max)
+    {
+        Vector3 clampPos = camera.transform.position;
+        clampPos.x = Mathf.Max(min.x, Mathf.Min(clampPos.x, max.x));        //Xクランプ
+        clampPos.y = Mathf.Max(min.y, Mathf.Min(clampPos.y, max.y));        //Yクランプ
+
+        camera.transform.position = clampPos;
+    }
 }

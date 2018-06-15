@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class StageSelectScript : MonoBehaviour {
 
-    public int stage;
+    int stage;
 
     //ステージをセットするメソッドを書く
     public void StageSet(int currentStageCount)
     {
         stage = currentStageCount;
     }
-    //クリックされたらそのintを返す
+    //そのintを返す
     public void ReturnStage()
     {
-        Debug.Log(stage + "がクリックされた");
+        //Debug.Log(stage + "がクリックされた");
         GameManager.Instance.SelectStage(stage);
     }
 }

@@ -9,10 +9,7 @@ public class StagePanelCreate : MonoBehaviour {
     private GameObject originPanel;
     [SerializeField]
     private GameObject buttonPanel;
-    [SerializeField]
-    private GameObject rightButton;
-    [SerializeField]
-    private GameObject leftButton;
+
     [SerializeField]
     private GameObject originButton;
     [SerializeField]
@@ -36,12 +33,9 @@ public class StagePanelCreate : MonoBehaviour {
             {
                 //Panel1個作成
                 PanelCreate();
-                //RightButton追加
-                RightButtonCreate();
             }
             //Button作成
             int index = (currentStage - 1) / panelPerButton;
-            //Debug.Log(index);
             GameObject b = Instantiate(originButton, panels[index].transform.GetChild(0));
             //作成されたボタンにステージを割り当てる
             b.GetComponent<StageSelectScript>().StageSet(currentStage);
@@ -59,15 +53,15 @@ public class StagePanelCreate : MonoBehaviour {
         GameObject p = Instantiate(originPanel, transform);
         panels.Add(p);
         if (panels.Count == 1) return;
-        GameObject lb = Instantiate(leftButton, panels[(currentStage - 1) / panelPerButton].transform);
-        lb.GetComponent<Button>().onClick.AddListener(GetComponent<StageSelectScrollScript>().OnClickLeft);
     }
 
-    void RightButtonCreate()
+    public int ReturnPanelPerButton()
     {
-        if (currentStage / panelPerButton <= 0) return;
-        GameObject rb = Instantiate(rightButton, panels[(currentStage / panelPerButton) - 1].transform);
-        rb.GetComponent<Button>().onClick.AddListener(GetComponent<StageSelectScrollScript>().OnClickRight);
-        
+        return panelPerButton;
+    }
+
+    public int ReturnPanel(int index)
+    {
+        return panels[index - 1].transform.GetChild(0).childCount;
     }
 }

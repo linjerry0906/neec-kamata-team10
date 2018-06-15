@@ -13,8 +13,6 @@ public class StageUI : MonoBehaviour
     private Text stageNumber;           //ステージ数
     [SerializeField]
     private Text currentTime;           //経過時間
-    [SerializeField]
-    private Text score;                 //スコア
 
     private StageManager stageManager;  //ステージマネージャー
 
@@ -23,7 +21,6 @@ public class StageUI : MonoBehaviour
         stageManager = GameManager.Instance.GetStageManager();          //ステージマネージャー取得
         stageNumber.text = stageManager.CurrentStage().ToString();      //ステージ設定
         currentTime.text = TimeString();                                //時間設定
-        score.text = "000000";                                          //スコア初期化
 	}
 	
 	void Update ()

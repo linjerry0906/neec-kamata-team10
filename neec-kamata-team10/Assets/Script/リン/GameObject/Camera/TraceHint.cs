@@ -33,8 +33,10 @@ public class TraceHint : CameraMode
             return;
 
         Vector3 targetPos = target.transform.position;                                                  //注目先の位置
+
         Vector3 point = camera.WorldToViewportPoint(targetPos);                                         //画面上の位置に変換
         Vector3 direct = targetPos - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));     //同じ深度で方向を計算する
+        direct.z = 0;
         Vector3 destination = cameraObj.transform.position + direct;                                    //目的地を計算
         cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, destination, ref velocity, dampTime);   //スムーズダンプさせる
     }
@@ -46,5 +48,19 @@ public class TraceHint : CameraMode
     public void SetTarget(GameObject target)
     {
         this.target = target;
+    }
+
+    /// <summary>
+    /// 座標クランプ
+    /// </summary>
+    /// <param name="min">最小</param>
+    /// <param name="max">最大</param>
+    public void Clamp(Vector2 min, Vector2 max)
+    {
+        Vector3 clampPos = cameraObj.transform.position;
+        clampPos.x = Mathf.Max(min.x, Mathf.Min(clampPos.x, max.x));        //Xクランプ
+        clampPos.y = Mathf.Max(min.y, Mathf.Min(clampPos.y, max.y));        //Yクランプ
+
+        cameraObj.transform.position = clampPos;
     }
 }

@@ -16,4 +16,10 @@ public interface CameraMode
     /// </summary>
     /// <param name="target">ターゲット</param>
     void SetTarget(GameObject target);
+    /// <summary>
+    /// 座標クランプ
+    /// </summary>
+    /// <param name="min">最小</param>
+    /// <param name="max">最大</param>
+    void Clamp(Vector2 min, Vector2 max);
 }
