@@ -25,11 +25,32 @@ public class SwitchObject : MonoBehaviour {
     public bool IsTurnOn = false;  //Switchの起動状態bool
     private byte Judge;            //動作安定用の8flame待機bool
 
+    Animator animator;             //アニメ制御用
+    SpriteRenderer spriteRenderer; //描画色の制御用
+    ParticleSystem particleSystem; //パーティクル制御用
+    float defaultSpeed;            //デフォルトのアニメ再生速度
+
+    [SerializeField]
+    private float delay = 0.5f;    //スイッチ状態の変更時のカラー制御Delay
+
+    float counter = 0f;                                  //delay秒数Counter
+    Color colorNow;                                      //counter開始前の描画色
+    Color colorOff = new Color(0.75f, 0.75f, 0.75f, 1f); //スイッチoff時のColor
+    Color colorOn = new Color(1f, 0.25f, 0.6f, 1f);      //スイッチOn時のColor
+
     //// Use this for initialization
-    //void Start()
-    //{
-        
-    //}
+    void Start()
+    {
+        //取得する
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+
+        defaultSpeed = animator.speed;
+        colorNow = colorOff;
+
+        particleSystem.Stop(); //初期状態では停止させておく
+    }
 
     // Update is called once per frame
     void Update()
@@ -45,6 +66,10 @@ public class SwitchObject : MonoBehaviour {
         /// 
         /// </summary>
         IsTurnOn = ((Judge & 7) != 0);
+
+        UpdateAnime(); //アニメのUpdate
+
+        UpdateParticle(); //パーティクルのUpdate
 
         //これからの1flameのジャッジのを入れるために左に1bitシフト
         Judge = (byte)(Judge << 1);
@@ -67,5 +92,45 @@ public class SwitchObject : MonoBehaviour {
 
         //else
         return false;
+    }
+
+    void UpdateAnime()
+    {
+        animator.speed = (IsTurnOn) ? defaultSpeed : 0f;              //アニメ速度の設定
+
+        Color imagineColor = (IsTurnOn) ? colorOn : colorOff;   //アニメ終了後の色
+
+        if(counter >= delay)
+        {   //カウンター:指定時間以上
+            spriteRenderer.color = imagineColor; //色の更新
+            colorNow = imagineColor;             //現在の色を新しい色に更新
+            counter = 0f;                        //カウンターをリセット
+        }
+        else if(spriteRenderer.color == imagineColor)
+        {
+            //アニメーション不要 変更なし
+            //カウントの必要もない
+            return;
+        }
+        else
+        {
+            //カウンター:指定時間未満
+            spriteRenderer.color = Color.Lerp(colorNow, imagineColor, (counter / delay));
+
+            counter += Time.deltaTime;
+        }
+    }
+
+    void UpdateParticle()
+    {
+        if(particleSystem.isPlaying && !IsTurnOn) //Particleは動いているけどスイッチOff
+        {
+            particleSystem.Stop();   //生成を止めろ
+        }
+        //上の真逆
+        else if(particleSystem.isStopped && IsTurnOn)
+        {
+            particleSystem.Play();   
+        }
     }
 }
