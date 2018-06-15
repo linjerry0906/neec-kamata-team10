@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
     private StageManager stageManager;                      //ステージマネージャー
-    private SoundManager soundManager;
+    private SoundManager soundManager;                      //サウンドマネージャー
+    private SystemSE systemSeManager;                       //システム音のマネージャー
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         controllerManager = new ControllerManager();
         soundManager = transform.GetChild(0).GetComponent<SoundManager>();
+        systemSeManager = transform.GetChild(0).GetComponent<SystemSE>();
         sceneManager = new SceneChange();
         stageManager = new StageManager();
         stageManager.Initialize(0, true);                         //Debug Test
@@ -154,10 +156,22 @@ public class GameManager : MonoBehaviour
 
 
     #region Sound関連
-
+    
+    /// <summary>
+    /// サウンドマネージャー
+    /// </summary>
+    /// <returns></returns>
     public SoundManager GetSoundManager()
     {
         return soundManager;
+    }
+    /// <summary>
+    /// SystemSoundマネージャー
+    /// </summary>
+    /// <returns></returns>
+    public SystemSE GetSystemSE()
+    {
+        return systemSeManager;
     }
 
     #endregion

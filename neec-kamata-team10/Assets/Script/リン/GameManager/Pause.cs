@@ -20,7 +20,10 @@ public class Pause : MonoBehaviour
     private GameManager gameManager;                //GameManager
     private StageManager stageManager;              //StageManager
     private SoundManager soundManager;              //SoundManager
+    private SystemSE systemSe;                      //SystemSe
     private ICharacterController controller;        //コントローラー
+
+    private PausePanelFade fadeManager;             //Fadeのマネージャー
 
     private PauseSelectEnum select = PauseSelectEnum.Retry;
 
@@ -37,20 +40,33 @@ public class Pause : MonoBehaviour
         Time.timeScale = 0;
         //背景音量設定
         soundManager = gameManager.GetSoundManager();
+        systemSe = gameManager.GetSystemSE();
         previousVolume = soundManager.MaxVolume();
         soundManager.SetMaxVolume(bgmMaxVolume);
 
         uiImage[0].GetComponent<PauseSelectAnime>().SetVisible(true);
+        fadeManager = pausePanel.GetComponent<PausePanelFade>();
     }
 
     void Update()
     {
-        if (controller.Pause())
-        {
-            pausePanel.GetComponent<PausePanelFade>().SetFadeState(FadeState.FadeOut);
-        }
+        if (fadeManager.CurrentState() != FadeState.None)
+            return;
 
+        PauseButton();
         Select();
+        Trigger();
+    }
+
+    /// <summary>
+    /// Pauseボタン
+    /// </summary>
+    private void PauseButton()
+    {
+        if (!controller.Pause())
+            return;
+        systemSe.PlaySystemSE(SystemSoundEnum.se_cancel);
+        fadeManager.SetFadeState(FadeState.FadeOut);
     }
 
     /// <summary>
@@ -60,16 +76,53 @@ public class Pause : MonoBehaviour
     {
         int selectInt = (int)select;
         if (controller.MoveSelectionDown())         //下
+        {
             selectInt++;
+            systemSe.PlaySystemSE(SystemSoundEnum.se_select);
+        }
         if (controller.MoveSelectionUp())           //上
+        {
             selectInt--;
+            systemSe.PlaySystemSE(SystemSoundEnum.se_select);
+        }
 
         selectInt = Mathf.Abs(selectInt);
-        selectInt %= (int)PauseSelectEnum.Null;
+        selectInt %= (int)PauseSelectEnum.Null;     //添え字計算
 
         uiImage[(int)select].GetComponent<PauseSelectAnime>().SetVisible(false);
         uiImage[selectInt].GetComponent<PauseSelectAnime>().SetVisible(true);
         select = (PauseSelectEnum)selectInt;
+    }
+
+    /// <summary>
+    /// トリガーボタン
+    /// </summary>
+    private void Trigger()
+    {
+        if (!controller.OperateTheMirror())
+            return;
+
+        if (select == PauseSelectEnum.Retry)
+            Retry();
+
+        if (select == PauseSelectEnum.StageSelect)
+            StageSelect();
+    }
+
+    /// <summary>
+    /// リトライ
+    /// </summary>
+    private void Retry()
+    {
+        gameManager.PauseRetry();
+    }
+
+    /// <summary>
+    /// ステージセレクト
+    /// </summary>
+    private void StageSelect()
+    {
+        gameManager.ChangeScene(EScene.StageSelect);
     }
 
     /// <summary>

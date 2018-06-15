@@ -10,8 +10,6 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
     [SerializeField]
-    private List<AudioClip> sesSource;              //効果音源
-    [SerializeField]
     private GameObject soundBuffer;                 //Prefab
 
     private List<GameObject> buffers;               //Sound Buffer

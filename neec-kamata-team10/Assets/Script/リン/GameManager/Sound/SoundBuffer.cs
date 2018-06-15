@@ -149,4 +149,13 @@ public class SoundBuffer : MonoBehaviour
         audioSource.loop = loop;
         audioSource.Play();
     }
+
+    /// <summary>
+    /// 終わっているか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnd()
+    {
+        return !audioSource.isPlaying;
+    }
 }

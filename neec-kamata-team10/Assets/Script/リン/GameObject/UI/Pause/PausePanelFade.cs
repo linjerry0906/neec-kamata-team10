@@ -103,4 +103,13 @@ public class PausePanelFade : MonoBehaviour
     {
         return fadeAlpha / maxAlpha;
     }
+
+    /// <summary>
+    /// 現在の状態
+    /// </summary>
+    /// <returns></returns>
+    public FadeState CurrentState()
+    {
+        return fadeState;
+    }
 }
