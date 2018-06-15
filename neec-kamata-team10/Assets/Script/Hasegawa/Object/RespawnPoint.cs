@@ -42,6 +42,7 @@ public class RespawnPoint : MonoBehaviour {
     {
         if (isChecked || !other.tag.Equals("Player")) return; //既に通過された後だったり、Player以外がぶつかった時は無視する
 
+        if (other.GetComponent<AliveFlag>().IsDead()) return; //Playerが死にながら突撃しても無駄だよ
         isChecked = true;
         spriteRenderer.sprite = checkedSprite; //Spriteを変更
         //パーティクル出すならここでActive化かな？

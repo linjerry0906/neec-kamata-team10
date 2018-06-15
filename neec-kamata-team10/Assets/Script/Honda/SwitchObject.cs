@@ -35,7 +35,7 @@ public class SwitchObject : MonoBehaviour {
 
     float counter = 0f;                                  //delay秒数Counter
     Color colorNow;                                      //counter開始前の描画色
-    Color colorOff = new Color(0.75f, 0.75f, 0.75f, 1f); //スイッチoff時のColor
+    Color colorOff = new Color(0f, 0f, 0f, 1f); //スイッチoff時のColor
     Color colorOn = new Color(1f, 0.25f, 0.6f, 1f);      //スイッチOn時のColor
 
     //// Use this for initialization
