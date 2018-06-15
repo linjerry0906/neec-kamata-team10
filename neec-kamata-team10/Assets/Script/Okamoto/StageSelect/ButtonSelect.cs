@@ -11,6 +11,7 @@ public class ButtonSelect : MonoBehaviour {
     [SerializeField]
     private GameObject parentObject;
     private StageSelectScript s;
+    private int allButton;
     private int panelButton;
     private int constrain;
     private int allPage;
@@ -19,6 +20,7 @@ public class ButtonSelect : MonoBehaviour {
     // Use this for initialization
     void Start () {
         stage = 1;
+        allButton = 0;
         allPage = 0;
         page = 1;
         constrain = 0;
@@ -31,20 +33,26 @@ public class ButtonSelect : MonoBehaviour {
         {
             constrain = transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>().constraintCount;
             allPage = transform.childCount;
+            for (int i = 0; i < allPage; i++) 
+            {
+                allButton += transform.GetChild(i).GetChild(0).childCount;
+            }
             CheckPanelButton();
             return;
         }
 
-        int index =constrain;
         //Debug.Log(panelButton);
         //Debug.Log(constrain);
         //Debug.Log(index);
         //選択ステージが端っこじゃないとき
-        if (!(stage % index == 0))
+        if (!(stage == allButton))
         {
-            if (controller.MoveSelectionRight()) stage++;
+            if (!(stage % constrain == 0))
+            {
+                if (controller.MoveSelectionRight()) stage++;
+            }
         }
-        if(!(stage % index == 1))
+        if(!(stage % constrain == 1))
         {
             if (controller.MoveSelectionLeft()) stage--;
         }
@@ -69,17 +77,35 @@ public class ButtonSelect : MonoBehaviour {
                 CheckPanelButton();
             }
         }
+        //終わりのページじゃないとき
+        if (!(page == allPage))
+        {
+            //下にシフトできるとき
+            if (stage + constrain <= (panelButton * page))
+            {
+                if (controller.MoveSelectionDown()) stage += constrain;
+            }
+            //上にシフトできるとき
+            if (stage - constrain > ((panelButton * page) - panelButton))
+            {
+                if (controller.MoveSelectionUp()) stage -= constrain;
+            }
+        }
+        //終わりのページの時
+        else
+        {
+            //下にシフトできるとき
+            if (stage + constrain <= allButton)
+            {
+                if (controller.MoveSelectionDown()) stage += constrain;
+            }
+            //上にシフトできるとき
+            if (stage - constrain > allButton - panelButton)
+            {
+                if (controller.MoveSelectionUp()) stage -= constrain;
+            }
+        }
 
-        //下にシフトできるとき
-        if (stage + index <= (panelButton * page))
-        {
-            if (controller.MoveSelectionDown()) stage += constrain;
-        }
-        //上にシフトできるとき
-        if (stage - index > ((panelButton * page) - panelButton))
-        {
-            if (controller.MoveSelectionUp()) stage -= constrain;
-        }
         Debug.Log(stage);
 
         if(controller.Jump())
