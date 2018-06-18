@@ -5,64 +5,58 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-    EnemyAnime enemyAnime;
+
     // Use this for initialization
     void Start()
     {
         direction = Direction.LEFT;
 
-        //defaultScale = transform.localScale;            //デフォルトスケール
-        //previousScale = defaultScale;                   //前回のスケール
-
-        enemyAnime = GetComponent<EnemyAnime>();
+        defaultScale = transform.localScale;            //デフォルトスケール
+        previousScale = defaultScale;                   //前回のスケール
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-        //NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
-        enemyAnime.Animation(this);
-
-        transform.localScale = new Vector3(transform.localScale.x, 
-            transform.localScale.y , 0.8f);
+        FlipAnimation();
     }
 
-    //Vector3 defaultScale;                               //デフォルトスケール
-    //Vector3 previousScale;                              //前回のスケール
-    //bool isMirrorColison = false;                       //継続して影響を受けさせないためのフラグ
-    ///// <summary>
-    ///// 鏡の影響を重ねて受けさせない
-    ///// </summary>
-    //private void NotInfluencedAgain()
-    //{
-    //    if (transform.localScale != previousScale)      //前回のスケールと今のスケールが異なれば
-    //    {
-    //        if (previousScale != defaultScale)          //前回のスケールがデフォルトのスケールなら影響を受けさせる
-    //        {
-    //            transform.localScale = previousScale;   //スケールを重ねて変更させない
-    //            isMirrorColison = true;                 //鏡に当たってる間このスケールを維持させるためのフラグ
-    //        }
-    //    }
+    Vector3 defaultScale;                               //デフォルトスケール
+    Vector3 previousScale;                              //前回のスケール
+    bool isMirrorColison = false;                       //継続して影響を受けさせないためのフラグ
+    /// <summary>
+    /// 鏡の影響を重ねて受けさせない
+    /// </summary>
+    private void NotInfluencedAgain()
+    {
+        if (transform.localScale != previousScale)      //前回のスケールと今のスケールが異なれば
+        {
+            if (previousScale != defaultScale)          //前回のスケールがデフォルトのスケールなら影響を受けさせる
+            {
+                transform.localScale = previousScale;   //スケールを重ねて変更させない
+                isMirrorColison = true;                 //鏡に当たってる間このスケールを維持させるためのフラグ
+            }
+        }
 
-    //    if (isMirrorColison)                            //一度スケールが変わったら
-    //    {
-    //        transform.localScale = previousScale;       //鏡に当たってる間は、このスケールを維持
-    //    }
+        if (isMirrorColison)                            //一度スケールが変わったら
+        {
+            transform.localScale = previousScale;       //鏡に当たってる間は、このスケールを維持
+        }
 
-    //    previousScale = transform.localScale;           //前回のスケールを保存
-    //}
+        previousScale = transform.localScale;           //前回のスケールを保存
+    }
 
-    ///// <summary>
-    ///// 鏡から離れたとき
-    ///// </summary>
-    ///// <param name="other"></param>
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.tag != "mirror") return;
+    /// <summary>
+    /// 鏡から離れたとき
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "mirror") return;
 
-    //    isMirrorColison = false;                //鏡から離れたら初期化
-    //    previousScale = defaultScale;           //鏡から離れたのでnormalサイズに
-    //}
+        isMirrorColison = false;                //鏡から離れたら初期化
+        previousScale = defaultScale;           //鏡から離れたのでnormalサイズに
+    }
 
     /// <summary>
     /// 地面端の設定
@@ -156,7 +150,7 @@ public class ChaseEnemy : MoveEnemy
     /// <returns></returns>
     private bool IsCloseThePlayerX(float differenceX)
     {
-        const int limitedRangeX = 1; //横軸の移動制限範囲
+        const float limitedRangeX = 0.4f; //横軸の移動制限範囲
 
         if (Mathf.Abs(differenceX) <= limitedRangeX) { return true; }   //playerに1タイル分近づくと動かさない
 

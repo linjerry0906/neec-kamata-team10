@@ -88,7 +88,7 @@ public class MoveEnemy : MonoBehaviour
         {
             time = 0.0f;
 
-            DetectEmpty detectEmptyLeft  = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
+            DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
             DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
 
             //地面に当たってなかったら
@@ -111,9 +111,14 @@ public class MoveEnemy : MonoBehaviour
     /// </summary>
     protected void FlipAnimation()
     {
-        Vector3 scale = transform.localScale;
+        //localScaleの値を1か-1か判断する
+        Vector3 offsetscale = transform.localScale;
+        offsetscale.x = (offsetscale.x > 0) ? 1 : -1;
+
+        offsetscale.x = ((int)Direction == offsetscale.x) ? -1 : 1;
         //左右反転
-        transform.localScale = new Vector3(scale.x * -(int)Direction, scale.y, scale.z);
+        transform.localScale = new Vector3(transform.localScale.x * offsetscale.x,
+            offsetscale.y, offsetscale.z);
     }
 
 }
