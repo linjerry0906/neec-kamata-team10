@@ -33,7 +33,6 @@ public class EnemyDead : MonoBehaviour {
     {
         //倒れるアニメーション
         FallAnimation();
-        //FlipAnimation();
     }
 
     public void FlipAnimation()
@@ -45,6 +44,10 @@ public class EnemyDead : MonoBehaviour {
     {
         if (!IsDead()) return;
         anim.SetBool("IsDead", true);
+
+        //死ぬときはオブジェクトに影響させないように重さを0にする。
+        Rigidbody rgdb = GetComponent<Rigidbody>();
+        rgdb.mass = 0f;
 
         //倒れるアニメーションが終了したら
         if (IsFallAnimationEnds())

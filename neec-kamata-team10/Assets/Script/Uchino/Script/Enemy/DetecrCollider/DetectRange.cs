@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DetectRange : MonoBehaviour
 {
-
     /// <summary>
     /// プレイヤーを感知する（メイン）
     /// </summary>
@@ -13,6 +12,7 @@ public class DetectRange : MonoBehaviour
     {
         if (other.gameObject.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない
 
+        isColison = true;
         ChaseEnemy chaseEnemy = GetComponentInParent<ChaseEnemy>();  //ChaseEnemyを取得
 
         if (WhetherChaisingOrNot(other))                             //追いかけるか否か
@@ -22,6 +22,19 @@ public class DetectRange : MonoBehaviour
         }
 
         chaseEnemy.AutoMove();                                       //自動で移動させる
+    }
+
+    bool isColison = false;
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "Player") return;
+
+        isColison = false;
+    }
+
+    public bool IsMove()
+    {
+        return isColison;
     }
 
     /// <summary>

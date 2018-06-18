@@ -67,13 +67,14 @@ public class CollisonToObject : MonoBehaviour {
 
     private void KillOrDeath(Collider other)
     {
-        if(other.tag == "Splinter")                           //相手はトゲ？
-        {
-            Destroy(transform.parent.gameObject);             //無条件で自分が死ぬ
-            return;
-        }
 
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
+
+        if ( other.tag == "Splinter"|| IsSmall(size) )         //エネミーが小さいか、棘に当たった時に死ぬ
+        {
+            GetComponentInParent<EnemyDead>().Dead();
+            return;
+        }
 
         if (size == null)                                     //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
         {
@@ -81,11 +82,6 @@ public class CollisonToObject : MonoBehaviour {
             return;
         }
 
-        if (IsSmall(size))                                    //エネミーが小さいか
-        {
-            GetComponentInParent<EnemyDead>().Dead();
-            return;
-        }
 
         other.GetComponent<AliveFlag>().Dead();               //小さくなかったのでプレイヤーが死ぬ
     }

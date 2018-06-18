@@ -5,14 +5,12 @@ using UnityEngine;
 public class NormalEnemy : MoveEnemy
 {
     Animator anim;
-    SpriteRenderer sRenderer;
 
     void Start()
     {
         DirectionInit();
 
         anim = GetComponent<Animator>();
-        sRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
