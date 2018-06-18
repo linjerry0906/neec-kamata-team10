@@ -134,6 +134,7 @@ public class Mirror : MonoBehaviour
     /// <param name="obj">オブジェクト</param>
     private void DestroyChildCompo(ref GameObject obj)
     {
+        obj.layer = 8;
         DestroyComponent(ref obj);                                                          //必要がないコンポーネントを削除
         SetReflectMaterial(ref obj);                                                        //マテリアル設定
         for (int i = 0; i < obj.transform.childCount; ++i)                                  //子供全体追加

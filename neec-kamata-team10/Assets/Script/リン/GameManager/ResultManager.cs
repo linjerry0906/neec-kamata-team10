@@ -25,6 +25,6 @@ public class ResultManager : MonoBehaviour
         }
 
         GameObject panel = Instantiate(resultPanel);
-        panel.transform.GetChild(0).GetComponent<ResultUI>().SetIsClear(isClear);
+        panel.transform.GetChild(1).GetComponent<ResultUI>().SetIsClear(isClear);
     }
 }
