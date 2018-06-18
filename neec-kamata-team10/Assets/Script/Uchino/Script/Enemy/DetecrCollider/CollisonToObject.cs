@@ -5,7 +5,6 @@ using UnityEngine;
 public class CollisonToObject : MonoBehaviour {
 
     ObjectSize objectSize;
-    AudioSource audioSource;
 
     private void Start()
     {
@@ -15,13 +14,13 @@ public class CollisonToObject : MonoBehaviour {
 
         objectSize = GetComponentInParent<ObjectSize>();
         parentPosY = transform.parent.position.y;
-        audioSource = GetComponent<AudioSource>();
+        normalSize = transform.parent.localScale;
     }
 
-
-    private void Update()
+    private void FixedUpdate()
     {
         Positioning();
+        UpdateSizeState();
     }
 
     float parentPosY;
@@ -30,22 +29,27 @@ public class CollisonToObject : MonoBehaviour {
     /// </summary>
     private void Positioning()
     {
-        if (!IsBigSize()) return;
+        if (!IsEnlarged()) return;
 
         Vector3 scale = transform.parent.localScale;
         Vector3 parentPos = transform.parent.position;
        
         transform.parent.position = 
-            new Vector3(parentPos.x, parentPosY + scale.y / 2 /2, parentPos.z);    //スケールが増えた分上に移動させる。
-
+            new Vector3(parentPos.x, parentPosY + scale.y / 2 / 2, parentPos.z);    //スケールが増えた分上に移動させる。
     }
 
-    bool IsBigSize()
+    Vector3 previousSize = Vector3.zero;
+    Vector3 normalSize;
+    void UpdateSizeState()
     {
-        if (objectSize.GetSize() == SizeEnum.Big_XY) return true;
-        if (objectSize.GetSize() == SizeEnum.Big_Y)  return true;
+        previousSize = transform.parent.localScale;
+    }
 
-        return false;
+    bool IsEnlarged()
+    {
+        if (!(transform.parent.transform.localScale.y > previousSize.y)) return false;
+
+        return true;
     }
 
     /// <summary>
@@ -58,19 +62,19 @@ public class CollisonToObject : MonoBehaviour {
         if (other.tag != "Player" 
             && other.tag != "Splinter") { return; }           //プレイヤーかトゲじゃなかったら実行しない。
 
-
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
     private void KillOrDeath(Collider other)
     {
-        if(other.tag == "Splinter")                           //相手はトゲ？
-        {
-            Destroy(transform.parent.gameObject);             //無条件で自分が死ぬ
-            return;
-        }
 
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
+
+        if ( other.tag == "Splinter"|| IsSmall(size) )         //エネミーが小さいか、棘に当たった時に死ぬ
+        {
+            GetComponentInParent<EnemyDead>().Dead();
+            return;
+        }
 
         if (size == null)                                     //鏡に影響を受けない敵なら無条件でプレイヤーが死ぬ 
         {
@@ -78,12 +82,6 @@ public class CollisonToObject : MonoBehaviour {
             return;
         }
 
-        if (IsSmall(size))                                    //エネミーが小さいか
-        {
-            audioSource.Play();
-            GetComponentInParent<EnemyAliveFlag>().Dead();
-            return;
-        }
 
         other.GetComponent<AliveFlag>().Dead();               //小さくなかったのでプレイヤーが死ぬ
     }
@@ -95,7 +93,7 @@ public class CollisonToObject : MonoBehaviour {
     /// <returns></returns>
     private bool IsSmall(ObjectSize size)
     {
-        if (size.GetSize() == SizeEnum.Small_XY){ return true; }    //全体的に小さいか
+        if (size.GetSize() == SizeEnum.Small_XY){ return true; }     //全体的に小さいか
         if (size.GetSize() == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
         if (size.GetSize() == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
 
