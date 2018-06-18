@@ -16,6 +16,11 @@
 	}
 	SubShader{
 		Tags{ "RenderType" = "Opaque" }
+		Stencil
+		{
+			Ref 1
+			Comp Equal
+		}
 		LOD 200
 
 		Blend SrcAlpha OneMinusSrcAlpha
