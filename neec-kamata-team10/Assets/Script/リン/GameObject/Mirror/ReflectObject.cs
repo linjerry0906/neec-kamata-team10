@@ -28,6 +28,25 @@ public class ReflectObject : MonoBehaviour
             reflectSize = objSize.DefaultSize();
         reflectSize.Scale(size);                           //拡大縮小したサイズ
         sizeRate = size;
+
+        InitMeshRenderer();
+    }
+
+    /// <summary>
+    /// メッシュレンダラーの初期化
+    /// </summary>
+    private void InitMeshRenderer()
+    {
+        if (originObj.tag != "appear_block")
+            return;
+
+        MeshRenderer mesh = GetComponent<MeshRenderer>();
+        Material originMaterial = originObj.GetComponent<MeshRenderer>().material;
+        mesh.material.SetTexture("_DesolveTex", originMaterial.GetTexture("_DesolveTex"));
+        mesh.material.SetColor("_ApearColor", originMaterial.GetColor("_ApearColor"));
+        mesh.material.SetColor("_ApearColor2", originMaterial.GetColor("_ApearColor2"));
+        mesh.material.SetFloat("_ApearSize", originMaterial.GetFloat("_ApearSize"));
+        mesh.material.SetFloat("_Disappear", 1.0f);
     }
 
     /// <summary>
@@ -57,8 +76,6 @@ public class ReflectObject : MonoBehaviour
     /// </summary>
     private void ReflectToOrigin()
     {
-        if (originObj.tag.Equals("Unresizable"))
-            return;
         ObjectSize objSize = originObj.GetComponent<ObjectSize>();
         if (objSize)
         {
