@@ -11,6 +11,7 @@ public class ButtonSelect : MonoBehaviour {
     [SerializeField]
     private GameObject parentObject;
     private StageSelectScript s;
+    private GameObject selectingButton;
     private int allButton;
     private int panelButton;
     private int constrain;
@@ -41,30 +42,38 @@ public class ButtonSelect : MonoBehaviour {
             return;
         }
 
+        StageSelect();
+        PageFeed();
+        StageSelectEnter();
+        
         //Debug.Log(panelButton);
         //Debug.Log(constrain);
         //Debug.Log(index);
-        //選択ステージが端っこじゃないとき
-        if (!(stage == allButton))
-        {
-            if (!(stage % constrain == 0))
-            {
-                if (controller.MoveSelectionRight()) stage++;
-            }
-        }
-        if(!(stage % constrain == 1))
-        {
-            if (controller.MoveSelectionLeft()) stage--;
-        }
+        Debug.Log(stage);
+    }
 
+    void CheckPanelButton()
+    {
+        panelButton = GetComponent<StagePanelCreate>().ReturnPanel(page);
+    }
+
+    //ページ送り
+    void PageFeed()
+    {
         //ページ送り
         if (page < allPage)
         {
             if (controller.SwitchToTheRight())
             {
                 page++;
-                CheckPanelButton();
-                stage = stage + panelButton;
+                if (stage + panelButton < allButton)
+                {
+                    stage = stage + panelButton;
+                }
+                else if(stage + panelButton >= allButton)
+                {
+                    stage = allButton;
+                }
             }
         }
 
@@ -74,9 +83,27 @@ public class ButtonSelect : MonoBehaviour {
             {
                 page--;
                 stage = stage - panelButton;
-                CheckPanelButton();
             }
         }
+    }
+
+    //ステージを選ぶ
+    void StageSelect()
+    {
+        //選択ステージが端っこじゃないとき
+        if (!(stage == allButton))
+        {
+            if (!(stage % constrain == 0))
+            {
+                if (controller.MoveSelectionRight()) stage++;
+            }
+        }
+        if (!(stage % constrain == 1))
+        {
+            if (controller.MoveSelectionLeft()) stage--;
+        }
+
+
         //終わりのページじゃないとき
         if (!(page == allPage))
         {
@@ -105,18 +132,20 @@ public class ButtonSelect : MonoBehaviour {
                 if (controller.MoveSelectionUp()) stage -= constrain;
             }
         }
+    }
 
-        Debug.Log(stage);
-
-        if(controller.Jump())
+    //ステージ決定
+    void StageSelectEnter()
+    {
+        if (controller.Jump())
         {
             s = transform.GetChild(page - 1).GetChild(0).GetChild(stage - 1).GetComponent<StageSelectScript>();
             s.ReturnStage();
         }
     }
 
-    void CheckPanelButton()
+    public int ReturnSelectStage()
     {
-        panelButton = GetComponent<StagePanelCreate>().ReturnPanel(page);
+        return stage;
     }
 }
