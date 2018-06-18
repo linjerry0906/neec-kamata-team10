@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-    EnemyAnime enemyAnime;
+
     // Use this for initialization
     void Start()
     {
@@ -13,18 +13,13 @@ public class ChaseEnemy : MoveEnemy
 
         defaultScale = transform.localScale;            //デフォルトスケール
         previousScale = defaultScale;                   //前回のスケール
-
-        enemyAnime = GetComponent<EnemyAnime>();
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-        NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
-        enemyAnime.Animation(this);
-
-        transform.localScale = new Vector3(transform.localScale.x, 
-            transform.localScale.y , 0.8f);
+        //NotInfluencedAgain();                            //鏡の影響を重ねて受けさせない
+        FlipAnimation();
     }
 
     Vector3 defaultScale;                               //デフォルトスケール
@@ -156,7 +151,7 @@ public class ChaseEnemy : MoveEnemy
     /// <returns></returns>
     private bool IsCloseThePlayerX(float differenceX)
     {
-        const int limitedRangeX = 1; //横軸の移動制限範囲
+        const float limitedRangeX = 0.4f; //横軸の移動制限範囲
 
         if (Mathf.Abs(differenceX) <= limitedRangeX) { return true; }   //playerに1タイル分近づくと動かさない
 

@@ -2,33 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnime : MonoBehaviour {
+public class EnemyDead : MonoBehaviour {
 
     Animator anim;
-    EnemyAliveFlag enemyAliveFlag;
+
+    bool isDead = false;
+
+    public void Dead()
+    {
+        isDead = true;
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
+    private void Update()
+    {
+        Animation();
+    }
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-        enemyAliveFlag = GetComponent<EnemyAliveFlag>();
     }
 
 
-    public void Animation(MoveEnemy enemy)
+    public void Animation()
     {
         //倒れるアニメーション
         FallAnimation();
-        FlipAnimation(enemy);
+        //FlipAnimation();
     }
 
-    public void FlipAnimation(MoveEnemy enemy)
+    public void FlipAnimation()
     {
-        anim.SetInteger("Direction",(int)enemy.Direction);
+        anim.SetInteger("Direction", (int)transform.localScale.x);
     }
 
     void FallAnimation()
     {
-        if (!enemyAliveFlag.IsDead()) return;
+        if (!IsDead()) return;
         anim.SetBool("IsDead", true);
 
         //倒れるアニメーションが終了したら
