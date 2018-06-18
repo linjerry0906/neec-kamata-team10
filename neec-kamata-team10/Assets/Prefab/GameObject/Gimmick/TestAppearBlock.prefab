@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4989640285621190}
   - component: {fileID: 114678390669683664}
-  - component: {fileID: 54384254083427444}
   - component: {fileID: 65947074987514646}
+  - component: {fileID: 54010488864148114}
   m_Layer: 0
   m_Name: TestAppearBlock
-  m_TagString: reflect
+  m_TagString: stage_block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 33708150777121762}
   - component: {fileID: 65010810541143606}
   - component: {fileID: 23178443241515288}
+  - component: {fileID: 114080572540198392}
   m_Layer: 0
   m_Name: BlockObject
   m_TagString: stage_block
@@ -67,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1415249953215656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.5, y: 3.5, z: -0.5}
+  m_LocalPosition: {x: -12.5, y: 1.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4953257590688834}
@@ -115,7 +116,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1467924279398188}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54384254083427444
+--- !u!54 &54010488864148114
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -154,6 +155,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114080572540198392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1467924279398188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0488e9ddc7d23dc44abfa3a341f0fe1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxIntensity: 2.5
+  minIntensity: 0
+  flashSpeed: 1.8
 --- !u!114 &114678390669683664
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -115,5 +115,6 @@ public class ReflectObject : MonoBehaviour
 
         Material originMaterial = originObj.GetComponent<MeshRenderer>().material;
         mesh.material.SetColor("_EmissionColor", originMaterial.GetColor("_EmissionColor"));
+        mesh.material.SetColor("_Color", originMaterial.GetColor("_Color"));
     }
 }
