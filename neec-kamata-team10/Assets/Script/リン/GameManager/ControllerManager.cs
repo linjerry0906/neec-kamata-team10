@@ -41,6 +41,8 @@ public class ControllerManager
     /// <returns></returns>
     public ICharacterController Pad()
     {
-        return pad_controller;
+        if(pad_controller.IsConnectedPad())
+            return pad_controller;
+        return keyboard_controller;
     }
 }

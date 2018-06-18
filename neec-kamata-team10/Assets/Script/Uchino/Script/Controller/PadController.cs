@@ -241,7 +241,7 @@ public class PadController : ICharacterController
 
     public bool IsConnectedPad()
     {
-        var ar = Input.GetJoystickNames();
-        return (ar[0] != ""); //コントローラは存在するか?
+        string[] ar = Input.GetJoystickNames();
+        return ar.Length > 0; //コントローラは存在するか?
     }
 }
