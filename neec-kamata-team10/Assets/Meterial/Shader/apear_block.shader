@@ -12,14 +12,18 @@
 		_ApearSize ("ApearSize", Range(0.0, 1.0)) = 0.3
 	}
 	SubShader {
-		Tags { "RenderType"="Opaque" }
+		Tags 
+		{ 
+			"Queue" = "Transparent"
+			"RenderType" = "Fade"
+		}
 		LOD 200
 
 		Blend SrcAlpha OneMinusSrcAlpha
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
+		#pragma surface surf Standard fullforwardshadows alpha:fade
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
@@ -50,20 +54,28 @@
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 			fixed4 mask = tex2D(_DesolveTex, IN.uv_MainTex);
 
-			if (c.a < mask.r)
-				discard;
+			half dBase = -2.0f * (1 - c.a) + 1.0f;			//alpha 0 => -1 , alpha 1 => 1
+			half dTexRead = mask.r + dBase;					//c.aで制御
+			half alpha = clamp(dTexRead, 0.0f, 1.0f);
+			o.Albedo = c.rgb;
+			o.Alpha = alpha;
 
-			if (c.a - mask.r < _ApearSize)
+
+			//if (c.a - mask.r < _ApearSize)
+			//{
+			//	fixed4 light = lerp(_ApearColor, _ApearColor2, abs(c.a - mask.r) / _ApearSize);
+			//	o.Albedo = light;
+			//	o.Emission = light;
+			//	return;
+			//}
+
+			if (alpha < _ApearSize)
 			{
-				fixed4 light = lerp(_ApearColor, _ApearColor2, abs(c.a - mask.r) / _ApearSize);
+				fixed4 light = lerp(_ApearColor, _ApearColor2, abs(alpha - mask.r) / _ApearSize);
 				o.Albedo = light;
-				o.Alpha = c.a;
 				o.Emission = light;
 				return;
 			}
-
-			o.Albedo = c.rgb;
-			o.Alpha = c.a;
 
 			fixed4 e = tex2D(_EmissionMap, IN.uv_MainTex) * _EmissionColor;
 			o.Emission = e;

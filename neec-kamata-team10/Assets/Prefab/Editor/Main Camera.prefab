@@ -56,7 +56,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4352364817133330}
   - component: {fileID: 20808231473427450}
-  - component: {fileID: 114232839704847626}
   m_Layer: 5
   m_Name: UICamera
   m_TagString: Untagged
@@ -217,19 +216,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1449589539283204}
   m_Enabled: 1
---- !u!114 &114232839704847626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1835757504164960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23a0fc10f587c414286aeca26537d170, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shaderMaterial: {fileID: 2100000, guid: 9d11b1217106c754481cc6d37eff2e8e, type: 2}
-  speed: 0.01
 --- !u!114 &114333866782841536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -244,7 +230,7 @@ MonoBehaviour:
   highLight: {fileID: 2100000, guid: 6cc8587a82d4ac343aac3dda2399d802, type: 2}
   brightness: 0.7
   lightStrength: 2
-  threshold: 0.99
+  threshold: 0.6
   offset1x: {x: 1, y: 1}
   offset2x: {x: 5, y: 5}
   offset4x: {x: 10, y: 10}
@@ -260,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMode: 1
-  target: {fileID: 0}
+  target: {fileID: 1936628794170634, guid: 992ad1b14b41e98448479d369dff6daa, type: 2}
   dampTime: 1
   relativePos: {x: 0, y: 14, z: -30}
   radius: 1
