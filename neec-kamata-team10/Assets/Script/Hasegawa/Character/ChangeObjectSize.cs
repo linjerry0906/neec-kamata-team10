@@ -102,16 +102,19 @@ public class ChangeObjectSize : MonoBehaviour
         {
             audio.clip = seManager.GetSE(0);
             audio.Play();
+            //Debug.Log("normalSE");
         }
         else if (size <= SizeEnum.Big_XY)
         {
             audio.clip = seManager.GetSE(1);
             audio.Play();
+            //Debug.Log("BigSE");
         }
         else
         {
             audio.clip = seManager.GetSE(2);
             audio.Play();
+            //Debug.Log("SmallSE");
         }
     }
 
