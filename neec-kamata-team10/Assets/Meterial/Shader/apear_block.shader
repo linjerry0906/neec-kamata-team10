@@ -6,6 +6,10 @@
 
 		_EmissionColor("EmissionColor", Color) = (0, 0, 0, 0)
 		_EmissionMap("Emission", 2D) = "white" {}
+
+		_ApearColor ("ApearColor", Color) = (1,1,1,1)
+		_ApearColor2 ("ApearColor2", Color) = (1,1,1,1)
+		_ApearSize ("ApearSize", Range(0.0, 1.0)) = 0.3
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -30,6 +34,9 @@
 
 		fixed4 _Color;
 		fixed4 _EmissionColor;
+		fixed4 _ApearColor;
+		fixed4 _ApearColor2;
+		half _ApearSize;
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
 		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -45,6 +52,15 @@
 
 			if (c.a < mask.r)
 				discard;
+
+			if (c.a - mask.r < _ApearSize)
+			{
+				fixed4 light = lerp(_ApearColor, _ApearColor2, abs(c.a - mask.r) / _ApearSize);
+				o.Albedo = light;
+				o.Alpha = c.a;
+				o.Emission = light;
+				return;
+			}
 
 			o.Albedo = c.rgb;
 			o.Alpha = c.a;

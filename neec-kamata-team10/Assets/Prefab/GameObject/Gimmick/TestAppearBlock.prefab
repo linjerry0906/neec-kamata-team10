@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4989640285621190}
   - component: {fileID: 114678390669683664}
+  - component: {fileID: 54879832094808712}
   m_Layer: 0
   m_Name: TestAppearBlock
-  m_TagString: Unresizable
+  m_TagString: stage_block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1415249953215656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.5, y: 4.5, z: -0.5}
+  m_LocalPosition: {x: -12.5, y: 1.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4953257590688834}
@@ -114,6 +115,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1467924279398188}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54879832094808712
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1415249953215656}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &65010810541143606
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -151,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c66b3892cc582843acbd3a6d1f2ffad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsReverseAppear: 1
+  IsReverseAppear: 0
   switchObj: {fileID: 0}
   appearObject: {fileID: 1467924279398188}
   fadeTime: 0.2
