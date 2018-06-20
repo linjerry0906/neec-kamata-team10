@@ -10,7 +10,7 @@ public class legCollider : MonoBehaviour
         Player p = transform.parent.GetComponent<Player>();
         string tag = t.gameObject.tag;
 
-        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw")
+        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw" || tag == "appear_block")
         {
             p.SetPlayerState(EPlayerState.Move);
             p.SetIsJump(false);
@@ -50,7 +50,7 @@ public class legCollider : MonoBehaviour
     void OnTriggerExit(Collider t)
     {
         string tag = t.gameObject.tag;
-        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw")
+        if (tag == "stage_block" || tag == "magic_block" || tag == "seasaw" || tag == "appear_block")
         {
             Player p = transform.parent.GetComponent<Player>();
             p.SetPlayerState(EPlayerState.Jump);
