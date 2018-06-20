@@ -10,7 +10,10 @@ public class BreakBlockEffect : MonoBehaviour
     [SerializeField]
     private GameObject particle;                    //EffectPrefab
 
-    private void OnDestroy()
+    /// <summary>
+    /// 壊れたとこの演出
+    /// </summary>
+    public void BreakEffect()
     {
         GameObject effect = Instantiate(particle, transform.position, Quaternion.identity);
         float lifeTime = effect.GetComponent<ParticleSystem>().main.startLifetime.constantMax;

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakBlockScript : MonoBehaviour {
-    
-    [SerializeField]
-    GameObject gameObject;
+public class BreakBlockScript : MonoBehaviour
+{
+
     [SerializeField]
     int breakMass;
     [SerializeField]
@@ -15,20 +14,26 @@ public class BreakBlockScript : MonoBehaviour {
     Player player;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         time = breakTime;
         trigger = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (trigger)
         {
             time -= Time.deltaTime;
-            if (time <= 0) Destroy(gameObject);
+            if (time <= 0)
+            {
+                GetComponent<BreakBlockEffect>().BreakEffect();
+                Destroy(transform.parent.gameObject);
+            }
         }
     }
-    
+
 
     //他のコライダと接触した時
     void OnTriggerEnter(Collider col)

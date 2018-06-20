@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 95632787275466210}
   - component: {fileID: 65819628161485726}
   - component: {fileID: 114379760177645606}
+  - component: {fileID: 114024118268000872}
   m_Layer: 0
   m_Name: brokenBlock
   m_TagString: stage_block
@@ -85,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1240197862566518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.29, y: 4.24, z: -0.5}
+  m_LocalPosition: {x: -9.75, y: 4.24, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4653023930938966}
@@ -203,6 +204,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114024118268000872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1309014493252640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 980ebc55238227f4dbc02701d38b0787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 1718564306378852, guid: 61fb8cef0bde13a43a6420b9f7e75cc4, type: 2}
 --- !u!114 &114379760177645606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,8 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb07f61c924d914889b358dc00ccf9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 1240197862566518}
-  breakMass: 150
+  breakMass: 400
   breakTime: 0.4
 --- !u!198 &198445258533620028
 ParticleSystem:
@@ -277,7 +289,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1479735661
+  randomSeed: -286347494
   InitialModule:
     serializedVersion: 3
     enabled: 1
