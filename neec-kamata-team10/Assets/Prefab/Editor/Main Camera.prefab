@@ -56,6 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4352364817133330}
   - component: {fileID: 20808231473427450}
+  - component: {fileID: 114020490866248804}
   m_Layer: 5
   m_Name: UICamera
   m_TagString: Untagged
@@ -216,6 +217,19 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1449589539283204}
   m_Enabled: 1
+--- !u!114 &114020490866248804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1835757504164960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a0fc10f587c414286aeca26537d170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderMaterial: {fileID: 2100000, guid: 9d11b1217106c754481cc6d37eff2e8e, type: 2}
+  speed: 0.01
 --- !u!114 &114333866782841536
 MonoBehaviour:
   m_ObjectHideFlags: 1
