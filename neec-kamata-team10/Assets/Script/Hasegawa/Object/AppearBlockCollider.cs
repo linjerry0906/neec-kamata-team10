@@ -10,7 +10,7 @@ public class AppearBlockCollider : MonoBehaviour {
     {
         if (c.gameObject.tag == "Player")
         {
-            Debug.Log("enter");
+            //Debug.Log("enter");
             player = c.gameObject.GetComponent<Player>();
         }
     }
@@ -19,7 +19,7 @@ public class AppearBlockCollider : MonoBehaviour {
     {
         if (c.gameObject.tag == "Player")
         {
-            Debug.Log("exit");
+            //Debug.Log("exit");
             player = null;
         }
     }
@@ -28,7 +28,7 @@ public class AppearBlockCollider : MonoBehaviour {
     {
         if (player != null)
         {
-            Debug.Log("disable");
+            //Debug.Log("disable");
             player.SetIsJump(true);
         }
     }
