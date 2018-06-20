@@ -36,7 +36,7 @@ public class BreakBlockScript : MonoBehaviour
 
 
     //他のコライダと接触した時
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
         //既に接触が始まった場合->無視する
         if (trigger) return;
