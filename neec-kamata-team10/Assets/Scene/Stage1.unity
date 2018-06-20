@@ -2349,6 +2349,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &271020758 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1240197862566518, guid: fb56e84863f603c4dbb5156e20bfc944,
+    type: 2}
+  m_PrefabInternal: {fileID: 1486912513}
+--- !u!114 &271020759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 271020758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 980ebc55238227f4dbc02701d38b0787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 1718564306378852, guid: 61fb8cef0bde13a43a6420b9f7e75cc4, type: 2}
 --- !u!1 &273063192
 GameObject:
   m_ObjectHideFlags: 0
@@ -13793,7 +13810,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4654060781344764, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -9.29
+      value: -9.75
       objectReference: {fileID: 0}
     - target: {fileID: 4654060781344764, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
       propertyPath: m_LocalPosition.y
@@ -13822,6 +13839,11 @@ Prefab:
     - target: {fileID: 4654060781344764, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
       propertyPath: m_RootOrder
       value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 114379760177645606, guid: fb56e84863f603c4dbb5156e20bfc944,
+        type: 2}
+      propertyPath: breakMass
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
