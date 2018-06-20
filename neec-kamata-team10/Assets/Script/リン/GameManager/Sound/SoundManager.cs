@@ -12,15 +12,11 @@ public class SoundManager : MonoBehaviour {
     [SerializeField]
     private GameObject soundBuffer;                 //Prefab
 
-    private List<GameObject> buffers;               //Sound Buffer
+    private List<GameObject> buffers = new List<GameObject>();               //Sound Buffer
     private string currentBgm = "";                 //現在の音楽
 
     private float maxVolume = 1.0f;                 //最大音量
 
-    private void Start()
-    {
-        buffers = new List<GameObject>();
-    }
 
     private void Update()
     {
@@ -66,8 +62,6 @@ public class SoundManager : MonoBehaviour {
     /// </summary>
     private void FadeOutOtherBGM()
     {
-        if (buffers.Count <= 0)
-            return;
         foreach (GameObject buffer in buffers)
         {
             SoundBuffer sound = buffer.GetComponent<SoundBuffer>();
