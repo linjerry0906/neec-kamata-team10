@@ -17,10 +17,15 @@ public class MoveEnemy : MonoBehaviour
     protected float moveSpeed = 1; //移動スピード
     protected Direction direction; //向き
 
+    protected DetectEmpty detectEmptyFront;
+
 
     public void DirectionInit()
     {
         direction = Direction.LEFT;
+
+        //デフォルトの向きがLeftなのでLeftを取得
+        detectEmptyFront = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
     }
 
     /// <summary>
@@ -88,21 +93,33 @@ public class MoveEnemy : MonoBehaviour
         {
             time = 0.0f;
 
-            DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
-            DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
+            //DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
+            //DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
+
+            ////地面に当たってなかったら
+            //if (!detectEmptyLeft.IsCollison())                     //左の地面端から離れたら
+            //{
+            //    SetDirection(Direction.RIGHT);                     //移動方向を反転させる
+            //}
+            //if (!detectEmptyRight.IsCollison())                    //右の地面端から離れたら
+            //{
+            //    SetDirection(Direction.LEFT);                      //移動方向を反転させる
+            //}
+
+            //detectEmptyLeft.MyUpdate();     //地面との接触判定のために必要
+            //detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
+
+
+            //ここから修正
+
 
             //地面に当たってなかったら
-            if (!detectEmptyLeft.IsCollison())                     //左の地面端から離れたら
+            if (!detectEmptyFront.IsCollison())        //前面のColliderが地面から離れたら
             {
-                SetDirection(Direction.RIGHT);                     //移動方向を反転させる
-            }
-            if (!detectEmptyRight.IsCollison())                    //右の地面端から離れたら
-            {
-                SetDirection(Direction.LEFT);                      //移動方向を反転させる
+                ReverseDirection();                    //移動方向を反転させる
             }
 
-            detectEmptyLeft.MyUpdate();     //地面との接触判定のために必要
-            detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
+            detectEmptyFront.MyUpdate();     //地面との接触判定のために必要
         }
     }
 
@@ -113,9 +130,13 @@ public class MoveEnemy : MonoBehaviour
     {
         //localScaleの値を1か-1か判断する
         Vector3 offsetscale = transform.localScale;
-        offsetscale.x = (offsetscale.x > 0) ? 1 : -1;
+        //offsetscale.x = (offsetscale.x > 0) ? 1 : -1;
 
-        offsetscale.x = ((int)Direction == offsetscale.x) ? -1 : 1;
+        //offsetscale.x = ((int)Direction == offsetscale.x) ? -1 : 1;
+
+        //offsetSceleの取得方法を見直し
+        offsetscale.x = ((int)Direction * offsetscale.x > 0) ? -1 : 1;
+
         //左右反転
         transform.localScale = new Vector3(transform.localScale.x * offsetscale.x,
             offsetscale.y, offsetscale.z);
