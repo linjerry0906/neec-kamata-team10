@@ -17,6 +17,8 @@ public class DetectEmpty : MonoBehaviour
     {
         //地面に触れている間は常にtrue
         isCollison = true;
+
+        Debug.Log(other.name);
     }
 
     /// <summary>
