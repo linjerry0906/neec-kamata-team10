@@ -17,9 +17,9 @@ public class MirrorBackStage : MonoBehaviour
         Material back = new Material(backStageMaterial);
 
         mesh.material = back;
-        back.color = origin.color;
-        back.mainTexture = origin.mainTexture;
-        back.SetTexture("_EmissionMap", origin.GetTexture("_EmissionMap"));
-        back.SetColor("_EmissionColor", origin.GetColor("_EmissionColor"));
+        back.color = origin.color;                                              //色設定
+        back.mainTexture = origin.mainTexture;                                  //テクスチャ設定
+        back.SetTexture("_EmissionMap", origin.GetTexture("_EmissionMap"));     //テクスチャ設定
+        back.SetColor("_EmissionColor", origin.GetColor("_EmissionColor"));     //色設定
 	}
 }
