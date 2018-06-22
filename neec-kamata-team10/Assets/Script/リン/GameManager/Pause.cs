@@ -99,7 +99,7 @@ public class Pause : MonoBehaviour
     /// </summary>
     private void Trigger()
     {
-        if (!controller.OperateTheMirror())
+        if (!controller.Jump())
             return;
 
         if (select == PauseSelectEnum.Retry)
