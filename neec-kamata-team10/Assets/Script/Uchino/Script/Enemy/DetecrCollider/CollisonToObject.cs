@@ -82,9 +82,9 @@ public class CollisonToObject : MonoBehaviour {
             return;
         }
 
-        if (IsSmall(size))
+        if (IsSmall(size))                    //自分の方が小さい
         {
-            other.GetComponent<AliveFlag>().Dead();
+            GetComponentInParent<EnemyDead>().Dead();
             return;
         }
 
