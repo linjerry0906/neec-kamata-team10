@@ -65,6 +65,7 @@ public class CollisonToObject : MonoBehaviour {
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
+
     private void KillOrDeath(Collider other)
     {
 
@@ -99,5 +100,7 @@ public class CollisonToObject : MonoBehaviour {
 
         return false;                                                //縮んでいない。
     }
+
+
 
 }

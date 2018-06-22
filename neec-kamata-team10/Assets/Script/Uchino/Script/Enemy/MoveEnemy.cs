@@ -142,4 +142,22 @@ public class MoveEnemy : MonoBehaviour
             offsetscale.y, offsetscale.z);
     }
 
+    /// <summary>
+    /// ChaseEnemy用
+    /// </summary>
+    protected void FlipAnimation_Chase(string enemyName)
+    {
+        if (enemyName == "ChaseEnemy")
+        {
+            Vector3 offsetscale = transform.localScale;
+
+            //左右反転
+            transform.localScale = new Vector3(offsetscale.x * -(int)Direction,
+                offsetscale.y, offsetscale.z);
+            return;
+        }
+
+        FlipAnimation();
+    }
+
 }
