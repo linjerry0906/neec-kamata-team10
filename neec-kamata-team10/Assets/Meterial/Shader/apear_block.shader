@@ -61,14 +61,6 @@
 			o.Alpha = alpha;
 
 
-			//if (c.a - mask.r < _ApearSize)
-			//{
-			//	fixed4 light = lerp(_ApearColor, _ApearColor2, abs(c.a - mask.r) / _ApearSize);
-			//	o.Albedo = light;
-			//	o.Emission = light;
-			//	return;
-			//}
-
 			if (alpha < _ApearSize)
 			{
 				fixed4 light = lerp(_ApearColor, _ApearColor2, abs(alpha - mask.r) / _ApearSize);
