@@ -6,7 +6,6 @@ public class CollisonToObject : MonoBehaviour {
 
     public AudioClip deadClip;
     AudioSource audioSource;
-    ObjectSize objectSize;
 
     private void Start()
     {
@@ -14,7 +13,6 @@ public class CollisonToObject : MonoBehaviour {
         transform.position = new Vector3(parentTransform.position.x, parentTransform.position.y
             , parentTransform.position.z);
 
-        objectSize = GetComponentInParent<ObjectSize>();
         parentPosY = transform.parent.position.y;
         normalSize = transform.parent.localScale;
 

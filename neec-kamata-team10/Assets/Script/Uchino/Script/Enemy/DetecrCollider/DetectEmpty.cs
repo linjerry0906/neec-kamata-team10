@@ -8,7 +8,7 @@ public class DetectEmpty : MonoBehaviour
 
     private void Start()
     {
-        groundInfo = GetComponentInParent<GroundInfo>();                    //実体を取得
+        groundInfo = GetComponentInParent<GroundInfo>();
     }
 
 
@@ -17,8 +17,6 @@ public class DetectEmpty : MonoBehaviour
     {
         //地面に触れている間は常にtrue
         if(IsGround(other.tag)) isCollison = true;
-
-
     }
 
     /// <summary>
