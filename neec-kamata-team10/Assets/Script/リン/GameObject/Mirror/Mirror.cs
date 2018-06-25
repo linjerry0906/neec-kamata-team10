@@ -68,8 +68,8 @@ public class Mirror : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag.Equals("reflect") ||                                 //像は無視
-            other.tag.Equals("mirror"))                                    //鏡無視
+        if (other.CompareTag("reflect") ||                                 //像は無視
+            other.CompareTag("mirror"))                                    //鏡無視
             return;
 
         if (originObj.Contains(other.gameObject))
@@ -242,18 +242,17 @@ public class Mirror : MonoBehaviour
     {
         DestroyReflects();                      //像を消す
 
-        foreach (GameObject g in originObj)     //オブジェクトのサイズをもとに戻す
+        for (int i = 0; i < originObj.Count; ++i)
         {
-            if (!g)
+            if (!originObj[i])
                 continue;
-            ObjectSize objSize = g.GetComponent<ObjectSize>();
+            ObjectSize objSize = originObj[i].GetComponent<ObjectSize>();
             if (objSize)
                 objSize.SetSize(SizeEnum.Normal);
 
-            //6.15 本田 変更:ChangeObjectSizeのBool changeがrelease時にfalseにされずにいた問題を解決
-            ChangeObjectSize cos = g.GetComponent<ChangeObjectSize>();
+            ChangeObjectSize cos = originObj[i].GetComponent<ChangeObjectSize>();
             if (cos)
-                cos.ReleaseMirror();                
+                cos.ReleaseMirror();
         }
         originObj.Clear();                      //リストクリア
     }
@@ -263,9 +262,9 @@ public class Mirror : MonoBehaviour
     /// </summary>
     private void DestroyReflects()
     {
-        foreach (GameObject g in reflectObj)
+        for (int i = 0; i < reflectObj.Count; ++i)
         {
-            Destroy(g);
+            Destroy(reflectObj[i]);
         }
         reflectObj.Clear();
     }
