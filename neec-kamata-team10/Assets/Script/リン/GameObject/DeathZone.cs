@@ -6,9 +6,9 @@ public class DeathZone : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
             other.GetComponent<AliveFlag>().Dead();
-        else
+        else if(other.CompareTag("Enemy") || other.CompareTag("stage_block"))
             Destroy(other.gameObject);
     }
 }
