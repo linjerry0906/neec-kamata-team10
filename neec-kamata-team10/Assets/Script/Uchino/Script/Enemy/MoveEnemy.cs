@@ -19,7 +19,12 @@ public class MoveEnemy : MonoBehaviour
     protected Animator anim;
     protected DetectEmpty detectEmptyFront;
 
+    private void Awake()
+    {
+       GroundInfo groundInfo = gameObject
+        .AddComponent(typeof(GroundInfo)) as GroundInfo;   //実体を取得
 
+    }
     public void DirectionInit()
     {
         direction = Direction.LEFT;
