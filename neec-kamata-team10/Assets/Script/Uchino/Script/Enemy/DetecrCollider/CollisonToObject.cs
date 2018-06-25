@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CollisonToObject : MonoBehaviour {
 
+    public AudioClip deadClip;
+    AudioSource audioSource;
     ObjectSize objectSize;
 
     private void Start()
@@ -15,6 +17,9 @@ public class CollisonToObject : MonoBehaviour {
         objectSize = GetComponentInParent<ObjectSize>();
         parentPosY = transform.parent.position.y;
         normalSize = transform.parent.localScale;
+
+        audioSource = GetComponentInParent<AudioSource>();
+        audioSource.clip = deadClip;
     }
 
     private void FixedUpdate()
@@ -73,6 +78,7 @@ public class CollisonToObject : MonoBehaviour {
 
         if (other.tag == "Splinter")
         {
+            audioSource.PlayOneShot(deadClip);
             GetComponentInParent<EnemyDead>().Dead();
             return;
         }
@@ -85,6 +91,7 @@ public class CollisonToObject : MonoBehaviour {
 
         if (IsSmall(size) )                                   //エネミーが小さいか、棘に当たった時に死ぬ
         {
+            audioSource.PlayOneShot(deadClip);
             GetComponentInParent<EnemyDead>().Dead();
             return;
         }
