@@ -221,11 +221,6 @@ public class ChaseEnemy : MoveEnemy
         bool isLeft = (Direction == Direction.LEFT) ? true : false;
         Vector3 myPosition = transform.position;
 
-        if(isLeft)
-        {
-             transform.position = new Vector3(onCollisonWallPositionX+0.1f, myPosition.y, myPosition.z);
-        }
-
         transform.position = new Vector3(onCollisonWallPositionX, myPosition.y, myPosition.z);
 
     }

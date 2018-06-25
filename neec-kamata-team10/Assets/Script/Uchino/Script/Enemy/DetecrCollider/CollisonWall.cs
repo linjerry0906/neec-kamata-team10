@@ -8,8 +8,9 @@ public class CollisonWall : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         SetOnColisonWall(other,true);
-        if (other.tag == "Player" || other.tag == "mirror") { return; }
 
+        if (!IsBlockTag(other)) return; //Blockじゃなかったら
+            
         NormalEnemy nomalEnemy = GetComponentInParent<NormalEnemy>();
         if (nomalEnemy != null)
         {
@@ -25,7 +26,7 @@ public class CollisonWall : MonoBehaviour {
 
     private void SetOnColisonWall(Collider other,bool isColisonWall)
     {
-        if ((other.tag != "stage_block")) return;
+        if (!IsBlockTag(other)) return;
 
         this.isColisonWall = isColisonWall;
 
@@ -41,6 +42,13 @@ public class CollisonWall : MonoBehaviour {
         return isColisonWall;
     }
 
+    public bool IsBlockTag(Collider other)
+    {
+        if (other.tag == "stage_block") return true;
+        if (other.tag == "magic_block") return true;
+
+        return false;
+    }
     
 
 
