@@ -28,6 +28,7 @@ public class CollisonWall : MonoBehaviour {
         if ((other.tag != "stage_block")) return;
 
         this.isColisonWall = isColisonWall;
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -39,7 +40,6 @@ public class CollisonWall : MonoBehaviour {
     {
         return isColisonWall;
     }
-
 
     
 

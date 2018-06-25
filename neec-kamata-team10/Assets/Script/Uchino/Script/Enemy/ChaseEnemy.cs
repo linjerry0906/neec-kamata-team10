@@ -14,13 +14,16 @@ public class ChaseEnemy : MoveEnemy
 
         defaultScale = transform.localScale;            //デフォルトスケール
         previousScale = defaultScale;                   //前回のスケール
+
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-        FlipAnimation_Chase(gameObject.name.ToString());
+        FlipAnimation_Chase();                           //アニメーションで反転   
     }
+
 
     Vector3 defaultScale;                               //デフォルトスケール
     Vector3 previousScale;                              //前回のスケール
@@ -191,6 +194,7 @@ public class ChaseEnemy : MoveEnemy
     /// </summary>
     private void SaveOnCollisonPosition()
     {
+
         //壁から離れたらぶつかった場所をリセット
         if(!colisonWall.IsWallColison())
         {
@@ -214,8 +218,14 @@ public class ChaseEnemy : MoveEnemy
 
         //壁に当たってなかったら実行しない
         if (!colisonWall.IsWallColison()) { return; }
-
+        bool isLeft = (Direction == Direction.LEFT) ? true : false;
         Vector3 myPosition = transform.position;
+
+        if(isLeft)
+        {
+             transform.position = new Vector3(onCollisonWallPositionX+0.1f, myPosition.y, myPosition.z);
+        }
+
         transform.position = new Vector3(onCollisonWallPositionX, myPosition.y, myPosition.z);
 
     }

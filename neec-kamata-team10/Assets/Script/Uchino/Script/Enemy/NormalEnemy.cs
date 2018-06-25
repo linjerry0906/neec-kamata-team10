@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NormalEnemy : MoveEnemy
 {
-    Animator anim;
 
     void Start()
     {
