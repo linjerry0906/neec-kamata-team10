@@ -8,6 +8,8 @@ public class GoalPoint : MonoBehaviour {
     /// ゴール地点のスクリプト(フラグ立てるだけ)
     /// </summary>
 
+    [SerializeField]
+    private EScene unlockStage = EScene.Stage1;
     private StageManager stageManager;
 
     //外部から変えられたくない
@@ -20,13 +22,13 @@ public class GoalPoint : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) //触れた瞬間
     {
-        if (isGoal || !other.tag.Equals("Player")) return; //もうゴールしました or プレイヤー以外とぶつかりました -> return
+        if (isGoal || !other.CompareTag("Player")) return; //もうゴールしました or プレイヤー以外とぶつかりました -> return
 
         //else{
         isGoal = true; //フラグ立てる
         //Debug.Log("Goal!"); //デバッグログ
         stageManager.EndStage();
-        stageManager.SetClear(isGoal);
+        stageManager.SetClear(isGoal, unlockStage);
         //}
     }
 }

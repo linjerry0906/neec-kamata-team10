@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;                  //GameManagerのインスタンス
 
     [SerializeField]
-    private EController debugController;
+    private EController debugController = EController.AUTO;
 
     private ControllerManager controllerManager;            //コントローラーのマネージャー
     private SceneChange sceneManager;                       //シーンマネージャー
@@ -52,10 +52,6 @@ public class GameManager : MonoBehaviour
         sceneManager = new SceneChange();
         stageManager = new StageManager();
         stageManager.Initialize(0, true);                         //Debug Test
-    }
-
-    void Start()
-    {
     }
 
     void Update()

@@ -92,7 +92,7 @@ public class StageManager
     /// クリアかどうかを知らせる
     /// </summary>
     /// <param name="isClear">クリアしたか</param>
-    public void SetClear(bool isClear)
+    public void SetClear(bool isClear, EScene unlockStage)
     {
         GameManager gameManager = GameManager.Instance;
         gameManager.GetController().SetFadeFlag(true);                      //操作禁止
