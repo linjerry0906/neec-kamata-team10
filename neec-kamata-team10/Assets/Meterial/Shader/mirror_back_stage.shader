@@ -1,4 +1,4 @@
-﻿Shader "Custom/mirror_bac_stage" {
+﻿Shader "Custom/mirror_back_stage" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}

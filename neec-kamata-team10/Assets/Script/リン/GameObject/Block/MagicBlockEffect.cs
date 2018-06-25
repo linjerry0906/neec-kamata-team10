@@ -15,6 +15,8 @@ public class MagicBlockEffect : MonoBehaviour {
     private float minIntensity = 0.0f;
     [SerializeField]
     private float flashSpeed = 1.8f;
+    [SerializeField]
+    private bool useSharedMaterial = true;
 
     private float currentIntensity = 0.0f;
     private bool isIncrease = true;
@@ -23,7 +25,14 @@ public class MagicBlockEffect : MonoBehaviour {
 
     private void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
+        if (useSharedMaterial)
+        {
+            material = GetComponent<MeshRenderer>().sharedMaterial;
+        }
+        else
+        {
+            material = GetComponent<MeshRenderer>().material;
+        }
     }
 
     // Update is called once per frame

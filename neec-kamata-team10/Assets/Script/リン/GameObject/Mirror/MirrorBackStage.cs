@@ -14,7 +14,7 @@ public class MirrorBackStage : MonoBehaviour
     {
         MeshRenderer mesh = GetComponent<MeshRenderer>();
         Material origin = mesh.material;
-        Material back = new Material(backStageMaterial);
+        Material back = backStageMaterial;
 
         mesh.material = back;
         back.color = origin.color;                                              //色設定
