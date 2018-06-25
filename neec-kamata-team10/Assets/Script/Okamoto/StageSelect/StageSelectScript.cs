@@ -20,13 +20,14 @@ public class StageSelectScript : MonoBehaviour {
 
     void Update()
     {
-
+        //ButtonSelectから選択されたボタンを感知する
         selectStage = parent.GetComponent<ButtonSelect>().ReturnSelectStage();
+        //選択されたボタンを暗くする
         if (selectStage == stage)
         {
-            //ボタンを暗くする
             GetComponent<Image>().color = select;
         }
+        //それ以外は明るくする
         else
         {
             GetComponent<Image>().color = Color.white;

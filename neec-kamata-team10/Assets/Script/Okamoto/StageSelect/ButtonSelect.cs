@@ -30,6 +30,7 @@ public class ButtonSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Startでできなかった初期値設定
         if(constrain == 0)
         {
             constrain = transform.GetChild(0).GetChild(0).GetComponent<GridLayoutGroup>().constraintCount;
@@ -61,29 +62,31 @@ public class ButtonSelect : MonoBehaviour {
     void PageFeed()
     {
         //ページ送り
+        //今のpageがallPageより少ないとき
         if (page < allPage)
         {
+            //右ページ送りボタンが押されたら
             if (controller.SwitchToTheRight())
             {
                 page++;
+                //ページ送りした時にstageがallButtonを超えないように設定
+                //allButtonより少なかったらpanelButtonを足す
                 if (stage + panelButton < allButton)
                 {
                     stage = stage + panelButton;
                 }
+                //それ以外はstageをallButtonと同じにする
                 else if(stage + panelButton >= allButton)
                 {
                     stage = allButton;
                 }
             }
         }
-
-        if (page > 1)
+        //pageが1より上でかつ左ページ送りボタンが押されたら
+        if (page > 1 && controller.SwitchToTheLeft())
         {
-            if (controller.SwitchToTheLeft())
-            {
-                page--;
-                stage = stage - panelButton;
-            }
+            page--;
+            stage = stage - panelButton;
         }
     }
 
@@ -144,6 +147,7 @@ public class ButtonSelect : MonoBehaviour {
         }
     }
 
+    //選択されたボタンをintで返す(StageSelectScript用)
     public int ReturnSelectStage()
     {
         return stage;
