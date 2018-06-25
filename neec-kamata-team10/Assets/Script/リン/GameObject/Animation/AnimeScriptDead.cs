@@ -22,7 +22,7 @@ public class AnimeScriptDead : StateMachineBehaviour
     {
         //終了したらステージ再開
         GameManager.Instance.GetStageManager().EndStage();
-        GameManager.Instance.GetStageManager().SetClear(false);
+        GameManager.Instance.GetStageManager().SetClear(false, EScene.NULL);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

@@ -8,7 +8,7 @@ public class DeathZone : MonoBehaviour {
     {
         if (other.tag == "Player")
             other.GetComponent<AliveFlag>().Dead();
-        if(other.tag == "Enemy")
+        else
             Destroy(other.gameObject);
     }
 }
