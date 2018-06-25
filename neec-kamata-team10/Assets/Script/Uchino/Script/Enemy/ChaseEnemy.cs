@@ -5,21 +5,25 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-
+    CollisonWall colisonWall;
     // Use this for initialization
     void Start()
     {
+        colisonWall = GetComponentInChildren<CollisonWall>();
         direction = Direction.LEFT;
 
         defaultScale = transform.localScale;            //デフォルトスケール
         previousScale = defaultScale;                   //前回のスケール
+
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-        FlipAnimation();
+        FlipAnimation_Chase();                           //アニメーションで反転   
     }
+
 
     Vector3 defaultScale;                               //デフォルトスケール
     Vector3 previousScale;                              //前回のスケール
@@ -103,7 +107,9 @@ public class ChaseEnemy : MoveEnemy
 
             if (IsCloseThePlayerX(offsetPosX)) { return; }              //プレイヤーに近すぎたら移動させない
         }
+        OnColisonWallPositioning();                                     //先に位置を補正しておく。
         HorizontalMove();                                               //移動
+
     }
 
     /// <summary>
@@ -113,7 +119,6 @@ public class ChaseEnemy : MoveEnemy
     {
         HorizontalMove();
     }
-
 
     /// <summary>
     /// 移動方向の決定
@@ -182,5 +187,46 @@ public class ChaseEnemy : MoveEnemy
         return !(IsPlayerleaveY(differenceY));
     }
 
+    bool isSaveCollisonPosition = false;                    //ぶつかったときのX座標を保存したか
+    float onCollisonWallPositionX;                          //ぶつかったときのX座標
+    /// <summary>
+    /// ぶつかったときのX軸の場所を保存
+    /// </summary>
+    private void SaveOnCollisonPosition()
+    {
 
+        //壁から離れたらぶつかった場所をリセット
+        if(!colisonWall.IsWallColison())
+        {
+            isSaveCollisonPosition = false;
+        }
+
+        //壁にぶつかった場所を保存
+        if (isSaveCollisonPosition) return;
+        onCollisonWallPositionX = transform.position.x;
+        isSaveCollisonPosition = true;
+        
+    }
+
+    /// <summary>
+    /// 壁にぶつかったときにめり込まないように位置を修正
+    /// </summary>
+    private void OnColisonWallPositioning()
+    {
+        //ぶつかった場所を保存
+        SaveOnCollisonPosition();
+
+        //壁に当たってなかったら実行しない
+        if (!colisonWall.IsWallColison()) { return; }
+        bool isLeft = (Direction == Direction.LEFT) ? true : false;
+        Vector3 myPosition = transform.position;
+
+        if(isLeft)
+        {
+             transform.position = new Vector3(onCollisonWallPositionX+0.1f, myPosition.y, myPosition.z);
+        }
+
+        transform.position = new Vector3(onCollisonWallPositionX, myPosition.y, myPosition.z);
+
+    }
 }

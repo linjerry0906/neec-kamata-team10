@@ -183,9 +183,6 @@ public class PadController : ICharacterController
     {
         UpdateKey();
     }
-
-    bool currentKey = false;
-    bool previousKey = false;
     
     //現在押されたか
     bool isRight = false;

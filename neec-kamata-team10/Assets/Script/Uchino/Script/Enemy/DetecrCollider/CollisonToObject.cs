@@ -65,12 +65,13 @@ public class CollisonToObject : MonoBehaviour {
         KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
+
     private void KillOrDeath(Collider other)
     {
 
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
-        if ( other.tag == "Splinter")         //エネミーが小さいか、棘に当たった時に死ぬ
+        if (other.tag == "Splinter")
         {
             GetComponentInParent<EnemyDead>().Dead();
             return;
@@ -82,7 +83,7 @@ public class CollisonToObject : MonoBehaviour {
             return;
         }
 
-        if (IsSmall(size))                    //自分の方が小さい
+        if (IsSmall(size) )                                   //エネミーが小さいか、棘に当たった時に死ぬ
         {
             GetComponentInParent<EnemyDead>().Dead();
             return;
@@ -104,5 +105,7 @@ public class CollisonToObject : MonoBehaviour {
 
         return false;                                                //縮んでいない。
     }
+
+
 
 }

@@ -16,7 +16,7 @@ public class MoveEnemy : MonoBehaviour
     [SerializeField]
     protected float moveSpeed = 1; //移動スピード
     protected Direction direction; //向き
-
+    protected Animator anim;
     protected DetectEmpty detectEmptyFront;
 
 
@@ -130,16 +130,21 @@ public class MoveEnemy : MonoBehaviour
     {
         //localScaleの値を1か-1か判断する
         Vector3 offsetscale = transform.localScale;
-        //offsetscale.x = (offsetscale.x > 0) ? 1 : -1;
-
-        //offsetscale.x = ((int)Direction == offsetscale.x) ? -1 : 1;
-
+        
         //offsetSceleの取得方法を見直し
         offsetscale.x = ((int)Direction * offsetscale.x > 0) ? -1 : 1;
 
         //左右反転
         transform.localScale = new Vector3(transform.localScale.x * offsetscale.x,
             offsetscale.y, offsetscale.z);
+    }
+
+    /// <summary>
+    /// ChaseEnemy用
+    /// </summary>
+    protected void FlipAnimation_Chase()
+    {
+         anim.SetInteger("Direction", (int)Direction);
     }
 
 }
