@@ -14,8 +14,6 @@ public class StageManager
     private bool isStage;                       //ステージ中か
     private DateTime passTime;                  //経過時間
 
-    private bool isClear;
-
     private Vector3 startPos;                   //Player初期位置
     private Vector3 cameraPos;                  //カメラ初期位置
 
@@ -23,7 +21,6 @@ public class StageManager
     {
         currentStage = 0;
         isStage = false;
-        isClear = false;
         passTime = DateTime.MinValue;
     }
 
@@ -34,7 +31,6 @@ public class StageManager
     public void Initialize(int nextStage, bool resetTime)
     {
         currentStage = nextStage;               //ステージ指定
-        isClear = false;
         if (resetTime)
         {
             passTime = DateTime.MinValue;       //Reset
@@ -98,8 +94,9 @@ public class StageManager
         gameManager.GetController().SetFadeFlag(true);                      //操作禁止
         Time.timeScale = 0;
 
-        this.isClear = isClear;
-        gameManager.GetComponent<ResultManager>().GameOver(isClear);
+        if (isClear)
+            gameManager.UnlockStage(unlockStage);                           //Stageを解放
+        gameManager.GetComponent<ResultManager>().GameOver(isClear);        //ResultPanelを表示
     }
 
     /// <summary>

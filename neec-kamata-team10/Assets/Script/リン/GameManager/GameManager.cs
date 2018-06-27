@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private StageManager stageManager;                      //ステージマネージャー
     private SoundManager soundManager;                      //サウンドマネージャー
     private SystemSE systemSeManager;                       //システム音のマネージャー
+    private UnlockManager unlockStageManager;               //ステージがクリアされたかをセーブ
+    private SaveManager saveManager;                        //SaveManager
 
     private void Awake()
     {
@@ -51,7 +53,10 @@ public class GameManager : MonoBehaviour
         systemSeManager = transform.GetChild(0).GetComponent<SystemSE>();
         sceneManager = new SceneChange();
         stageManager = new StageManager();
-        stageManager.Initialize(0, true);                         //Debug Test
+        stageManager.Initialize(0, true);                   //Debug Test
+        unlockStageManager = new UnlockManager();
+        saveManager = new SaveManager();
+        saveManager.Load(unlockStageManager);               //Load
     }
 
     void Update()
@@ -168,6 +173,30 @@ public class GameManager : MonoBehaviour
     public SystemSE GetSystemSE()
     {
         return systemSeManager;
+    }
+
+    #endregion
+
+
+    #region Save関連
+
+    /// <summary>
+    /// ステージを解放
+    /// </summary>
+    /// <param name="nextStage"></param>
+    public void UnlockStage(EScene nextStage)
+    {
+        unlockStageManager.Clear((EScene)stageManager.CurrentStage(), nextStage, stageManager.PassTime());
+        saveManager.Save(unlockStageManager);
+    }
+
+    /// <summary>
+    /// 進捗状況のマネージャー
+    /// </summary>
+    /// <returns></returns>
+    public UnlockManager UnlockManager()
+    {
+        return unlockStageManager;
     }
 
     #endregion
