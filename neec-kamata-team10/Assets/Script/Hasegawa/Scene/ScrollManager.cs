@@ -19,12 +19,16 @@ public class ScrollManager : MonoBehaviour
     private float backXMin;
 
     private int maxBlockX = 18;
+    private Camera camera;
+    private ColorState state;
 
     // Use this for initialization
     void Start()
     {
         xMin = transform.GetChild(0).transform.position.x - maxBlockX;
         xMax = transform.GetChild(0).transform.position.x + maxBlockX;
+        camera = Camera.main;
+        state = camera.GetComponent<BackGround>().GetState();
     }
 
     // Update is called once per frame
@@ -51,6 +55,7 @@ public class ScrollManager : MonoBehaviour
         transform.GetChild(2).GetChild(1).transform.position = CheckBack(ground1BackPosition);
         //Debug.Log("ground1"+ground1BackPosition);
         ground2BackPosition -= new Vector3(scrollSpeedBack, 0, 0) * Time.deltaTime;
+        CheckState(ground2BackPosition);
         transform.GetChild(3).GetChild(1).transform.position = CheckBack(ground2BackPosition);
         //Debug.Log("ground2" + ground2BackPosition);
 
@@ -58,6 +63,19 @@ public class ScrollManager : MonoBehaviour
         transform.GetChild(2).GetChild(2).transform.position = CheckDef(ground1DefPosition);
         ground2DefPosition -= new Vector3(scrollSpeedDef, 0, 0) * Time.deltaTime;
         transform.GetChild(3).GetChild(2).transform.position = CheckDef(ground2DefPosition);
+    }
+
+    //太陽と月の入れ替え
+    void CheckState(Vector3 position)
+    {
+        if (position.x <= backXMin)
+        {
+            state = camera.GetComponent<BackGround>().GetState();
+            SunMoon sunMoon = transform.GetChild(3).GetComponent<SunMoon>();
+
+            if (state == ColorState.Third) sunMoon.Change(false);
+            else sunMoon.Change(true);
+        }
     }
 
     Vector3 CheckDef(Vector3 position)
