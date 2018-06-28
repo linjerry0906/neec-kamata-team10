@@ -3,8 +3,6 @@
 // 作成者：林 佳叡
 // 内容：プレイヤーデータを管理するクラス
 //------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 
 public class SaveManager
