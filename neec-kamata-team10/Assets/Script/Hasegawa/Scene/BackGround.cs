@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ColorState
+{
+    First,
+    Second,
+    Third
+}
+
 public class BackGround : MonoBehaviour
 {
-    public enum ColorState
-    {
-        First,
-        Second,
-        Third
-    }
-
     //private float red;
     //private float green;
     //private float blue;
@@ -58,6 +58,7 @@ public class BackGround : MonoBehaviour
             rate = 0;
             currentColor = Camera.main.backgroundColor;
         }
+        //Debug.Log(colorState);
     }
 
     void ColorChange(Color color, float rate)
