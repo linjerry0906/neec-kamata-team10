@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: appearBlock
-  m_Shader: {fileID: 4800000, guid: d0834732c2df7094bbf6256162381179, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ALPHABLEND_ON
+  m_Name: mirror_back_appear
+  m_Shader: {fileID: 4800000, guid: fe2f297864cb7794184b8a4601edd375, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -20,10 +20,6 @@ Material:
     m_TexEnvs:
     - _BumpMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DesolveTex:
-        m_Texture: {fileID: 2800000, guid: 0d5405a32309dbe489a4a9f5de47b801, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -59,26 +55,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _ApearSize: 0.8
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DissolveScale: 0.804
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _Mode: 2
+    - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - _ApearColor: {r: 1, g: 0.93103445, b: 0, a: 1}
-    - _ApearColor2: {r: 1, g: 0.92941177, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.15210435, g: 0.15210435, b: 0.15210435, a: 0.15210435}
+    - _EmissionColor: {r: 1.7961123, g: 1.7961123, b: 1.7961123, a: 1.7961123}
