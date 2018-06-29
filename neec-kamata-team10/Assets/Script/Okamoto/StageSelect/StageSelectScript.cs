@@ -61,7 +61,7 @@ public class StageSelectScript : MonoBehaviour
         }
         else
         {
-            //ToDo SE
+            GameManager.Instance.GetSystemSE().PlaySystemSE(SystemSoundEnum.se_error);
         }
     }
 

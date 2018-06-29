@@ -9,5 +9,6 @@ public enum SystemSoundEnum
 {
     se_cancel = 0,
     se_enter,
-    se_select
+    se_select,
+    se_error,
 }
