@@ -15,6 +15,10 @@ public class SaveManager
     /// </summary>
     public void Save(UnlockManager unlockManager)
     {
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
         if (File.Exists(path + fileName))                       //Dataある場合
         {
             SaveData(unlockManager, FileMode.Open);
