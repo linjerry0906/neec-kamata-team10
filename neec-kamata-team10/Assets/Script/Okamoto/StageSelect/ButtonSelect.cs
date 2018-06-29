@@ -50,7 +50,7 @@ public class ButtonSelect : MonoBehaviour {
         //Debug.Log(panelButton);
         //Debug.Log(constrain);
         //Debug.Log(index);
-        Debug.Log(stage);
+        //Debug.Log(stage);
     }
 
     void CheckPanelButton()
@@ -152,4 +152,6 @@ public class ButtonSelect : MonoBehaviour {
     {
         return stage;
     }
+
+    
 }
