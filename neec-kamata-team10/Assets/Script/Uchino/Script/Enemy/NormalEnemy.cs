@@ -9,15 +9,13 @@ public class NormalEnemy : MoveEnemy
     {
         DirectionInit();
 
-        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
         SetGroundEdge();                                    //地面端の設定
         HorizontalMove();                                   //行ったり来たり
-
-        FlipAnimation();                                    //反転アニメーション
+        FlipAnimation_Simple();
     }
 
 

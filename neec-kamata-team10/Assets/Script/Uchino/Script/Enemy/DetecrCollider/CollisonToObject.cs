@@ -14,8 +14,6 @@ public class CollisonToObject : MonoBehaviour {
             , parentTransform.position.z);
 
         parentPosY = transform.parent.position.y;
-        normalSize = transform.parent.localScale;
-
         audioSource = GetComponentInParent<AudioSource>();
         audioSource.clip = deadClip;
     }
@@ -42,7 +40,6 @@ public class CollisonToObject : MonoBehaviour {
     }
 
     Vector3 previousSize = Vector3.zero;
-    Vector3 normalSize;
     void UpdateSizeState()
     {
         previousSize = transform.parent.localScale;

@@ -9,7 +9,7 @@ public class CollisonWall : MonoBehaviour {
     {
         SetOnColisonWall(other,true);
 
-        if (!IsBlockTag(other)) return; //Blockじゃなかったら
+        if (!IsBlockTag(other) && other.tag != "Enemy") return; 
             
         NormalEnemy nomalEnemy = GetComponentInParent<NormalEnemy>();
         if (nomalEnemy != null)
