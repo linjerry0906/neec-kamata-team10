@@ -8451,9 +8451,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highLight: {fileID: 2100000, guid: 6cc8587a82d4ac343aac3dda2399d802, type: 2}
-  brightness: 0.7
+  brightness: 0.6
   lightStrength: 2
-  threshold: 0.3
+  threshold: 0.9
   offset1x: {x: 1, y: 1}
   offset2x: {x: 5, y: 5}
   offset4x: {x: 10, y: 10}
@@ -8485,8 +8485,8 @@ MonoBehaviour:
   relativePos: {x: 0, y: 14, z: -30}
   radius: 1
   charaTraceSpeed: 5
-  minPos: {x: -1000, y: -100}
-  maxPos: {x: 1000, y: 500}
+  minPos: {x: -36, y: 17.5}
+  maxPos: {x: 42, y: 500}
 --- !u!81 &669976344
 AudioListener:
   m_ObjectHideFlags: 0
@@ -8543,7 +8543,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 669976340}
   m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
-  m_LocalPosition: {x: -42.5, y: 17, z: -30}
+  m_LocalPosition: {x: -36, y: 17.5, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 209839553}
