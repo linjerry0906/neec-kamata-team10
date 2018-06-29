@@ -16,10 +16,15 @@ public class BackGround : MonoBehaviour
     //private float blue;
     private float rate = 0;
     private Color currentColor;
+    private Color currentLightColor;
     private ColorState colorState = ColorState.First;
 
     [SerializeField]
     private Color firstColor = new Color(6 / 255.0f, 73 / 255.0f, 176 / 255.0f,0);
+    //[SerializeField]
+    //private Color firstLightColor = new Color(255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 0);
+    private Color firstLightColor;
+
     [SerializeField]
     private Color secondColor = new Color(212 / 255.0f, 93 / 255.0f, 39, 0 / 255.0f);
     [SerializeField]
@@ -32,9 +37,12 @@ public class BackGround : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        firstLightColor = transform.GetChild(1).GetComponent<Light>().color;
+
         Camera.main.backgroundColor = firstColor;
-        //Debug.Log("background" + Camera.main.backgroundColor);
+        transform.GetChild(1).GetComponent<Light>().color = firstLightColor;
         currentColor = Camera.main.backgroundColor;
+        currentLightColor = transform.GetChild(1).GetComponent<Light>().color;
     }
 
     // Update is called once per frame
@@ -42,9 +50,21 @@ public class BackGround : MonoBehaviour
     {
         //Debug.Log("background" + Camera.main.backgroundColor);
 
-        if (colorState == ColorState.First) ColorChange(secondColor, rate);
-        else if (colorState == ColorState.Second) ColorChange(thirdColor, rate);
-        else if (colorState == ColorState.Third) ColorChange(firstColor, rate);
+        if (colorState == ColorState.First)
+        {
+            ColorChange(secondColor, rate);
+            LightColorChange(secondColor, rate);
+        }
+        else if (colorState == ColorState.Second)
+        {
+            ColorChange(thirdColor, rate);
+            LightColorChange(thirdColor, rate);
+        }
+        else if (colorState == ColorState.Third)
+        {
+            ColorChange(firstColor, rate);
+            LightColorChange(firstLightColor, rate);
+        }
 
         rate += 1 / time * Time.deltaTime;
 
@@ -57,13 +77,28 @@ public class BackGround : MonoBehaviour
             else if (colorState == ColorState.Third) colorState = ColorState.First;
             rate = 0;
             currentColor = Camera.main.backgroundColor;
+            currentLightColor = transform.GetChild(1).GetComponent<Light>().color;
         }
         //Debug.Log(colorState);
     }
 
     void ColorChange(Color color, float rate)
     {
-        Camera.main.backgroundColor = Color.Lerp(currentColor, color, rate);
+        Color changeColor = Color.Lerp(currentColor, color, rate);
+        Camera.main.backgroundColor = changeColor;
+
+        //if (colorState == ColorState.First) changeColor += new Color(210 / 255.0f, 210 / 255.0f, 210 / 255.0f);
+        //else changeColor += new Color(150 / 255.0f, 150 / 255.0f, 150 / 255.0f);
+
+        //changeColor += new Color(180 / 255.0f, 180 / 255.0f, 180 / 255.0f);
+        //changeColor += new Color(180 / 255.0f, 180 / 255.0f, 180 / 255.0f);
+        //transform.GetChild(1).GetComponent<Light>().color= changeColor;
+    }
+
+    void LightColorChange(Color color, float rate)
+    {
+        Color changeColor = Color.Lerp(currentLightColor, color, rate);
+        transform.GetChild(1).GetComponent<Light>().color = changeColor;
     }
 
     public ColorState GetState()
