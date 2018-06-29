@@ -9,6 +9,7 @@
     Stage7 = 7,
     Stage8 = 8,
     Stage9 = 9,
+    Stage10 = 10,
     StageNull,              //Stage追加はこの上に
     TitleTest = -100,
     PlayTest,
