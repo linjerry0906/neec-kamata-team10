@@ -20,15 +20,13 @@ public class BackGround : MonoBehaviour
     private ColorState colorState = ColorState.First;
 
     [SerializeField]
-    private Color firstColor = new Color(6 / 255.0f, 73 / 255.0f, 176 / 255.0f,0);
-    //[SerializeField]
-    //private Color firstLightColor = new Color(255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 0);
+    private Color firstColor; //= new Color(6 / 255.0f, 73 / 255.0f, 176 / 255.0f,0);
+    [SerializeField]
     private Color firstLightColor;
-
     [SerializeField]
-    private Color secondColor = new Color(212 / 255.0f, 93 / 255.0f, 39, 0 / 255.0f);
+    private Color secondColor; //= new Color(212 / 255.0f, 93 / 255.0f, 39, 0 / 255.0f);
     [SerializeField]
-    private Color thirdColor = new Color(16 / 255.0f, 18 / 255.0f, 68, 0 / 255.0f);
+    private Color thirdColor; //= new Color(16 / 255.0f, 18 / 255.0f, 68, 0 / 255.0f);
     [SerializeField]
     private float time = 30;
 
@@ -37,7 +35,7 @@ public class BackGround : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        firstLightColor = transform.GetChild(1).GetComponent<Light>().color;
+        //firstLightColor = transform.GetChild(1).GetComponent<Light>().color;
 
         Camera.main.backgroundColor = firstColor;
         transform.GetChild(1).GetComponent<Light>().color = firstLightColor;
