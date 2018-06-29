@@ -5,12 +5,7 @@ using UnityEngine;
 public class EnemyAliveFlag : MonoBehaviour
 {
     bool isDead = false;
-    Animator anim;
 
-    private void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
 
     public void Dead()
     {

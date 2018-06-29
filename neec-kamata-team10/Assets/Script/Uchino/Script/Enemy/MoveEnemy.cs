@@ -23,6 +23,7 @@ public class MoveEnemy : MonoBehaviour
     {
        GroundInfo groundInfo = gameObject
         .AddComponent(typeof(GroundInfo)) as GroundInfo;   //実体を取得
+        anim = GetComponent<Animator>();
 
     }
     public void DirectionInit()
@@ -131,11 +132,11 @@ public class MoveEnemy : MonoBehaviour
     /// <summary>
     /// 左右の画像反転処理
     /// </summary>
-    protected void FlipAnimation()
+    protected void FlipAnimation_Simple()
     {
         //localScaleの値を1か-1か判断する
         Vector3 offsetscale = transform.localScale;
-        
+
         //offsetSceleの取得方法を見直し
         offsetscale.x = ((int)Direction * offsetscale.x > 0) ? -1 : 1;
 
@@ -147,7 +148,7 @@ public class MoveEnemy : MonoBehaviour
     /// <summary>
     /// ChaseEnemy用
     /// </summary>
-    protected void FlipAnimation_Chase()
+    protected void FlipAnimation()
     {
          anim.SetInteger("Direction", (int)Direction);
     }

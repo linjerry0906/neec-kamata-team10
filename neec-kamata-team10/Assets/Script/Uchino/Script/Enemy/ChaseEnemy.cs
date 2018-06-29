@@ -14,14 +14,12 @@ public class ChaseEnemy : MoveEnemy
 
         defaultScale = transform.localScale;            //デフォルトスケール
         previousScale = defaultScale;                   //前回のスケール
-
-        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         SetGroundEdge();                                 //地面端をセット
-        FlipAnimation_Chase();                           //アニメーションで反転   
+        FlipAnimation();                                 //アニメーションで反転   
     }
 
 
@@ -218,7 +216,6 @@ public class ChaseEnemy : MoveEnemy
 
         //壁に当たってなかったら実行しない
         if (!colisonWall.IsWallColison()) { return; }
-        bool isLeft = (Direction == Direction.LEFT) ? true : false;
         Vector3 myPosition = transform.position;
 
         transform.position = new Vector3(onCollisonWallPositionX, myPosition.y, myPosition.z);

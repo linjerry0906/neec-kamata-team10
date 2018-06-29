@@ -159,21 +159,37 @@ public class PadController : ICharacterController
         this.isFade = isFade;
     }
 
+    /// <summary>
+    /// 選択を上に移動
+    /// </summary>
+    /// <returns></returns>
     public bool MoveSelectionUp()
     {
         return IsKeyDown(isUp,previousUp);
     }
 
+    /// <summary>
+    /// 選択を下に移動
+    /// </summary>
+    /// <returns></returns>
     public bool MoveSelectionDown()
     {
         return IsKeyDown(isDown, previousDown);
     }
 
+    /// <summary>
+    /// 選択を左に移動
+    /// </summary>
+    /// <returns></returns>
     public bool MoveSelectionLeft()
     {
         return IsKeyDown(isLeft, previousLeft);
     }
 
+    /// <summary>
+    /// 選択を右に移動
+    /// </summary>
+    /// <returns></returns>
     public bool MoveSelectionRight()
     {
         return IsKeyDown(isRight, previousRight);
@@ -199,30 +215,49 @@ public class PadController : ICharacterController
     //軸
     string vertical = "Vertical";
     string horizontal = "Horizontal";
+    const float feelingMovementNum = 0.75f; 
 
     private void UpdateKey()
     {
         previousRight = isRight;
-        previousLeft = isLeft;
-        previousDown = isDown;
-        previousUp = isUp;
+        previousLeft  = isLeft;
+        previousDown  = isDown;
+        previousUp    = isUp;
 
-        isRight = IsKeyDown(horizontal, 1);
-        isLeft = IsKeyDown(horizontal, -1);
-        isUp = IsKeyDown(vertical, 1);
-        isDown = IsKeyDown(vertical, -1);
+        isRight = IsKeyDown(horizontal, feelingMovementNum);
+        isLeft  = IsKeyDown(horizontal,-feelingMovementNum);
+        isUp    = IsKeyDown(vertical,   feelingMovementNum);
+        isDown  = IsKeyDown(vertical,  -feelingMovementNum);
     }
 
-    private bool IsKeyDown(string axisName, int direction)
+    private bool IsKeyDown(string axisName, float direction)
     {
-        if (Input.GetAxis(axisName) == direction)
+        //＋軸なら
+        if(direction >= 0)
         {
-            return true;
+            if (Input.GetAxisRaw(axisName) >= direction)
+            {
+                return true;
+            }
+        }
+        //-軸なら
+        if (direction <= 0)
+        {
+            if (Input.GetAxisRaw(axisName) <= direction)
+            {
+                return true;
+            }
         }
 
-        return false;       
+        return false;
     }
 
+    /// <summary>
+    /// 前回のキーが押されてなくて、今回のキーが押されていたら。
+    /// </summary>
+    /// <param name="isDirKey"></param>
+    /// <param name="previousDirKey"></param>
+    /// <returns></returns>
     private bool IsKeyDown(bool isDirKey ,bool previousDirKey)
     {
         return isDirKey && !previousDirKey;

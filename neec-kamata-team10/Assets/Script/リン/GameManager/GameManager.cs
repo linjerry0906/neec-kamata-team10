@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         stageManager.Update();                              //Stage時間を更新
+        GetController().Update();
     }
 
     #region Scene関連
