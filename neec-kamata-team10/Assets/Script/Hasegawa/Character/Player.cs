@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
     //ジャンプ
     void Jump()
     {
+        if (controller.IsFade()) return;
         if (controller.Jump() && !isJump)
         {
             audio.clip = GetComponent<SEManager>().GetSE(0);
