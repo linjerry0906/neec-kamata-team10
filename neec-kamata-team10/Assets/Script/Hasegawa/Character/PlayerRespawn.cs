@@ -21,6 +21,7 @@ public class PlayerRespawn : MonoBehaviour
             if (spawnNum < num) return;
             num = spawnNum;
             respawnPos = c.transform.position;
+            respawnPos.y += 0.2f;
         }
     }
 
