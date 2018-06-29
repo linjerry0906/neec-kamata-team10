@@ -212,9 +212,10 @@ public class PadController : ICharacterController
     bool previousDown = false;
     bool previousUp = false;
 
-    //軸
+    //軸(ジョイスティック)
     string vertical = "Vertical";
     string horizontal = "Horizontal";
+
     const float feelingMovementNum = 0.75f; 
 
     private void UpdateKey()
@@ -224,30 +225,55 @@ public class PadController : ICharacterController
         previousDown  = isDown;
         previousUp    = isUp;
 
-        isRight = IsKeyDown(horizontal, feelingMovementNum);
-        isLeft  = IsKeyDown(horizontal,-feelingMovementNum);
-        isUp    = IsKeyDown(vertical,   feelingMovementNum);
-        isDown  = IsKeyDown(vertical,  -feelingMovementNum);
+        isRight = IsKeyDown(horizontal, 1);
+        isLeft  = IsKeyDown(horizontal,-1);
+        isUp    = IsKeyDown(vertical,   1);
+        isDown  = IsKeyDown(vertical,  -1);
     }
 
     private bool IsKeyDown(string axisName, float direction)
     {
+        //アナログスティックの軸名（UnityのInputManagerで設定）
+        string analogSticName = axisName + 2;
+
         //＋軸なら
         if(direction >= 0)
         {
-            if (Input.GetAxisRaw(axisName) >= direction)
-            {
-                return true;
-            }
+            return IsPlusInput(axisName,analogSticName);
         }
         //-軸なら
         if (direction <= 0)
         {
-            if (Input.GetAxisRaw(axisName) <= direction)
-            {
-                return true;
-            }
+            return IsMinusInput(axisName,analogSticName);
         }
+
+        return false;
+    }
+
+    /// <summary>
+    /// プラス軸の入力判定
+    /// </summary>
+    /// <param name="joyAxisName"></param>
+    /// <param name="analogAxisName"></param>
+    /// <returns></returns>
+    bool IsPlusInput(string joyAxisName,string analogAxisName)
+    {
+        if (Input.GetAxisRaw(joyAxisName) >= feelingMovementNum) return true;
+        if (Input.GetAxis(analogAxisName) == 1)                  return true;
+
+        return false;
+    }
+
+    /// <summary>
+    /// マイナス軸の入力判定
+    /// </summary>
+    /// <param name="joyAxisName"></param>
+    /// <param name="analogAxisName"></param>
+    /// <returns></returns>
+    bool IsMinusInput(string axisName, string analogAxisName)
+    {
+        if (Input.GetAxisRaw(axisName) <= -feelingMovementNum) return true;
+        if (Input.GetAxis(analogAxisName) == -1)               return true;
 
         return false;
     }
