@@ -14,7 +14,9 @@ public class TitleManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (controller.Jump()) {
-            Debug.Log("change");
+            SystemSE systemSE = GameManager.Instance.GetSystemSE();
+            systemSE.PlaySystemSE(SystemSoundEnum.se_enter);
+
             GameManager.Instance.ChangeScene(EScene.StageSelect); }
 	}
 }
