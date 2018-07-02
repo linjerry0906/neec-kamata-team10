@@ -8,7 +8,8 @@ public class DeathZone : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
             other.GetComponent<AliveFlag>().Dead();
-        else if(other.CompareTag("Enemy") || other.CompareTag("stage_block"))
+        else if(other.CompareTag("Enemy") || other.CompareTag("stage_block") ||
+                other.CompareTag("magic_block") || other.CompareTag("Splinter") )
             Destroy(other.gameObject);
     }
 }
