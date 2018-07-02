@@ -176,7 +176,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
@@ -1117,7 +1117,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 806db5d33946614438afd812e3b0eded, type: 2}
+  - {fileID: 2100000, guid: 5bea5a73fb45500449610053d36f62da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1300,7 +1300,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -1935,6 +1935,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 76
       objectReference: {fileID: 0}
+    - target: {fileID: 114379760177645606, guid: fb56e84863f603c4dbb5156e20bfc944,
+        type: 2}
+      propertyPath: breakMass
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
   m_IsPrefabParent: 0
@@ -2280,7 +2285,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 806db5d33946614438afd812e3b0eded, type: 2}
+  - {fileID: 2100000, guid: 5bea5a73fb45500449610053d36f62da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3533,7 +3538,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -4840,6 +4845,11 @@ Prefab:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114379760177645606, guid: fb56e84863f603c4dbb5156e20bfc944,
+        type: 2}
+      propertyPath: breakMass
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
   m_IsPrefabParent: 0
@@ -4886,6 +4896,11 @@ Prefab:
     - target: {fileID: 4089739796761468, guid: 061b66e3198da6e4b8d2b832ab6c5f2e, type: 2}
       propertyPath: m_RootOrder
       value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 54973476062930988, guid: 061b66e3198da6e4b8d2b832ab6c5f2e,
+        type: 2}
+      propertyPath: m_Mass
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 061b66e3198da6e4b8d2b832ab6c5f2e, type: 2}
@@ -5157,7 +5172,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 806db5d33946614438afd812e3b0eded, type: 2}
+  - {fileID: 2100000, guid: 5bea5a73fb45500449610053d36f62da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6164,7 +6179,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -8163,7 +8178,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -9081,7 +9096,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -9627,7 +9642,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 806db5d33946614438afd812e3b0eded, type: 2}
+  - {fileID: 2100000, guid: 5bea5a73fb45500449610053d36f62da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10195,7 +10210,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -13819,6 +13834,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 114379760177645606, guid: fb56e84863f603c4dbb5156e20bfc944,
+        type: 2}
+      propertyPath: breakMass
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb56e84863f603c4dbb5156e20bfc944, type: 2}
   m_IsPrefabParent: 0
@@ -14018,7 +14038,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
@@ -15038,7 +15058,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f45be8055fd1c044b852b92498452487, type: 2}
+      objectReference: {fileID: 2100000, guid: d324af73fd22e5b4b8a66d9bc58f5d76, type: 2}
     - target: {fileID: 1227171071476876, guid: fd3355204a30fa3499dd615ffdd83dfe, type: 2}
       propertyPath: m_Layer
       value: 8
@@ -15577,7 +15597,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 806db5d33946614438afd812e3b0eded, type: 2}
+  - {fileID: 2100000, guid: 5bea5a73fb45500449610053d36f62da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15891,7 +15911,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
