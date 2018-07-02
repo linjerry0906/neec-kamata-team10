@@ -46,7 +46,6 @@ public class ReflectObject : MonoBehaviour
         mesh.material.SetColor("_ApearColor", originMaterial.GetColor("_ApearColor"));
         mesh.material.SetColor("_ApearColor2", originMaterial.GetColor("_ApearColor2"));
         mesh.material.SetFloat("_ApearSize", originMaterial.GetFloat("_ApearSize"));
-        mesh.material.SetFloat("_Disappear", 1.0f);
     }
 
     /// <summary>

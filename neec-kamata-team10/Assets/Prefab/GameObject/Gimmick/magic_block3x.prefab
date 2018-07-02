@@ -147,7 +147,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385981608662418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.47, y: 2.5, z: -0.5}
+  m_LocalPosition: {x: -15.5, y: 3.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4649836176607312}
@@ -251,7 +251,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 208b75e1f2e0bbf49a8f6d5af21affee, type: 2}
+  - {fileID: 2100000, guid: dfaf3f1b47f922541b24d948e87ec899, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -285,7 +285,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 208b75e1f2e0bbf49a8f6d5af21affee, type: 2}
+  - {fileID: 2100000, guid: dfaf3f1b47f922541b24d948e87ec899, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -319,7 +319,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 208b75e1f2e0bbf49a8f6d5af21affee, type: 2}
+  - {fileID: 2100000, guid: dfaf3f1b47f922541b24d948e87ec899, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
   maxIntensity: 2.5
   minIntensity: 0
   flashSpeed: 1.8
+  useSharedMaterial: 1
 --- !u!114 &114074931923914470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -573,6 +574,7 @@ MonoBehaviour:
   maxIntensity: 2.5
   minIntensity: 0
   flashSpeed: 1.8
+  useSharedMaterial: 1
 --- !u!114 &114983212808566286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -587,6 +589,7 @@ MonoBehaviour:
   maxIntensity: 2.5
   minIntensity: 0
   flashSpeed: 1.8
+  useSharedMaterial: 1
 --- !u!114 &114983753842747560
 MonoBehaviour:
   m_ObjectHideFlags: 1

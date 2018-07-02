@@ -16,6 +16,10 @@ public class Mirror : MonoBehaviour
     [SerializeField]
     private Material reflectMaterial;           //鏡側用のマテリアル
     [SerializeField]
+    private Material reflectMagic;
+     [SerializeField]
+    private Material reflectAppear;
+    [SerializeField]
     private Material spriteMaterial;            //鏡側用のマテリアル
     [SerializeField]
     private List<GameObject> originObj;         //映し元
@@ -167,7 +171,6 @@ public class Mirror : MonoBehaviour
     /// <param name="obj">目標オブジェクト</param>
     private void SetReflectMaterial(ref GameObject obj)
     {
-        obj.tag = "reflect";                                                  //Tag修正
         MeshRenderer mesh = obj.GetComponent<MeshRenderer>();                 //モデル
         SpriteRenderer sprite = obj.GetComponent<SpriteRenderer>();           //Sprite
         if (mesh)                                                             //メッシュレンダラーがある場合
@@ -177,7 +180,7 @@ public class Mirror : MonoBehaviour
             for (int i = 0; i < length; ++i)
             {
                 Texture mTex = mesh.materials[i].mainTexture;                 //テクスチャ取得
-                materials[i] = new Material(reflectMaterial);                 //マテリアル設定
+                materials[i] = GetReflectMaterial(obj.tag);                          //マテリアル設定
                 materials[i].SetTexture("_MainTex", mTex);                    //テクスチャ設定
                 materials[i].SetColor("_Color", mesh.materials[i].color);
                 Texture mEmiss = mesh.materials[i].GetTexture("_EmissionMap");
@@ -185,6 +188,7 @@ public class Mirror : MonoBehaviour
                 materials[i].SetTexture("_EmissionMap", mEmiss);
                 materials[i].SetColor("_EmissionColor", mEColor);
             }
+            obj.tag = "reflect";                                                  //Tag修正
             mesh.materials = materials;
         }
         if (sprite)                                                           //スプライトがある場合
@@ -288,5 +292,18 @@ public class Mirror : MonoBehaviour
     public bool IsAlive()
     {
         return isAlive;
+    }
+
+    private Material GetReflectMaterial(string tag)
+    {
+        switch(tag)
+        {
+            case "magic_block":
+                return reflectMagic;
+            case "appear_block":
+                return new Material(reflectAppear);
+            default:
+                return reflectMaterial;
+        }
     }
 }

@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: mirror_back_appear
-  m_Shader: {fileID: 4800000, guid: fe2f297864cb7794184b8a4601edd375, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_Shader: {fileID: 4800000, guid: 694f3fe35e185a245811c73b8a78b00a, type: 3}
+  m_ShaderKeywords: _DISAPPEAR_ON _EMISSIVE_ON _TRANSPARENT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -20,6 +20,10 @@ Material:
     m_TexEnvs:
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DesolveTex:
+        m_Texture: {fileID: 2800000, guid: 0d5405a32309dbe489a4a9f5de47b801, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,11 +39,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 12eda9b3c2739b047920cd985fb6ae1d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 973fc2ec9b18fcf4c8e0a2fbb8ec8b39, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0cdbaa0b93d43fa47849d5ff385c43bb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 77f9bbec956565d41a15982c7eed2096, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -55,10 +59,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _ApearSize: 0.3
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _Disappear: 1
     - _DstBlend: 0
+    - _Emissive: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
@@ -69,8 +76,14 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StencilComp: 6
+    - _StencilRef: 1
+    - _Transparent: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _ApearColor: {r: 1, g: 0.88965523, b: 0, a: 1}
+    - _ApearColor2: {r: 1, g: 0.9724138, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 1.7961123, g: 1.7961123, b: 1.7961123, a: 1.7961123}
+    - _DesolveTile: {r: 5, g: 3, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
