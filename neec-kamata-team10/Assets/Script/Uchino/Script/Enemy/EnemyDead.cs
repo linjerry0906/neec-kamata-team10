@@ -8,9 +8,18 @@ public class EnemyDead : MonoBehaviour {
 
     bool isDead = false;
 
+    //7.5 本田 Enemyの死亡時にパーティクルが出るように追加
+    [SerializeField]
+    private ParticleSystem deadParticle;
+
     public void Dead()
     {
         isDead = true;
+
+        if(deadParticle != null)
+        {
+            deadParticle.Play();
+        }
     }
 
     public bool IsDead()
@@ -26,6 +35,10 @@ public class EnemyDead : MonoBehaviour {
     private void Start()
     {
         anim = GetComponent<Animator>();
+
+        deadParticle = GetComponentInChildren<ParticleSystem>();
+
+        deadParticle.Stop();
     }
 
 
@@ -68,5 +81,4 @@ public class EnemyDead : MonoBehaviour {
         return true;
 
     }
-
 }
