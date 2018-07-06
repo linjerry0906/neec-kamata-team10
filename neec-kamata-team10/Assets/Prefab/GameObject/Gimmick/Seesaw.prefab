@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 54252229855276786}
   - component: {fileID: 65346295413487796}
   - component: {fileID: 114702421179430664}
+  - component: {fileID: 65717008648166334}
   m_Layer: 11
   m_Name: board
   m_TagString: seasaw
@@ -131,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980365289476450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.5, y: 0.5, z: -0.5}
+  m_LocalPosition: {x: 37.5, y: 2.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4631867358709298}
@@ -303,6 +304,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4333963, y: 0.58, z: 0.13}
   m_Center: {x: 3.79, y: 0, z: 0}
+--- !u!65 &65717008648166334
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757958733566748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.049999997, y: 0.0025000023, z: 0.01}
+  m_Center: {x: 0, y: 6.9849193e-10, z: 0}
 --- !u!95 &95249660831704280
 Animator:
   serializedVersion: 3
