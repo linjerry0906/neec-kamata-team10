@@ -36,8 +36,6 @@ public class EnemyDead : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
 
-        deadParticle = GetComponentInChildren<ParticleSystem>();
-
         deadParticle.Stop();
     }
 
