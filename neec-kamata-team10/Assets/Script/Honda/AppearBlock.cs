@@ -26,9 +26,9 @@ public class AppearBlock : MonoBehaviour
     public SwitchObject switchObj; //スイッチ本体(のコード)
     public GameObject appearObject; //スイッチで切り替えさせるObject
 
-    public float fadeTime = 0.2f;  //fade時間
+    [SerializeField]
+    private float fadeTime = 0.2f;  //fade時間
     Material objectMaterial;       //fade操作に使うObjectのMaterial
-    int timer, limitTime;          //fade用のtimer(笑)
 
     enum fadeStatus //fade状態 していない,in,out
     {
@@ -43,11 +43,8 @@ public class AppearBlock : MonoBehaviour
 	void Start () {
         isActive = IsReverseAppear;        //初期状態の設定
         appearObject.SetActive(isActive);
-        limitTime = (int)(fadeTime * 60f); //60fps前提の簡易fade
 
         objectMaterial = appearObject.GetComponent<Renderer>().material;
-
-        timer = 0;
 
         fadeNow = fadeStatus.none;
 	}
@@ -55,9 +52,8 @@ public class AppearBlock : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-        if (timer < limitTime)   //タイマーの時間分岐
+        if (fadeNow != fadeStatus.none)   //タイマーの時間分岐
         {
-            timer++;
             SetAlpha();
         }
 
@@ -131,21 +127,8 @@ public class AppearBlock : MonoBehaviour
         objectMaterial.color = objColor;
     }
 
-    void SetTimer()
+    void SetTime()
     {
-        if (timer >= limitTime) //前回のフェードが終了していれば
-        {
-            timer = 0;
-        }
-
-        else                           //スイッチを高速で連打してフェードが終わってなければ
-        {
-            timer = limitTime - timer; //経過時間を取得して途中から
-        }
-    }
-
-    float GetTime()
-    {
-        return (float)timer / (float)limitTime;
+        
     }
 }
