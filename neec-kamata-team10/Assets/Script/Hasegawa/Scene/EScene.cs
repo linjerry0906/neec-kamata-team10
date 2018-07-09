@@ -11,7 +11,7 @@
     Stage9 = 9,
     Stage10 = 10,
     StageNull,              //Stage追加はこの上に
-    TitleTest = -100,
+    Title = -100,
     PlayTest,
     StageSelect,
     Pause,

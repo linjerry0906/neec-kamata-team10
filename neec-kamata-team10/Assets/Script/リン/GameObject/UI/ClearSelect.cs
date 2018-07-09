@@ -26,7 +26,7 @@ public class ClearSelect : MonoBehaviour
     private void Start()
     {
         controller = GameManager.Instance.GetController();
-        currentSelect = ESelection.TryAgain;
+        currentSelect = ESelection.StageSelect;
 
         InitButton();                               //ボタンの初期化
     }

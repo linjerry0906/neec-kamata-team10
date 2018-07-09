@@ -1884,6 +1884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 528084363}
   - component: {fileID: 528084365}
+  - component: {fileID: 528084364}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1904,6 +1905,19 @@ Transform:
   m_Father: {fileID: 1780339938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528084364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 528084362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a0fc10f587c414286aeca26537d170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderMaterial: {fileID: 2100000, guid: 9d11b1217106c754481cc6d37eff2e8e, type: 2}
+  speed: 0.01
 --- !u!20 &528084365
 Camera:
   m_ObjectHideFlags: 0
@@ -5464,10 +5478,10 @@ RectTransform:
   m_Father: {fileID: 2033469095}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -143}
-  m_SizeDelta: {x: 700, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 36}
+  m_SizeDelta: {x: 0, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1296881531
 MonoBehaviour:
@@ -5490,11 +5504,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: bd31433d8938e644b85915d8988b40c6, type: 3}
-    m_FontSize: 60
+    m_FontSize: 45
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 188
+    m_MaxSize: 45
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -6210,16 +6224,16 @@ RectTransform:
   m_GameObject: {fileID: 1515052357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 4, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 2033469095}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 116}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1515052359
 MonoBehaviour:
   m_ObjectHideFlags: 0
