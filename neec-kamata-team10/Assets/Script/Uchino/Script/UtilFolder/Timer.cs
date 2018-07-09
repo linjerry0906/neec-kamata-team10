@@ -38,4 +38,9 @@ public class Timer
 
         return false;
     }
+
+    public float Rate()
+    {
+        return (float)currentTime / limitTime;
+    }
 }
