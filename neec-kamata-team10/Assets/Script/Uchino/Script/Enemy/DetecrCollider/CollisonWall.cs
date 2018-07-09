@@ -18,7 +18,7 @@ public class CollisonWall : MonoBehaviour {
     {
         SetOnColisonWall(other,true);
 
-        if (!IsBlockTag(other) && other.tag != "Enemy") return;
+        if (!IsReversObjectTag(other) && other.tag != "Enemy") return;
 
         if (isUpdateDone) return; //リサイズ時でも二重に判定はさせない
 
@@ -29,17 +29,11 @@ public class CollisonWall : MonoBehaviour {
         {
             gameObject.GetComponentInParent<NormalEnemy>().ReverseDirection();  //プレイヤー以外のブロックに当たったら反転
         }
-
-        ThrowingEnemy throwingEnemy = GetComponentInParent<ThrowingEnemy>();
-        if (throwingEnemy!= null)
-        {
-            gameObject.GetComponentInParent<ThrowingEnemy>().ReverseDirection();  //プレイヤー以外のブロックに当たったら反転
-        }
     }
 
     private void SetOnColisonWall(Collider other,bool isColisonWall)
     {
-        if (!IsBlockTag(other)) return;
+        if (!IsReversObjectTag(other)) return;
 
         this.isColisonWall = isColisonWall;
 
@@ -55,7 +49,7 @@ public class CollisonWall : MonoBehaviour {
         return isColisonWall;
     }
 
-    public bool IsBlockTag(Collider other)
+    public bool IsReversObjectTag(Collider other)
     {
         if (other.tag == "stage_block") return true;
         if (other.tag == "magic_block") return true;
