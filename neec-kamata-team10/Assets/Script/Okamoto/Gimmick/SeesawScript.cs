@@ -58,8 +58,6 @@ public class SeesawScript : MonoBehaviour {
             //角速度をそのまま突っ込む
             Rigidbody pBody = c.GetComponent<Rigidbody>();
             pBody.AddForce(Vector3.up * length * Mathf.Abs(rotateSpeed));
-
-            Debug.Log("Forced");
         }
     }
 

@@ -5,12 +5,25 @@ using UnityEngine;
 public class CollisonWall : MonoBehaviour {
 
     bool isColisonWall = false;
+
+    //7.9 本田 加筆
+    private bool isUpdateDone = false; //リサイズで二重に判定が起こるとバグったので
+
+    void Update()
+    {
+        isUpdateDone = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         SetOnColisonWall(other,true);
 
-        if (!IsBlockTag(other) && other.tag != "Enemy") return; 
-            
+        if (!IsBlockTag(other) && other.tag != "Enemy") return;
+
+        if (isUpdateDone) return; //リサイズ時でも二重に判定はさせない
+
+        isUpdateDone = true;
+
         NormalEnemy nomalEnemy = GetComponentInParent<NormalEnemy>();
         if (nomalEnemy != null)
         {
@@ -46,6 +59,7 @@ public class CollisonWall : MonoBehaviour {
     {
         if (other.tag == "stage_block") return true;
         if (other.tag == "magic_block") return true;
+        if (other.tag == "appear_block") return true;
 
         return false;
     }
