@@ -25,6 +25,4 @@ public interface ICharacterController
     int GetFlameCount();              //フレーム数を取得する
     bool IsFade();                    //シーンがフェードしたか
     void SetFadeFlag(bool isFade);    //シーンフェードフラグの設定
-
-
 }
