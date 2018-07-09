@@ -28,11 +28,11 @@ public class ChangeScale
     }
 
     //オブジェクトの変形
-    public Vector3 Scale(bool change, SizeEnum size)
+    public Vector3 Scale(bool hitMirror, SizeEnum size)
     {
-        if (size == SizeEnum.Normal && !isChange) return new Vector3(1, 1, 1);
+        //if (size == SizeEnum.Normal && !isChange) return new Vector3(1, 1, 1);
 
-        if (change)
+        if (hitMirror)
         {
             isChange = true;
             timer = changeTime;
