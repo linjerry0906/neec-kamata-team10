@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 114451213294973534}
   - component: {fileID: 114526608288091722}
   - component: {fileID: 82465701014402886}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -274,7 +274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 70
-  climbSpeed: 0
   moveSpeed: 5
   moveForceMultiplier: 30
 --- !u!136 &136894820160612158
