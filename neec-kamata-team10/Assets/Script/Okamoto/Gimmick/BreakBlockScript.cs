@@ -28,8 +28,8 @@ public class BreakBlockScript : MonoBehaviour
             time -= Time.deltaTime;
             if (time <= 0)
             {
-                GetComponent<BreakBlockEffect>().BreakEffect();
-                Destroy(transform.parent.gameObject);
+                GetComponent<BreakBlockEffect>().BreakEffect();                GameObject childBlock = GetComponentsInChildren<GameObject>()[0];
+                Destroy(childBlock);
             }
         }
     }
@@ -49,6 +49,13 @@ public class BreakBlockScript : MonoBehaviour
         else if (IsTrueTag(col.gameObject.tag))
         {
             trigger = IsMass(col);
+        }
+
+        //↑で破壊が始まった？
+        if (trigger)
+        {
+            GameObject childBlock = GetComponentsInChildren<GameObject>()[0];
+            Destroy(childBlock);
         }
     }
 
