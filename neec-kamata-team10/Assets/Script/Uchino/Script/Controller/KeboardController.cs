@@ -200,7 +200,11 @@ public class KeboardController : ICharacterController
 	/// </summary>
 	public bool Pause()
 	{
-		return Input.GetKeyDown (KeyCode.P);			
+		return Input.GetKeyDown (KeyCode.P);
 	}
 
+    public bool GameEnd()
+    {
+        return false;
+    }
 }

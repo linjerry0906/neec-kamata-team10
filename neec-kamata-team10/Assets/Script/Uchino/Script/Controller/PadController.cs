@@ -302,4 +302,16 @@ public class PadController : ICharacterController
         string[] ar = Input.GetJoystickNames();
         return ar.Length > 0; //コントローラは存在するか?
     }
+
+    /// <summary>
+    /// ゲームを終了
+    /// </summary>
+    /// <returns></returns>
+    public bool GameEnd()
+    {
+        if (!Input.GetKeyDown(KeyCode.JoystickButton6)) return false;
+        if (!Input.GetKeyDown(KeyCode.JoystickButton7)) return false;
+
+        return true;
+    }
 }
