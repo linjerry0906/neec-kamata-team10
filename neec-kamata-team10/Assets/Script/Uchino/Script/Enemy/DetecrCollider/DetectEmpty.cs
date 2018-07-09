@@ -16,7 +16,7 @@ public class DetectEmpty : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //地面に触れている間は常にtrue
-        if(IsGround(other.tag)) isCollison = true;
+        if(IsGround(other)) isCollison = true;
     }
 
     /// <summary>
@@ -49,12 +49,12 @@ public class DetectEmpty : MonoBehaviour
     /// <summary>
     /// Colliderが地面かどうかreturnする
     /// </summary>
-    public bool IsGround(string tag)
+    public bool IsGround(Collider other)
     {
-        if (tag.Equals("stage_block")) return true;
-        if (tag.Equals("seasaw")) return true;
-        if (tag.Equals("magic_block")) return true;
-        if (tag.Equals("appear_block")) return true;
+        if (other.CompareTag("stage_block")) return true;
+        if (other.CompareTag("seasaw")) return true;
+        if (other.CompareTag("magic_block")) return true;
+        if (other.CompareTag("appear_block")) return true;
 
         return false;
     }

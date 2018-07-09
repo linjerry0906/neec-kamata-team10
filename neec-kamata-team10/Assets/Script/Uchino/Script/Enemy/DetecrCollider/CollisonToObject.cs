@@ -101,9 +101,10 @@ public class CollisonToObject : MonoBehaviour {
     /// <returns></returns>
     private bool IsSmall(ObjectSize size)
     {
-        if (size.GetSize() == SizeEnum.Small_XY){ return true; }     //全体的に小さいか
-        if (size.GetSize() == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
-        if (size.GetSize() == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
+        SizeEnum eSize = size.GetSize();
+        if (eSize == SizeEnum.Small_XY){ return true; }     //全体的に小さいか
+        if (eSize == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
+        if (eSize == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
 
         return false;                                                //縮んでいない。
     }
