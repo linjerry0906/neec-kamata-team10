@@ -79,7 +79,7 @@ public class Mirror : MonoBehaviour
         if (originObj.Contains(other.gameObject))
             return;
 
-        bool unresizable = IsUnresizableTag(other.tag);
+        bool unresizable = IsUnresizableTag(other);
 
         originObj.Add(other.gameObject);                                   //映したい物を保存
         AddReflectObj(other.gameObject, unresizable);                      //鏡側の像を追加
@@ -104,11 +104,11 @@ public class Mirror : MonoBehaviour
     /// </summary>
     /// <param name="tag">タグ</param>
     /// <returns></returns>
-    private bool IsUnresizableTag(string tag)
+    private bool IsUnresizableTag(Collider collider)
     {
         for (int i = 0; i < tags.Length; ++i)
         {
-            if (tag.Equals(tags[i]))
+            if (collider.CompareTag(tags[i]))
                 return true;
         }
         return false;
