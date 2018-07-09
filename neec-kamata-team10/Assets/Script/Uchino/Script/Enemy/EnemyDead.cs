@@ -5,12 +5,23 @@ using UnityEngine;
 public class EnemyDead : MonoBehaviour {
 
     Animator anim;
-
     bool isDead = false;
 
     //7.5 本田 Enemyの死亡時にパーティクルが出るように追加
     [SerializeField]
     private ParticleSystem deadParticle;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+
+        deadParticle.Stop();
+    }
+
+    private void Update()
+    {
+        Animation();
+    }
 
     public void Dead()
     {
@@ -27,17 +38,6 @@ public class EnemyDead : MonoBehaviour {
         return isDead;
     }
 
-    private void Update()
-    {
-        Animation();
-    }
-
-    private void Start()
-    {
-        anim = GetComponent<Animator>();
-
-        deadParticle.Stop();
-    }
 
 
     public void Animation()

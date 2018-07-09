@@ -21,18 +21,6 @@ public class GroundInfo : MonoBehaviour
     }
 
     /// <summary>
-    /// セットされているか
-    /// </summary>
-    /// <returns></returns>
-    public bool IsAllSet()
-    {
-        if(rightEdgeX == 0) { return false; }
-        if(leftEdgeX  == 0) { return false; }
-
-        return true;
-    }
-
-    /// <summary>
     /// 右端がセットされているか
     /// </summary>
     /// <returns></returns>

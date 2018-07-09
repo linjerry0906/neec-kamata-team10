@@ -26,7 +26,6 @@ public class DetectRange : MonoBehaviour
     bool isColison = false;
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag != "Player") return;
 
         isColison = false;
     }
