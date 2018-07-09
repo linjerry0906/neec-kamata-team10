@@ -39,15 +39,15 @@ public class CollisonToObject : MonoBehaviour {
             new Vector3(parentPos.x, parentPosY + scale.y / 2 / 2, parentPos.z);    //スケールが増えた分上に移動させる。
     }
 
-    Vector3 previousSize = Vector3.zero;
+    float previousSizeY = 0;
     void UpdateSizeState()
     {
-        previousSize = transform.parent.localScale;
+        previousSizeY = transform.lossyScale.y;
     }
 
     bool IsEnlarged()
     {
-        if (!(transform.parent.transform.localScale.y > previousSize.y)) return false;
+        if (!(transform.lossyScale.y > previousSizeY)) return false;
 
         return true;
     }
@@ -59,10 +59,10 @@ public class CollisonToObject : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag != "Player" 
-            && other.tag != "Splinter") { return; }           //プレイヤーかトゲじゃなかったら実行しない。
+        if (!other.CompareTag("Player")
+            && !other.CompareTag("Splinter")) { return; }           //プレイヤーかトゲじゃなかったら実行しない。
 
-        KillOrDeath(other);                                   //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
+        KillOrDeath(other);                                        //衝突時の状態で敵が死ぬかプレイヤーが死ぬか判定する
     }
 
 
@@ -71,7 +71,7 @@ public class CollisonToObject : MonoBehaviour {
 
         ObjectSize size = GetComponentInParent<ObjectSize>(); //エネミーのサイズ
 
-        if (other.tag == "Splinter")
+        if (other.CompareTag("Splinter"))
         {
             audioSource.PlayOneShot(deadClip);
             GetComponentInParent<EnemyDead>().Dead();
@@ -84,7 +84,7 @@ public class CollisonToObject : MonoBehaviour {
             return;
         }
 
-        if (IsSmall(size) )                                   //エネミーが小さいか、棘に当たった時に死ぬ
+        if (IsSmall(size) )                                   //エネミーが小さいときはエネミーが死ぬ  
         {
             audioSource.PlayOneShot(deadClip);
             GetComponentInParent<EnemyDead>().Dead();
@@ -101,11 +101,12 @@ public class CollisonToObject : MonoBehaviour {
     /// <returns></returns>
     private bool IsSmall(ObjectSize size)
     {
-        if (size.GetSize() == SizeEnum.Small_XY){ return true; }     //全体的に小さいか
-        if (size.GetSize() == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
-        if (size.GetSize() == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
+        SizeEnum eSize = size.GetSize();
+        if (eSize == SizeEnum.Small_XY){ return true; }     //全体的に小さいか
+        if (eSize == SizeEnum.Small_X) { return true; }     //横に縮んでいるか
+        if (eSize == SizeEnum.Small_Y) { return true; }     //縦に縮んでいるか
 
-        return false;                                                //縮んでいない。
+        return false;                                       //縮んでいない。
     }
 
 

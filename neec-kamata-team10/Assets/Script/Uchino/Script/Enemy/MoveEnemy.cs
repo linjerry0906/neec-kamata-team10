@@ -99,23 +99,6 @@ public class MoveEnemy : MonoBehaviour
         {
             time = 0.0f;
 
-            //DetectEmpty detectEmptyLeft = transform.GetChild(0).GetChild(0).GetComponent<DetectEmpty>();
-            //DetectEmpty detectEmptyRight = transform.GetChild(0).GetChild(1).GetComponent<DetectEmpty>();
-
-            ////地面に当たってなかったら
-            //if (!detectEmptyLeft.IsCollison())                     //左の地面端から離れたら
-            //{
-            //    SetDirection(Direction.RIGHT);                     //移動方向を反転させる
-            //}
-            //if (!detectEmptyRight.IsCollison())                    //右の地面端から離れたら
-            //{
-            //    SetDirection(Direction.LEFT);                      //移動方向を反転させる
-            //}
-
-            //detectEmptyLeft.MyUpdate();     //地面との接触判定のために必要
-            //detectEmptyRight.MyUpdate();    //地面との接触判定のために必要
-
-
             //ここから修正
 
 
@@ -130,7 +113,7 @@ public class MoveEnemy : MonoBehaviour
     }
 
     /// <summary>
-    /// 左右の画像反転処理
+    /// 左右の画像反転処理(SimpleEnemy用)
     /// </summary>
     protected void FlipAnimation_Simple()
     {

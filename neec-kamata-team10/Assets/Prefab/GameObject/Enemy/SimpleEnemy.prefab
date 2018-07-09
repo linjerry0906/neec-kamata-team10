@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4126378626900220}
   - component: {fileID: 65063668975582446}
   - component: {fileID: 114500095044681946}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LowerRight
   m_TagString: reflect
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4147598608108566}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: EdgeOfTheGround
   m_TagString: reflect
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4945556724975214}
   - component: {fileID: 65770267915378570}
   - component: {fileID: 114586171388181988}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LowerLeft
   m_TagString: reflect
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 4425361773961372}
   - component: {fileID: 65575441322363472}
   - component: {fileID: 114030986436610948}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: DetectWall
   m_TagString: reflect
   m_Icon: {fileID: 0}
@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 114665001509228162}
   - component: {fileID: 114141110666044358}
   - component: {fileID: 114001419977991880}
-  - component: {fileID: 114005728883929168}
   - component: {fileID: 114393718448140484}
   - component: {fileID: 54553981432355582}
   - component: {fileID: 212718875991666732}
@@ -158,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995389060812492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 3.5, z: -0.5}
+  m_LocalPosition: {x: -2.5, y: 1.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4147598608108566}
@@ -422,17 +421,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c5a0e94e683dad7418a064f4eaa2a3cc, type: 3}
   - {fileID: 8300000, guid: 53ae71a0a31bac343963e2c48a96b4e6, type: 3}
   - {fileID: 8300000, guid: edeee8c11eaee734ea9a515706a89713, type: 3}
---- !u!114 &114005728883929168
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1995389060812492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b21d90f33319224cba870ffc3f599db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114030986436610948
 MonoBehaviour:
   m_ObjectHideFlags: 1

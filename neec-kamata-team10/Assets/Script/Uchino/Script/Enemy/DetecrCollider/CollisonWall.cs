@@ -29,12 +29,6 @@ public class CollisonWall : MonoBehaviour {
         {
             gameObject.GetComponentInParent<NormalEnemy>().ReverseDirection();  //プレイヤー以外のブロックに当たったら反転
         }
-
-        ThrowingEnemy throwingEnemy = GetComponentInParent<ThrowingEnemy>();
-        if (throwingEnemy!= null)
-        {
-            gameObject.GetComponentInParent<ThrowingEnemy>().ReverseDirection();  //プレイヤー以外のブロックに当たったら反転
-        }
     }
 
     private void SetOnColisonWall(Collider other,bool isColisonWall)
