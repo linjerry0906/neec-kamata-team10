@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65996485946207320}
   m_Layer: 0
   m_Name: brokenBlock
-  m_TagString: stage_block
+  m_TagString: reflect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1240197862566518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.5, y: 2.5, z: -0.5}
+  m_LocalPosition: {x: 66.5, y: 2.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4653023930938966}
@@ -185,8 +185,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0072358875, y: 0.0011288774, z: 0.01}
-  m_Center: {x: -0.000055283606, y: 0.00443556, z: 0}
+  m_Size: {x: 0.8, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!95 &95632787275466210
 Animator:
   serializedVersion: 3
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980ebc55238227f4dbc02701d38b0787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 1574779622118038}
+  particle: {fileID: 1718564306378852, guid: 61fb8cef0bde13a43a6420b9f7e75cc4, type: 2}
 --- !u!114 &114692198664622624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,7 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakMass: 9
-  breakTime: 0.4
+  breakTime: 0.1
+  childBlock: {fileID: 1309014493252640}
 --- !u!198 &198445258533620028
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -289,7 +290,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 617931516
+  randomSeed: -820587016
   InitialModule:
     serializedVersion: 3
     enabled: 1

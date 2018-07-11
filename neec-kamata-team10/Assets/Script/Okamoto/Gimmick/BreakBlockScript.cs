@@ -9,6 +9,8 @@ public class BreakBlockScript : MonoBehaviour
     int breakMass;
     [SerializeField]
     float breakTime;
+    [SerializeField]
+    GameObject childBlock;
     float time;
     bool trigger;
     Player player;
@@ -20,16 +22,24 @@ public class BreakBlockScript : MonoBehaviour
         trigger = false;
     }
 
-    // Update is called once per frame
+
+    //7.10 本田 破壊と同時にChild側を破壊して消滅に切り替えたので
+
+    //Update is called once per frame
     void Update()
     {
-        if (trigger)
+        if (trigger && time > 0)
         {
+            //時間内にたくさんパーティクルを散らすような仕様に
+            GetComponent<BreakBlockEffect>().BreakEffect();
+
             time -= Time.deltaTime;
+
             if (time <= 0)
             {
-                GetComponent<BreakBlockEffect>().BreakEffect();                GameObject childBlock = GetComponentsInChildren<GameObject>()[0];
-                Destroy(childBlock);
+                Destroy(gameObject);
+                //GameObject childBlock = GetComponentsInChildren<GameObject>()[0];
+                //Destroy(childBlock);
             }
         }
     }
@@ -54,7 +64,7 @@ public class BreakBlockScript : MonoBehaviour
         //↑で破壊が始まった？
         if (trigger)
         {
-            GameObject childBlock = GetComponentsInChildren<GameObject>()[0];
+
             Destroy(childBlock);
         }
     }
