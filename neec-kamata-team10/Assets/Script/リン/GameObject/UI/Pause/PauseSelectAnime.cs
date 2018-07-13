@@ -19,7 +19,6 @@ public class PauseSelectAnime : MonoBehaviour {
         animator = GetComponent<Animator>();
         animator.speed = 0.9f;
         imageRenderer = GetComponent<Image>();
-        imageRenderer.enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;         //レンダーされないようにOFF
     }

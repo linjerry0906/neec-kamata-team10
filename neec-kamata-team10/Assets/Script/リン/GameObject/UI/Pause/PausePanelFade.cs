@@ -11,6 +11,8 @@ public class PausePanelFade : MonoBehaviour
     [SerializeField]
     private GameObject pauseManager;
     [SerializeField]
+    private Image[] selectImage;
+    [SerializeField]
     private float fadeSpeed = 0.5f;     //fadeするスピード
     [SerializeField]
     private float maxAlpha = 0.25f;     //Alpha最大値
@@ -58,6 +60,7 @@ public class PausePanelFade : MonoBehaviour
         }
 
         panelImage.color = new Color(1, 1, 1, fadeAlpha);       //Alpha設定
+        SetSelectImageAlpha();
     }
 
     /// <summary>
@@ -75,6 +78,15 @@ public class PausePanelFade : MonoBehaviour
         }
 
         panelImage.color = new Color(1, 1, 1, fadeAlpha);       //Alpha設定
+        SetSelectImageAlpha();
+    }
+
+    private void SetSelectImageAlpha()
+    {
+        for(int i = 0; i < selectImage.Length; ++i)
+        {
+            selectImage[i].color = new Color(1, 1, 1, fadeAlpha / maxAlpha);
+        }
     }
 
     /// <summary>

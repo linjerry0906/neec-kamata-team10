@@ -309,8 +309,8 @@ public class PadController : ICharacterController
     /// <returns></returns>
     public bool GameEnd()
     {
-        if (!Input.GetKeyDown(KeyCode.JoystickButton6)) return false;
-        if (!Input.GetKeyDown(KeyCode.JoystickButton7)) return false;
+        if (!Input.GetKey(KeyCode.JoystickButton6)) return false;
+        if (!Input.GetKey(KeyCode.JoystickButton7)) return false;
 
         return true;
     }

@@ -25,14 +25,7 @@ public class MagicBlockEffect : MonoBehaviour {
 
     private void Start()
     {
-        if (useSharedMaterial)
-        {
-            material = GetComponent<MeshRenderer>().sharedMaterial;
-        }
-        else
-        {
-            material = GetComponent<MeshRenderer>().material;
-        }
+        material = GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame

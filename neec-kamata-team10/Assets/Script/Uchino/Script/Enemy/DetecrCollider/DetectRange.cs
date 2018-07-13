@@ -10,7 +10,6 @@ public class DetectRange : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag != "Player") { return; }            //プレイヤーじゃなかったら実行しない
 
         isColison = true;
         ChaseEnemy chaseEnemy = GetComponentInParent<ChaseEnemy>();  //ChaseEnemyを取得
@@ -27,7 +26,6 @@ public class DetectRange : MonoBehaviour
     bool isColison = false;
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag != "Player") return;
 
         isColison = false;
     }

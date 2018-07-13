@@ -62,9 +62,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         stageManager.Update();                              //Stage時間を更新
-        GetController().Update();
+
+        UpdateController();
     }
 
+    
     #region Scene関連
 
     /// <summary>
@@ -92,7 +94,7 @@ public class GameManager : MonoBehaviour
         sceneManager.CloseScene(EScene.Pause);
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// 指定のコントローラーを取得
@@ -106,6 +108,19 @@ public class GameManager : MonoBehaviour
 
         return controllerManager.Pad();                     //パッドのコントローラーを返す
     }
+
+    /// <summary>
+    /// コントローラー関連更新
+    /// </summary>
+    private void UpdateController()
+    {
+        ICharacterController controller = GetController();
+
+        controller.Update();
+        if(controller.GameEnd())
+            Application.Quit();
+    }
+
 
     #region Stage関連
 

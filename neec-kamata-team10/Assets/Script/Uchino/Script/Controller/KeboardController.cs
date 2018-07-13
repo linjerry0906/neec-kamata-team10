@@ -203,8 +203,12 @@ public class KeboardController : ICharacterController
 		return Input.GetKeyDown (KeyCode.P);
 	}
 
+    /// <summary>
+    /// ゲーム終了
+    /// </summary>
+    /// <returns></returns>
     public bool GameEnd()
     {
-        return false;
+        return Input.GetKeyDown(KeyCode.Escape);
     }
 }
