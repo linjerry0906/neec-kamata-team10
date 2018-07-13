@@ -3385,7 +3385,7 @@ GameObject:
   - component: {fileID: 389007923}
   - component: {fileID: 389007922}
   m_Layer: 0
-  m_Name: GameSystem (1)
+  m_Name: GameSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3402,8 +3402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb017282704b4d42af6cc0b6ed1407a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mirrorUI: {fileID: 0}
-  player: {fileID: 0}
+  mirrorUI: {fileID: 1251231094}
+  player: {fileID: 2012153296}
   mirrors:
   - {fileID: 1748790131734024, guid: e7ffd7f4fd0ce2845904bea301ae99de, type: 2}
   - {fileID: 1298398411504874, guid: 54579cf8277c2694bbda4c967edb2c91, type: 2}
@@ -22238,6 +22238,21 @@ Prefab:
         type: 2}
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212714103814696774, guid: 992ad1b14b41e98448479d369dff6daa,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 212714103814696774, guid: 992ad1b14b41e98448479d369dff6daa,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 212714103814696774, guid: 992ad1b14b41e98448479d369dff6daa,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.73333335
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 992ad1b14b41e98448479d369dff6daa, type: 2}
