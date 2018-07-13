@@ -101,7 +101,6 @@ public class MoveEnemy : MonoBehaviour
 
             //ここから修正
 
-
             //地面に当たってなかったら
             if (!detectEmptyFront.IsCollison())        //前面のColliderが地面から離れたら
             {

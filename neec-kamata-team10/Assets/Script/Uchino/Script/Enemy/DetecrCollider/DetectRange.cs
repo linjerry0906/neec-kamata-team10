@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class DetectRange : MonoBehaviour
 {
+    ChaseEnemy chaseEnemy;
+    private void Start()
+    {
+        chaseEnemy = GetComponentInParent<ChaseEnemy>(); //ChasEnemyスクリプトの取得
+        groundInfo = GetComponentInParent<GroundInfo>(); //地面の情報を取得
+    }
     /// <summary>
     /// プレイヤーを感知する（メイン）
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
-
-        isColison = true;
-        ChaseEnemy chaseEnemy = GetComponentInParent<ChaseEnemy>();  //ChaseEnemyを取得
+        isColison = true;                                            //プレイヤーを検知した
 
         if (WhetherChaisingOrNot(other))                             //追いかけるか否か
         {
@@ -23,13 +27,16 @@ public class DetectRange : MonoBehaviour
         chaseEnemy.AutoMove();                                       //自動で移動させる
     }
 
-    bool isColison = false;
+    bool isColison = false; //DeciveEnemy用
     private void OnTriggerExit(Collider other)
     {
-
         isColison = false;
     }
 
+    /// <summary>
+    /// 動いてるか
+    /// </summary>
+    /// <returns></returns>
     public bool IsMove()
     {
         return isColison;
@@ -51,6 +58,7 @@ public class DetectRange : MonoBehaviour
         return false;                                                //追尾しない
     }
 
+    GroundInfo groundInfo;
     /// <summary>
     /// プレイヤーがエネミーのいる地面いるかいないか
     /// </summary>
@@ -58,8 +66,6 @@ public class DetectRange : MonoBehaviour
     /// <returns></returns>
     private bool IsOutOfRangeGround(Vector3 playerPosition)
     {
-        GroundInfo groundInfo = GetComponentInParent<GroundInfo>();         //地面の情報を取得
-
         if(groundInfo.IsSetLeft())                                          //左地面端の位置がセットされているか
         {
             if (playerPosition.x < groundInfo.LeftEdgeX)

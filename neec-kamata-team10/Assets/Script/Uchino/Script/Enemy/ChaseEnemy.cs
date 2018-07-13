@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class ChaseEnemy : MoveEnemy
 {
-    CollisonWall colisonWall;
+
     // Use this for initialization
     void Start()
     {
         colisonWall = GetComponentInChildren<CollisonWall>();
         direction = Direction.LEFT;
+
+        detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
+        detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
     }
 
     private void Update()
@@ -19,7 +22,9 @@ public class ChaseEnemy : MoveEnemy
         FlipAnimation();                                 //アニメーションで反転   
     }
 
-
+    //地面の端を検知するオブジェクト群
+    DetectEmpty detectEmptyLeft;                         //左の地面端
+    DetectEmpty detectEmptyRight;                        //右の地面端
     /// <summary>
     /// 地面端の設定
     /// </summary>
@@ -27,12 +32,10 @@ public class ChaseEnemy : MoveEnemy
     {
         time += Time.deltaTime;                                    //タイマーの更新
 
-        //1フレーム遅れて実行
+        //2フレーム遅れて実行
         if (time >= twoFrame)
         {
             time = 0.0f;                                           //タイマーの初期化
-            DetectEmpty detectEmptyLeft  = transform.GetChild(1).GetChild(0).GetComponent<DetectEmpty>();
-            DetectEmpty detectEmptyRight = transform.GetChild(1).GetChild(1).GetComponent<DetectEmpty>();
 
             //地面に当たってなかったら
             if (!detectEmptyLeft.IsCollison())
@@ -56,17 +59,31 @@ public class ChaseEnemy : MoveEnemy
     /// </summary>
     public void ChaseMove(Collider player)
     {
-        float offsetPosX = OffsetPosition(player).x;                    //プレイヤーと敵との横の距離を求める
-        float offsetPosY = OffsetPosition(player).y;                    //プレイヤーと敵との縦の距離を求める
+        Vector3 offSetPosition = OffsetPosition(player);        //プレイヤーと敵との距離を求める
+        float offsetPosX = offSetPosition.x;                    //プレイヤーと敵との横の距離を求める
+        float offsetPosY = offSetPosition.y;                    //プレイヤーと敵との縦の距離を求める
 
-        if (IsNotPlayerleave(offsetPosY))                               //Y軸に2タイル以上離れていなかったら
+        if (IsNotPlayerleave(offsetPosY))                       //Y軸に2タイル以上離れていなかったら
         {
-            DirectionDetermination(offsetPosX);                         //プレイヤーのいる方向を判断する
+            DirectionDetermination(offSetPosition.x);           //プレイヤーのいる方向を判断する
 
-            if (IsCloseThePlayerX(offsetPosX)) { return; }              //プレイヤーに近すぎたら移動させない
+            if (IsCloseThePlayerX(offsetPosX)) { return; }      //プレイヤーに近すぎたら移動させない
         }
-        OnColisonWallPositioning();                                     //先に位置を補正しておく。
-        HorizontalMove();                                               //移動
+
+        //OnColisonWallPositioning();                             //先に位置を補正しておく。
+        HorizontalMove();                                       //移動
+
+    }
+
+    /// <summary>
+    /// 敵とプレイヤーとの距離を求める
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 OffsetPosition(Collider player)
+    {
+        Vector3 offsetPos = player.transform.position - transform.position;
+
+        return offsetPos;
 
     }
 
@@ -85,27 +102,10 @@ public class ChaseEnemy : MoveEnemy
     /// <returns></returns>
     void DirectionDetermination(float offsetPos)
     {
-        if (offsetPos > 0)               //プレイヤーが右にいたら
-        {
-            direction = Direction.RIGHT; //右向きにする
-            return;
-        }
-
-        direction = Direction.LEFT;      //左にいるので左向きにする
+        direction = (offsetPos > 0) ? Direction.RIGHT : Direction.LEFT;
     }
 
-    /// <summary>
-    /// 敵とプレイヤーとの距離を求める
-    /// </summary>
-    /// <returns></returns>
-    private Vector3 OffsetPosition(Collider player)
-    {
-        Vector3 offsetPos =  player.transform.position - transform.position;
-
-        return offsetPos;
-
-    }
-
+    const float limitedRangeX = 0.4f;    //横軸の移動制限範囲
     /// <summary>
     /// 移動制限(Playerに限りなく近づいたら動かさない)
     /// </summary>
@@ -113,13 +113,12 @@ public class ChaseEnemy : MoveEnemy
     /// <returns></returns>
     private bool IsCloseThePlayerX(float differenceX)
     {
-        const float limitedRangeX = 0.4f; //横軸の移動制限範囲
-
         if (Mathf.Abs(differenceX) <= limitedRangeX) { return true; }   //playerに1タイル分近づくと動かさない
 
         return false;
     }
 
+    const int limitedRangeY = 2;         //縦軸の移動制限範囲
     /// <summary>
     /// Y軸に2タイル分離れているか
     /// </summary>
@@ -127,8 +126,6 @@ public class ChaseEnemy : MoveEnemy
     /// <returns></returns>
     private bool IsPlayerleaveY(float differenceY)
     {
-        const int limitedRangeY = 2; //縦軸の移動制限範囲
-
         if (Mathf.Abs(differenceY) >= limitedRangeY) { return true; }   //Y方向に2タイル以上離れてる
 
         return false;
@@ -145,14 +142,15 @@ public class ChaseEnemy : MoveEnemy
         return !(IsPlayerleaveY(differenceY));
     }
 
+    CollisonWall colisonWall;                               //壁衝突検知用オブジェクト
     bool isSaveCollisonPosition = false;                    //ぶつかったときのX座標を保存したか
     float onCollisonWallPositionX;                          //ぶつかったときのX座標
+
     /// <summary>
     /// ぶつかったときのX軸の場所を保存
     /// </summary>
     private void SaveOnCollisonPosition()
     {
-
         //壁から離れたらぶつかった場所をリセット
         if(!colisonWall.IsWallColison())
         {
@@ -162,8 +160,8 @@ public class ChaseEnemy : MoveEnemy
         //壁にぶつかった場所を保存
         if (isSaveCollisonPosition) return;
         onCollisonWallPositionX = transform.position.x;
-        isSaveCollisonPosition = true;
-        
+
+        isSaveCollisonPosition = true;        
     }
 
     /// <summary>
@@ -176,8 +174,8 @@ public class ChaseEnemy : MoveEnemy
 
         //壁に当たってなかったら実行しない
         if (!colisonWall.IsWallColison()) { return; }
-        Vector3 myPosition = transform.position;
 
+        Vector3 myPosition = transform.position;
         transform.position = new Vector3(onCollisonWallPositionX, myPosition.y, myPosition.z);
 
     }

@@ -18,6 +18,8 @@ public class StagePanelCreate : MonoBehaviour {
 
     [SerializeField]
     private int panelPerButton;
+    [SerializeField]
+    private StageSelectBackground background;
 
     List<GameObject> panels;
 
@@ -63,5 +65,10 @@ public class StagePanelCreate : MonoBehaviour {
     public int ReturnPanel(int index)
     {
         return panels[index - 1].transform.GetChild(0).childCount;
+    }
+
+    public void SetBackGround(int stage, bool isLock)
+    {
+        background.SetBackGround(stage, isLock);
     }
 }
