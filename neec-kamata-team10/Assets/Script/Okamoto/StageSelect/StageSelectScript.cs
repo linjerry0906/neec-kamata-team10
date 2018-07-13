@@ -30,6 +30,7 @@ public class StageSelectScript : MonoBehaviour
         if (selectStage == stage)
         {
             GetComponent<Image>().color = IsUnlockstage ? select : lockSelect;
+            parent.GetComponent<StagePanelCreate>().SetBackGround(stage, IsUnlockstage);
         }
         else if (!IsUnlockstage)
         {

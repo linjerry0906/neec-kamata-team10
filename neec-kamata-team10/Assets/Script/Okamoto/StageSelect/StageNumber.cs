@@ -12,10 +12,10 @@ public class StageNumber : MonoBehaviour {
 	void Start () {
         text = GetComponent<Text>();
         stage = transform.parent.GetComponent<StageSelectScript>().StageNumber();
+        text.text = "Stage" + stage;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = "Stage" + stage;
 	}
 }
