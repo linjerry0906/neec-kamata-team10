@@ -130,8 +130,10 @@ public class ButtonSelect : MonoBehaviour {
         //終わりのページじゃないとき
         if (!(page == allPage))
         {
+            int temple = allButton % constrain;
+            temple = temple == 0 ? constrain : temple;
             //左下の時クレジットボタンに移動
-            if (allButton - (allButton % constrain) + 1 == stage)
+            if (allButton - (temple) + 1 == stage)
             {
                 if (controller.MoveSelectionDown() || controller.MoveSelectionLeft()) creditFlag = true;
             }
