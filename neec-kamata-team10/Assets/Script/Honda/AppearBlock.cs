@@ -34,7 +34,7 @@ public class AppearBlock : MonoBehaviour
     //FadeColor関連
     private Material objectMaterial;     //fade操作に使うObjectのMaterial
     private Color colorNow, startColor;  //現在の色、Fade開始時の色
-    private Color maxColor, clearColor;  //α=1,0 Fade後の色
+    private Color maxColor, clearColor;  //α=max,0 Fade後の色
 
 
     enum fadeStatus //fade状態 していない,in,out
@@ -54,12 +54,14 @@ public class AppearBlock : MonoBehaviour
         objectMaterial = appearObject.GetComponent<Renderer>().material;
 
         #region Fade関連の数値の設定
-        colorNow = objectMaterial.color;          //現在色取得
-        startColor = colorNow;                    //開始色=現在色(とりあえず)
+        startColor = objectMaterial.color;          //現在色取得
 
-        maxColor = colorNow; maxColor.a = 1f;     //a=1の状態を作成
-        clearColor = colorNow; clearColor.a = 0f; //a=0も作成
-        
+        maxColor = startColor;                      //a=maxの状態を保存
+        clearColor = startColor; clearColor.a = 0f; //a=0も作成
+
+        //Init時の色は反転設定=trueなら出現しているのでmax, falseなら消えているのでclear 
+        colorNow = IsReverseAppear ? maxColor : clearColor;
+
         fadeNow = fadeStatus.none;                //ステータスは変化なし
         #endregion
     }
