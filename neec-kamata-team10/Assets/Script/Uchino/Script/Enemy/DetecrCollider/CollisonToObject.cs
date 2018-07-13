@@ -25,18 +25,28 @@ public class CollisonToObject : MonoBehaviour {
     }
 
     float parentPosY;
+    bool isPositioning = false;
     /// <summary>
     /// BigXYの時に地面に埋まらないように位置を調整
     /// </summary>
     private void Positioning()
     {
-        if (!IsEnlarged()) return;
+        if (!IsEnlarged())                                                          //大きくなければ実行しない 
+        {
+            isPositioning = false;                                                  //大きくないのでフラグリセット
+            return;                                                                
+        }
+
+        if (isPositioning) return;                                                  //一回だけ上に移動させる
 
         Vector3 scale = transform.parent.localScale;
-        Vector3 parentPos = transform.parent.position;
-       
+        Vector3 parentPos = transform.parent.position; 
+        float upperMovePower = scale.y / 2 / 2;                                     //上に移動する量
+
         transform.parent.position = 
-            new Vector3(parentPos.x, parentPosY + scale.y / 2 / 2, parentPos.z);    //スケールが増えた分上に移動させる。
+            new Vector3(parentPos.x, parentPos.y + upperMovePower, parentPos.z);    //スケールが増えた分上に移動させる。
+
+        isPositioning = true;                                                       //移動させた
     }
 
     float previousSizeY = 0;
@@ -47,9 +57,9 @@ public class CollisonToObject : MonoBehaviour {
 
     bool IsEnlarged()
     {
-        if (!(transform.lossyScale.y > previousSizeY)) return false;
+        if (transform.lossyScale.y > previousSizeY)  return true;
 
-        return true;
+        return false;
     }
 
     /// <summary>
