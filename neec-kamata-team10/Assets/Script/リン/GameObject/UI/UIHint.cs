@@ -45,6 +45,9 @@ public class UIHint : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// ヒントタイマー更新
+	/// </summary>
 	private void UpdateTimer()
 	{
 		if(fadeIn)
