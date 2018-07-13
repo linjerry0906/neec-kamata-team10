@@ -18,6 +18,8 @@ public class ButtonSelect : MonoBehaviour {
     private int allPage;
     private int page;
 
+    private bool creditFlag;
+
     // Use this for initialization
     void Start () {
         stage = 1;
@@ -26,6 +28,8 @@ public class ButtonSelect : MonoBehaviour {
         page = 1;
         constrain = 0;
         controller = GameManager.Instance.GetController();
+
+        creditFlag = false;
     }
 	
 	// Update is called once per frame
@@ -48,11 +52,12 @@ public class ButtonSelect : MonoBehaviour {
         StageSelect();
         PageFeed();
         StageSelectEnter();
-        
+
         //Debug.Log(panelButton);
         //Debug.Log(constrain);
         //Debug.Log(index);
         //Debug.Log(stage);
+        Debug.Log(creditFlag);
     }
 
     void CheckPanelButton()
@@ -95,23 +100,42 @@ public class ButtonSelect : MonoBehaviour {
     //ステージを選ぶ
     void StageSelect()
     {
+        if(creditFlag)
+        {
+            if (controller.MoveSelectionUp() || controller.MoveSelectionRight()) creditFlag = false;
+            return;
+        }
         //選択ステージが端っこじゃないとき
         if (!(stage == allButton))
         {
             if (!(stage % constrain == 0))
             {
-                if (controller.MoveSelectionRight()) stage++;
+                if (controller.MoveSelectionRight())
+                {
+                    stage++;
+                    return;
+                }
             }
         }
         if (!(stage % constrain == 1))
         {
-            if (controller.MoveSelectionLeft()) stage--;
+            if (controller.MoveSelectionLeft())
+            {
+                stage--;
+                return;
+            }
         }
 
 
         //終わりのページじゃないとき
         if (!(page == allPage))
         {
+            //左下の時クレジットボタンに移動
+            if (allButton - (allButton % constrain) + 1 == stage)
+            {
+                if (controller.MoveSelectionDown() || controller.MoveSelectionLeft()) creditFlag = true;
+            }
+
             //下にシフトできるとき
             if (stage + constrain <= (panelButton * page))
             {
@@ -126,6 +150,13 @@ public class ButtonSelect : MonoBehaviour {
         //終わりのページの時
         else
         {
+
+            //左下の時クレジットボタンに移動
+            if (page * panelButton - constrain + 1 == stage)
+            {
+                if (controller.MoveSelectionDown() || controller.MoveSelectionLeft()) creditFlag = true;
+            }
+
             //下にシフトできるとき
             if (stage + constrain <= allButton)
             {
@@ -137,6 +168,9 @@ public class ButtonSelect : MonoBehaviour {
                 if (controller.MoveSelectionUp()) stage -= constrain;
             }
         }
+
+        
+
     }
 
     //ステージ決定
@@ -152,6 +186,7 @@ public class ButtonSelect : MonoBehaviour {
     //選択されたボタンをintで返す(StageSelectScript用)
     public int ReturnSelectStage()
     {
+        if (creditFlag) return 0;
         return stage;
     }
 
