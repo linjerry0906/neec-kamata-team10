@@ -45,6 +45,7 @@ public class Pause : MonoBehaviour
         soundManager.SetMaxVolume(bgmMaxVolume);
 
         uiImage[0].GetComponent<PauseSelectAnime>().SetVisible(true);
+        uiImage[1].GetComponent<PauseSelectAnime>().SetVisible(false);
         fadeManager = pausePanel.GetComponent<PausePanelFade>();
     }
 

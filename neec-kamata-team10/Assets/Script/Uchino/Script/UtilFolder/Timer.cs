@@ -16,6 +16,11 @@ public class Timer
         this.limitTime = limitTime;
     }
 
+    public void Initialize()
+    {
+        currentTime = 0;
+    }
+
     /// <summary>
     /// タイマー更新
     /// </summary>
