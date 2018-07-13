@@ -43,6 +43,8 @@ public class ButtonSelect : MonoBehaviour {
             return;
         }
 
+        if(controller.IsFade())
+            return;
         StageSelect();
         PageFeed();
         StageSelectEnter();

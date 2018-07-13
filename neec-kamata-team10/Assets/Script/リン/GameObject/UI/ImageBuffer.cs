@@ -19,10 +19,14 @@ public class ImageBuffer : MonoBehaviour
 	private float fadeSpeed;
 	[SerializeField]
 	private Image lockImage;
+	private int maxPrefer = 720;
+	private Material effect;
 
 	private void Start()
 	{
 		image = GetComponent<Image>();
+		effect = new Material(image.material);
+		image.material = effect;
 	}
 
 	private void Update()
@@ -41,7 +45,9 @@ public class ImageBuffer : MonoBehaviour
 		Color newColor = image.color;
 		newColor.a += FadeValue();
 		image.color = newColor;
-		lockImage.color = newColor * 5;
+		effect.SetFloat("_Count", newColor.a * newColor.a * maxPrefer);
+		effect.SetFloat("_Alpha", newColor.a);
+		lockImage.color = newColor * 2;
 
 		if(newColor.a >= 1.0f)
 			state = FadeState.None;
@@ -76,9 +82,12 @@ public class ImageBuffer : MonoBehaviour
 	public void SetSprite(Sprite sprite, bool isLock)
 	{
 		image = GetComponent<Image>();
+		effect = new Material(image.material);
+		image.material = effect;
 		image.sprite = sprite;
 
 		if(!isLock)
 			lockImage.enabled = true;
+		Fade();
 	}
 }

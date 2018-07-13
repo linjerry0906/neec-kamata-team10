@@ -14,7 +14,7 @@ public class StageSelectBackground : MonoBehaviour
 	private Sprite[] stageImage;
 	[SerializeField]
 	private GameObject imageBuffer;
-	private int currentIndex = 1;
+	private int currentIndex = -1;
 	[SerializeField]
 	private List<GameObject> buffers;
 
