@@ -9,11 +9,6 @@ public class CollisonToObject : MonoBehaviour {
 
     private void Start()
     {
-        Transform parentTransform = transform.parent.transform;
-        transform.position = new Vector3(parentTransform.position.x, parentTransform.position.y
-            , parentTransform.position.z);
-
-        parentPosY = transform.parent.position.y;
         audioSource = GetComponentInParent<AudioSource>();
         audioSource.clip = deadClip;
     }
@@ -31,25 +26,25 @@ public class CollisonToObject : MonoBehaviour {
     /// </summary>
     private void Positioning()
     {
-        if (!IsEnlarged())                                                          //大きくなければ実行しない 
+        if (!IsEnlarged())                                                     //大きくなければ実行しない 
         {
-            isPositioning = false;                                                  //大きくないのでフラグリセット
+            isPositioning = false;                                             //大きくないのでフラグリセット
             return;                                                                
         }
 
-        if (isPositioning) return;                                                  //一回だけ上に移動させる
+        if (isPositioning) return;                                             //一回だけ上に移動させる
 
         Vector3 scale = transform.parent.localScale;
         Vector3 parentPos = transform.parent.position; 
-        float upperMovePower = scale.y / 2 / 2;                                     //上に移動する量
+        float upperMove = scale.y / 2 / 2;                                     //上に移動する量
 
         transform.parent.position = 
-            new Vector3(parentPos.x, parentPos.y + upperMovePower, parentPos.z);    //スケールが増えた分上に移動させる。
+            new Vector3(parentPos.x, parentPos.y + upperMove, parentPos.z);    //スケールが増えた分上に移動させる。
 
-        isPositioning = true;                                                       //移動させた
+        isPositioning = true;                                                  //移動させた
     }
 
-    float previousSizeY = 0;
+    float previousSizeY;                                                       //前のサイズ
     void UpdateSizeState()
     {
         previousSizeY = transform.lossyScale.y;
@@ -57,9 +52,7 @@ public class CollisonToObject : MonoBehaviour {
 
     bool IsEnlarged()
     {
-        if (transform.lossyScale.y > previousSizeY)  return true;
-
-        return false;
+        return transform.lossyScale.y > previousSizeY;
     }
 
     /// <summary>
