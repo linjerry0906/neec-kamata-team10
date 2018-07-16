@@ -19,6 +19,8 @@ public class SceneFader : MonoBehaviour
     {
         GameManager.Instance.GetController().SetFadeFlag(true);
         stageManager = GameManager.Instance.GetStageManager();  //ステージマネージャーを取得
+        if(stageManager.CameraPos() != Vector3.zero)
+            speed = 0.1f;
     }
 
     private void Update()

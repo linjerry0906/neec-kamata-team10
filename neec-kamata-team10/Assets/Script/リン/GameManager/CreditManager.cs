@@ -18,7 +18,7 @@ public class CreditManager : MonoBehaviour
 	
 	void Update () 
 	{
-		
+		BackButton();
 	}
 
 	private void BackButton()

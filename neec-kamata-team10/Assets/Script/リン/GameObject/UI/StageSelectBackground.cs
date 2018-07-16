@@ -13,6 +13,8 @@ public class StageSelectBackground : MonoBehaviour
 	[SerializeField]
 	private Sprite[] stageImage;
 	[SerializeField]
+	private Sprite creditImage;
+	[SerializeField]
 	private GameObject imageBuffer;
 	private int currentIndex = -1;
 	[SerializeField]
@@ -24,17 +26,26 @@ public class StageSelectBackground : MonoBehaviour
 	/// <param name="stage"></param>
 	public void SetBackGround(int stage, bool isLock)
 	{
-		int index = stage - 1;					//ステージから添え字
-		index = Mathf.Max(0, Mathf.Min(index, stageImage.Length - 1));
+		int index = currentIndex;
+		Sprite background =  GetSprite(stage, ref index);
 
 		if(index == currentIndex)				//同じの場合は変更しない
 			return;
 
 		currentIndex = index;
 		GameObject buffer = Instantiate(imageBuffer, transform);
-		buffer.GetComponent<ImageBuffer>().SetSprite(stageImage[index], isLock);
+		buffer.GetComponent<ImageBuffer>().SetSprite(background, isLock);
 		FadeOutAll();
 		buffers.Add(buffer);
+	}
+
+	private Sprite GetSprite(int stage, ref int index)
+	{
+		//if(stage == (int)EScene.Credit)
+
+		index = stage - 1;					//ステージから添え字
+		index = Mathf.Max(0, Mathf.Min(index, stageImage.Length - 1));
+		return stageImage[index];
 	}
 
 	private void FadeOutAll()
