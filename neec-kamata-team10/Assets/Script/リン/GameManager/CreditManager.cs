@@ -9,13 +9,21 @@ using UnityEngine;
 
 public class CreditManager : MonoBehaviour 
 {
+	private ICharacterController controller;
 
-	void Start () {
-		
+	void Start () 
+	{
+		controller = GameManager.Instance.GetController();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		
+	}
+
+	private void BackButton()
+	{
+		if(controller.OperateTheMirror() || controller.Jump())
+			GameManager.Instance.ChangeScene(EScene.StageSelect);
 	}
 }
