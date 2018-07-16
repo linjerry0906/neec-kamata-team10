@@ -167,10 +167,9 @@ public class ButtonSelect : MonoBehaviour {
             {
                 if (controller.MoveSelectionDown()) stage += constrain;
             }
-
-            int lastPanelButton = allButton % panelButton;
+            
             //上にシフトできるとき
-            if (stage - constrain > allButton - lastPanelButton)
+            if (stage - constrain > (page - 1) * panelButton )
             {
                 if (controller.MoveSelectionUp()) stage -= constrain;
             }
