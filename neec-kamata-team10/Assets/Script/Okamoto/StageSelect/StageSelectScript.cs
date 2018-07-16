@@ -10,6 +10,8 @@ public class StageSelectScript : MonoBehaviour
     Color select;
     [SerializeField]
     Color lockSelect;
+    [SerializeField]
+    Color lockColor;
     int stage;
     int selectStage;
     GameObject parent;
@@ -36,12 +38,12 @@ public class StageSelectScript : MonoBehaviour
         }
         else if (!IsUnlockstage)
         {
-            GetComponent<Image>().color = Color.red;
+            GetComponent<Image>().color = lockColor;
         }
         //それ以外は明るくする
         else
         {
-            GetComponent<Image>().color = Color.white;
+            GetComponent<Image>().color = Color.grey;
         }
     }
 
