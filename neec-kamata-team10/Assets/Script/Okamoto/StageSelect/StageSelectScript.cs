@@ -13,13 +13,15 @@ public class StageSelectScript : MonoBehaviour
     int stage;
     int selectStage;
     GameObject parent;
-    bool IsUnlockstage;
+    bool IsUnlockstage = true;
+    [SerializeField]
+    bool findParent = true;
 
 
     void Start()
     {
-        parent = gameObject.transform.parent.parent.parent.gameObject;
-
+        if(findParent)
+            parent = gameObject.transform.parent.parent.parent.gameObject;
     }
 
     void Update()
@@ -47,6 +49,7 @@ public class StageSelectScript : MonoBehaviour
     public void StageSet(int currentStageCount)
     {
         stage = currentStageCount;
+        if (transform.childCount < 2) return;
         transform.GetChild(1).GetComponent<BestTimeTextPrint>().SetBestTime(stage);
         IsUnlockstage = GameManager.Instance.UnlockManager().IsUnlocked((EScene)stage);
     }
@@ -54,6 +57,12 @@ public class StageSelectScript : MonoBehaviour
     //そのintを返す(ステージセレクト用)
     public void ReturnStage()
     {
+        if (stage == (int)EScene.Credit)
+        {
+            GameManager.Instance.ChangeScene((EScene)stage);
+            GameManager.Instance.GetSystemSE().PlaySystemSE(SystemSoundEnum.se_enter);
+        }
+
         //Debug.Log(stage + "がクリックされた");
         if (IsUnlockstage)
         {
@@ -76,5 +85,10 @@ public class StageSelectScript : MonoBehaviour
     void bestTimePrint()
     {
         GameManager.Instance.UnlockManager().ClearTime((EScene)stage);
+    }
+
+    public void SetParent(GameObject parent)
+    {
+        this.parent = parent;
     }
 }
