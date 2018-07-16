@@ -10,6 +10,8 @@ public class ButtonSelect : MonoBehaviour {
 
     [SerializeField]
     private GameObject parentObject;
+    [SerializeField]
+    private GameObject creditButton;
     private StageSelectScript s;
     private GameObject selectingButton;
     private int allButton;
@@ -28,6 +30,8 @@ public class ButtonSelect : MonoBehaviour {
         page = 1;
         constrain = 0;
         controller = GameManager.Instance.GetController();
+        creditButton.GetComponent<StageSelectScript>().StageSet((int)EScene.Credit);
+        creditButton.GetComponent<StageSelectScript>().SetParent(gameObject);
 
         creditFlag = false;
     }
@@ -57,7 +61,7 @@ public class ButtonSelect : MonoBehaviour {
         //Debug.Log(constrain);
         //Debug.Log(index);
         //Debug.Log(stage);
-        Debug.Log(creditFlag);
+        //Debug.Log(creditFlag);
     }
 
     void CheckPanelButton()
@@ -131,7 +135,7 @@ public class ButtonSelect : MonoBehaviour {
         if (!(page == allPage))
         {
             //左下の時クレジットボタンに移動
-            if (allButton - (allButton % constrain) + 1 == stage)
+            if (page * panelButton - constrain + 1 == stage)
             {
                 if (controller.MoveSelectionDown() || controller.MoveSelectionLeft()) creditFlag = true;
             }
@@ -150,9 +154,10 @@ public class ButtonSelect : MonoBehaviour {
         //終わりのページの時
         else
         {
-
+            int temple = allButton % constrain;
+            temple = temple == 0 ? constrain : temple;
             //左下の時クレジットボタンに移動
-            if (page * panelButton - constrain + 1 == stage)
+            if (allButton - (temple) + 1 == stage)
             {
                 if (controller.MoveSelectionDown() || controller.MoveSelectionLeft()) creditFlag = true;
             }
@@ -162,8 +167,9 @@ public class ButtonSelect : MonoBehaviour {
             {
                 if (controller.MoveSelectionDown()) stage += constrain;
             }
+            
             //上にシフトできるとき
-            if (stage - constrain > allButton - panelButton)
+            if (stage - constrain > (page - 1) * panelButton )
             {
                 if (controller.MoveSelectionUp()) stage -= constrain;
             }
@@ -178,6 +184,12 @@ public class ButtonSelect : MonoBehaviour {
     {
         if (controller.Jump())
         {
+            if (creditFlag)
+            {
+                creditButton.GetComponent<StageSelectScript>().ReturnStage();
+                return;
+            }
+
             s = transform.GetChild(page - 1).GetChild(0).GetChild(stage - 1).GetComponent<StageSelectScript>();
             s.ReturnStage();
         }
@@ -186,7 +198,7 @@ public class ButtonSelect : MonoBehaviour {
     //選択されたボタンをintで返す(StageSelectScript用)
     public int ReturnSelectStage()
     {
-        if (creditFlag) return 0;
+        if (creditFlag) return (int)EScene.Credit;
         return stage;
     }
 

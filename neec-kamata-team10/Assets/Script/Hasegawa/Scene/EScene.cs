@@ -15,5 +15,6 @@
     PlayTest,
     StageSelect,
     Pause,
+    Credit,
     NULL,
 }
