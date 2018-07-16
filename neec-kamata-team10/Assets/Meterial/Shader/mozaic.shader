@@ -46,8 +46,8 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				fixed2 scaledPos = floor(i.uv * _Count);
-				fixed2 uv = scaledPos / _Count;
+				fixed2 scaledPos = floor((i.uv - 0.5f) * _Count);
+				fixed2 uv = scaledPos / _Count + 0.5f;
 				fixed4 col = tex2D(_MainTex, uv);
 				col.a = _Alpha;
 				return col;

@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4057572363424960}
   - component: {fileID: 198234866284757628}
   - component: {fileID: 199672340738148864}
+  - component: {fileID: 114232313456343002}
   m_Layer: 0
   m_Name: DeadParticle
-  m_TagString: Untagged
+  m_TagString: reflect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,6 +42,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &114232313456343002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033286176506604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573bb3dec8cbbeb459439ea5bc6409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198234866284757628
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -101,7 +113,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1929113795
+  randomSeed: 122980227
   InitialModule:
     serializedVersion: 3
     enabled: 1
