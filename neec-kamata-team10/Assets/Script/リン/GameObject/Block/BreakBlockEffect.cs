@@ -17,7 +17,6 @@ public class BreakBlockEffect : MonoBehaviour
     {
         GameObject effect = Instantiate(particle, transform.position, Quaternion.identity);
         float lifeTime = effect.GetComponent<ParticleSystem>().main.startLifetime.constantMax;
-        Debug.Log((effect != null).ToString() + lifeTime);
         Destroy(effect, lifeTime);                  //LifeTimeに合わせて消す
     }
 }
