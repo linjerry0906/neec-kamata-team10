@@ -15,7 +15,7 @@ public class CollisonToObject : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        Positioning();
+        //Positioning();
         UpdateSizeState();
     }
 
