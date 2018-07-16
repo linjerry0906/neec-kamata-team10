@@ -19,11 +19,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4654060781344764}
-  - component: {fileID: 54538793627447614}
-  - component: {fileID: 65268784752182780}
+  - component: {fileID: 114692198664622624}
+  - component: {fileID: 114647738868548250}
+  - component: {fileID: 65996485946207320}
   m_Layer: 0
   m_Name: brokenBlock
-  m_TagString: stage_block
+  m_TagString: reflect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,9 +40,8 @@ GameObject:
   - component: {fileID: 33656747857044540}
   - component: {fileID: 23741759280696304}
   - component: {fileID: 95632787275466210}
-  - component: {fileID: 65819628161485726}
-  - component: {fileID: 114379760177645606}
-  - component: {fileID: 114024118268000872}
+  - component: {fileID: 54004942913266274}
+  - component: {fileID: 65052849507243070}
   m_Layer: 0
   m_Name: brokenBlock
   m_TagString: stage_block
@@ -86,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1240197862566518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.5, y: 1.5, z: -0.5}
+  m_LocalPosition: {x: 66.5, y: 2.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4653023930938966}
@@ -148,12 +148,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1309014493252640}
   m_Mesh: {fileID: 4300000, guid: 7a09735059208c24d9232c01a260b11e, type: 3}
---- !u!54 &54538793627447614
+--- !u!54 &54004942913266274
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1240197862566518}
+  m_GameObject: {fileID: 1309014493252640}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -161,32 +161,32 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65268784752182780
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1240197862566518}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65819628161485726
+--- !u!65 &65052849507243070
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1309014493252640}
   m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65996485946207320
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240197862566518}
+  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0072358875, y: 0.0011288774, z: 0.01}
-  m_Center: {x: -0.000055283606, y: 0.00443556, z: 0}
+  m_Size: {x: 0.8, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!95 &95632787275466210
 Animator:
   serializedVersion: 3
@@ -204,31 +204,32 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114024118268000872
+--- !u!114 &114647738868548250
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1309014493252640}
+  m_GameObject: {fileID: 1240197862566518}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 980ebc55238227f4dbc02701d38b0787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 1718564306378852, guid: 61fb8cef0bde13a43a6420b9f7e75cc4, type: 2}
---- !u!114 &114379760177645606
+--- !u!114 &114692198664622624
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1309014493252640}
+  m_GameObject: {fileID: 1240197862566518}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffb07f61c924d914889b358dc00ccf9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   breakMass: 9
-  breakTime: 0.4
+  breakTime: 0.1
+  childBlock: {fileID: 1309014493252640}
 --- !u!198 &198445258533620028
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -289,7 +290,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1183825146
+  randomSeed: -820587016
   InitialModule:
     serializedVersion: 3
     enabled: 1

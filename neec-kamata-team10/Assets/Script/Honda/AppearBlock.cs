@@ -26,9 +26,16 @@ public class AppearBlock : MonoBehaviour
     public SwitchObject switchObj; //スイッチ本体(のコード)
     public GameObject appearObject; //スイッチで切り替えさせるObject
 
-    public float fadeTime = 0.2f;  //fade時間
-    Material objectMaterial;       //fade操作に使うObjectのMaterial
-    int timer, limitTime;          //fade用のtimer(笑)
+    //FadeTime関連
+    [SerializeField]
+    private float fadeTime = 0.2f;  //fade時間
+    private float timeNow;          //経過時間
+
+    //FadeColor関連
+    private Material objectMaterial;     //fade操作に使うObjectのMaterial
+    private Color colorNow, startColor;  //現在の色、Fade開始時の色
+    private Color maxColor, clearColor;  //α=max,0 Fade後の色
+
 
     enum fadeStatus //fade状態 していない,in,out
     {
@@ -43,27 +50,29 @@ public class AppearBlock : MonoBehaviour
 	void Start () {
         isActive = IsReverseAppear;        //初期状態の設定
         appearObject.SetActive(isActive);
-        limitTime = (int)(fadeTime * 60f); //60fps前提の簡易fade
 
         objectMaterial = appearObject.GetComponent<Renderer>().material;
 
-        timer = 0;
+        #region Fade関連の数値の設定
+        startColor = objectMaterial.color;          //現在色取得
 
-        fadeNow = fadeStatus.none;
-	}
+        maxColor = startColor;                      //a=maxの状態を保存
+        clearColor = startColor; clearColor.a = 0f; //a=0も作成
+
+        //Init時の色は反転設定=trueなら出現しているのでmax, falseなら消えているのでclear 
+        colorNow = IsReverseAppear ? maxColor : clearColor;
+
+        fadeNow = fadeStatus.none;                //ステータスは変化なし
+        #endregion
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (timer < limitTime)   //タイマーの時間分岐
+        if (fadeNow != fadeStatus.none)   //タイマーの時間分岐
         {
-            timer++;
+            timeNow += Time.deltaTime;
             SetAlpha();
-        }
-
-        else
-        {
-            fadeNow = fadeStatus.none;
         }
 
 
@@ -85,7 +94,8 @@ public class AppearBlock : MonoBehaviour
         if (isActive ^ newActive)
         {
             Judge();
-            SetTimer();
+            timeNow = 0f;
+            startColor = colorNow;
             SetAlpha();        //初回Alpha値設定
         }
 	}
@@ -110,42 +120,36 @@ public class AppearBlock : MonoBehaviour
 
     void SetAlpha()
     {
-        Color objColor = objectMaterial.color;
         if (fadeNow == fadeStatus.none) return; //fadeしていないのになんで来たんだ
 
         else if(fadeNow == fadeStatus.fadein)   //フェードインなら
         {
-            objColor.a = GetTime();
+            colorNow = Color.Lerp(startColor, maxColor, TimeRate());
+
+            if(TimeRate() > 1f)
+            {
+                fadeNow = fadeStatus.none;
+            }
         }
 
         else if(fadeNow == fadeStatus.fadeout)  //フェードアウトなら
         {
-            objColor.a = 1.0f - GetTime();
+            colorNow = Color.Lerp(startColor, clearColor, TimeRate());
 
-            if(timer >= limitTime)              //fadeOut終了なら寝かせる
+            if(TimeRate() >= 1f)              //fadeOut終了なら寝かせる
             {
                 appearObject.SetActive(false);
+
+                fadeNow = fadeStatus.none;
             }
         }
 
-        objectMaterial.color = objColor;
+        objectMaterial.color = colorNow;
     }
 
-    void SetTimer()
+    float TimeRate()
     {
-        if (timer >= limitTime) //前回のフェードが終了していれば
-        {
-            timer = 0;
-        }
-
-        else                           //スイッチを高速で連打してフェードが終わってなければ
-        {
-            timer = limitTime - timer; //経過時間を取得して途中から
-        }
-    }
-
-    float GetTime()
-    {
-        return (float)timer / (float)limitTime;
+        if (timeNow > fadeTime) return 1f;
+        return (timeNow / fadeTime);
     }
 }
