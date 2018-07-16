@@ -6,6 +6,8 @@ public class EnemyDead : MonoBehaviour {
 
     Animator anim;
     bool isDead = false;
+    [SerializeField]
+    private GameObject particle;
 
 
     private void Start()
@@ -21,6 +23,8 @@ public class EnemyDead : MonoBehaviour {
     public void Dead()
     {
         isDead = true;
+        GameObject clone = Instantiate(particle, transform.localPosition, Quaternion.identity);
+        clone.GetComponent<ParticleSystem>().Play();
     }
 
     public bool IsDead()

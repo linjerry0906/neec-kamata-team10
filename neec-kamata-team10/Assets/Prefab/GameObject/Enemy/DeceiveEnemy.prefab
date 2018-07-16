@@ -504,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573bb3dec8cbbeb459439ea5bc6409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDead: {fileID: 0}
 --- !u!114 &114370904307755700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -549,6 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c336213337b178a4f99c72e582472773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 1443497675044318}
 --- !u!114 &114854956367101688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,7 +635,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 122980227
+  randomSeed: -1624737849
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -1527,7 +1529,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1552,8 +1554,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 50501
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1561,7 +1563,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
