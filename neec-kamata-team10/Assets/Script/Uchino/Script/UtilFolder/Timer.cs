@@ -24,7 +24,7 @@ public class Timer
     /// <summary>
     /// タイマー更新
     /// </summary>
-    public void TimeUpdate()
+    public void TimerUpdate()
     {
         currentTime += Time.deltaTime;
     }

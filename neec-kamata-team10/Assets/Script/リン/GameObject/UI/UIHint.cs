@@ -53,7 +53,7 @@ public class UIHint : MonoBehaviour
 		if(fadeIn)
 			return;
 
-		timer.TimeUpdate();
+		timer.TimerUpdate();
 		if(timer.IsTime())
 			fadeIn = true;
 	}

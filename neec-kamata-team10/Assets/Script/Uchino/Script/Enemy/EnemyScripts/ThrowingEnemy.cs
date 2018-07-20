@@ -31,7 +31,7 @@ public class ThrowingEnemy : MoveEnemy {
     /// </summary>
     void InstanceThrowObj()
     {
-        throwtimer.TimeUpdate();            //投げる間隔
+        throwtimer.TimerUpdate();            //投げる間隔
 
         if (!throwtimer.IsTime()) return;   //投げる時間になってなかったら生成しない
 
