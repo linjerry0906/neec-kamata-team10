@@ -15,7 +15,6 @@ public class UnlockManager
     {
         stages = new bool[(int)(EScene.StageNull - 1)];
         stages[0] = true;
-        stages[ClampIndex(EScene.Stage7)] = true;
 
         clearTimes = new DateTime[(int)(EScene.StageNull - 1)];
     }
