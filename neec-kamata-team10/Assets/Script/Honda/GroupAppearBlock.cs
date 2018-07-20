@@ -14,10 +14,10 @@ public class GroupAppearBlock : AppearBlockBase
     // Use this for initialization
     void Start()
     {
-        base.appearObject = this.appearObject;
+        base.appearObj = this.appearObject;
         parent = GetComponentInParent<GroupAppearParent>();
-        IsReverseAppear = parent.IsReverseAppear;
-        fadeTime = parent.FadeTime + addTime;
+        IsReverse = parent.IsReverseAppear;
+        fadeT = parent.FadeTime + addTime;
 
         base.OriginStart();
     }

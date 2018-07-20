@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AppearBlockBase : MonoBehaviour {
 
-    protected bool IsReverseAppear;
+    protected bool IsReverse;
     protected bool isActive;           //現在のActive状態
     protected bool newActive;          //Update時の状態判定用bool
 
-    protected float fadeTime;          //fade時間
+    protected float fadeT;             //fade時間
     protected float timeNow;           //経過時間
 
-    protected GameObject appearObject; //スイッチで切り替えさせるObject
+    protected GameObject appearObj; //スイッチで切り替えさせるObject
 
     //FadeColor関連
     protected Material objectMaterial;     //fade操作に使うObjectのMaterial
@@ -31,11 +31,11 @@ public class AppearBlockBase : MonoBehaviour {
     // Use this for initialization
     protected void OriginStart()
     {
-        isActive = IsReverseAppear;        //初期状態の設定
+        isActive = IsReverse;        //初期状態の設定
 
-        appearObject.SetActive(isActive);
+        appearObj.SetActive(isActive);
 
-        objectMaterial = appearObject.GetComponent<Renderer>().material;
+        objectMaterial = appearObj.GetComponent<Renderer>().material;
 
         #region Fade関連の数値の設定
         startColor = objectMaterial.color;          //現在色取得
@@ -44,7 +44,7 @@ public class AppearBlockBase : MonoBehaviour {
         clearColor = startColor; clearColor.a = 0f; //a=0も作成
 
         //Init時の色は反転設定=trueなら出現しているのでmax, falseなら消えているのでclear 
-        colorNow = IsReverseAppear ? maxColor : clearColor;
+        colorNow = IsReverse ? maxColor : clearColor;
 
         fadeNow = fadeStatus.none;                //ステータスは変化なし
         #endregion
@@ -89,7 +89,7 @@ public class AppearBlockBase : MonoBehaviour {
         if (!isActive) //元々寝ていた場合->起こす
         {
             isActive = true;
-            appearObject.SetActive(true);
+            appearObj.SetActive(true);
             fadeNow = fadeStatus.fadein;
         }
 
@@ -121,7 +121,7 @@ public class AppearBlockBase : MonoBehaviour {
 
             if (TimeRate() >= 1f)              //fadeOut終了なら寝かせる
             {
-                appearObject.SetActive(false);
+                appearObj.SetActive(false);
 
                 fadeNow = fadeStatus.none;
             }
@@ -132,8 +132,8 @@ public class AppearBlockBase : MonoBehaviour {
 
     float TimeRate()
     {
-        if (timeNow > fadeTime) return 1f;
-        return (timeNow / fadeTime);
+        if (timeNow > fadeT) return 1f;
+        return (timeNow / fadeT);
     }
 }
 
