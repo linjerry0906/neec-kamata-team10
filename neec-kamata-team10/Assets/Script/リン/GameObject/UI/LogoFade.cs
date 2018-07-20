@@ -24,7 +24,7 @@ public class LogoFade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		timer.TimeUpdate();
+		timer.TimerUpdate();
 
 		SetFadeColor();
 
