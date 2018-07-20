@@ -15,8 +15,6 @@ public class MagicBlockEffect : MonoBehaviour {
     private float minIntensity = 0.0f;
     [SerializeField]
     private float flashSpeed = 1.8f;
-    [SerializeField]
-    private bool useSharedMaterial = true;
 
     private float currentIntensity = 0.0f;
     private bool isIncrease = true;
