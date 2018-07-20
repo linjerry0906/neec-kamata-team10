@@ -57,7 +57,7 @@ public class CreditBackground : MonoBehaviour
 	/// </summary>
 	private void UpdateTimer()
 	{
-		timer.TimeUpdate();
+		timer.TimerUpdate();
 		if(timer.IsTime())
 		{
 			++currentCount;

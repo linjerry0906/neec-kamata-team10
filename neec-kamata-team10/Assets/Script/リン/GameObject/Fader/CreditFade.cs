@@ -31,7 +31,7 @@ public class CreditFade : MonoBehaviour
 		if(!isFade)
 			return;
 
-		timer.TimeUpdate();
+		timer.TimerUpdate();
 		fadeImage.color = Color.Lerp(minColor, maxColor, timer.Rate() * timer.Rate());
 		if(timer.IsTime())
 			GameManager.Instance.ChangeScene(EScene.StageSelect);
