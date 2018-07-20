@@ -20,9 +20,9 @@ using UnityEngine;
 public class AppearBlock : AppearBlockBase
 {
     [SerializeField]
-    private new GameObject appearObject; //スイッチで切り替えさせるObject
+    private GameObject appearObject; //スイッチで切り替えさせるObject
     [SerializeField]
-    private new bool IsReverseAppear = false; //trueだとスイッチOnで消滅、スイッチOffで出現
+    private bool IsReverseAppear = false; //trueだとスイッチOnで消滅、スイッチOffで出現
 
     [SerializeField]
     public SwitchObject switchObj; //スイッチ本体(のコード)
@@ -30,14 +30,14 @@ public class AppearBlock : AppearBlockBase
 
     //FadeTime関連
     [SerializeField]
-    private new float fadeTime = 0.2f;  //fade時間
+    private float fadeTime = 0.2f;  //fade時間
 
     // Use this for initialization
     void Start()
     {
-        base.appearObject = this.appearObject;
-        base.IsReverseAppear = this.IsReverseAppear;
-        base.fadeTime = this.fadeTime;
+        base.appearObj = this.appearObject;
+        base.IsReverse = this.IsReverseAppear;
+        base.fadeT = this.fadeTime;
 
         base.OriginStart();
     }
