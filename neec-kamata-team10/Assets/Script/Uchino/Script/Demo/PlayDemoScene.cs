@@ -7,8 +7,8 @@ public class PlayDemoScene : MonoBehaviour {
 
     [SerializeField]
     private int transitionTime = 12;    //遷移を開始する時間
-    private Timer waitTimer;                    //タイマー
-    private FadeManager fadeManager;    
+    private Timer waitTimer;            //タイマー
+    private FadeManager fadeManager;    //fadeManagerの取得
 
     // Use this for initialization
     void Start () {
@@ -56,11 +56,4 @@ public class PlayDemoScene : MonoBehaviour {
             waitTimer.Initialize();
     }
 
-    /// <summary>
-    /// Demoシーンへ遷移
-    /// </summary>
-    void TransitionDemoScene()
-    {
-        SceneManager.LoadScene("Demo");
-    }
 }
