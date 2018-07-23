@@ -21,12 +21,35 @@ public class MirrorSelectPanel : MonoBehaviour
     private float spacing;
 
     private int currentMirror = 0;
+    private int prevMirror;
+    [SerializeField]
+    private float animTime = 0.2f;  //アニメーションさせる時間
+    private Timer timer;
+    [SerializeField]
+    private GameObject fakeFirst;
+    [SerializeField]
+    private GameObject fakeLast;
+
+    private Vector3 MinSizeUI, MaxSizeUI;
+
 
     private void Start()
     {
         currentMirror = 0;
         spacing = GetComponent<HorizontalLayoutGroup>().spacing;
+
+        timer = new Timer(animTime);
+        MinSizeUI = new Vector3(MIN_SIZE, MIN_SIZE, 0);
+        MaxSizeUI = new Vector3(MAX_SIZE, MAX_SIZE, 0);
         SetCurrentMirror(currentMirror);
+    }
+
+    private void Update()
+    {
+        if (timer.IsTime()) return;
+
+        timer.TimerUpdate();
+        SetUISize();
     }
 
     /// <summary>
@@ -38,13 +61,37 @@ public class MirrorSelectPanel : MonoBehaviour
         if (index >= mirrors.Length)
             return;
 
-        mirrors[currentMirror].GetComponent<RectTransform>().localScale = new Vector3(MIN_SIZE, MIN_SIZE, 0);   //大きさ
+        timer.Initialize();
+  
         mirrors[currentMirror].GetComponent<Animator>().SetBool("Selected", false);                             //アニメション
-
+        prevMirror = currentMirror;
         currentMirror = index;
-        mirrors[currentMirror].GetComponent<RectTransform>().localScale = new Vector3(MAX_SIZE, MAX_SIZE, 0);   //大きさ
         mirrors[currentMirror].GetComponent<Animator>().SetBool("Selected", true);                              //アニメション
+    }
 
-        GetComponent<RectTransform>().localPosition = START_POS + new Vector3(-spacing * index, 0, 0);
+    /// <summary>
+    /// アニメーション中のUIのサイズを設定
+    /// </summary>
+    private void SetUISize()
+    {
+        int prevIndex = prevMirror;
+        if(prevMirror - currentMirror > 1)
+        {
+            fakeFirst.GetComponent<RectTransform>().localScale = Vector3.Lerp(MaxSizeUI, MinSizeUI, timer.Rate());              //古いものは小さくする方向
+            prevIndex = -1;
+        }
+        if(prevMirror - currentMirror < -1)
+        {
+            fakeLast.GetComponent<RectTransform>().localScale = Vector3.Lerp(MaxSizeUI, MinSizeUI, timer.Rate());               //古いものは小さくする方向
+            prevIndex = mirrors.Length;
+        }
+
+        mirrors[prevMirror].GetComponent<RectTransform>().localScale = Vector3.Lerp(MaxSizeUI, MinSizeUI, timer.Rate());        //古いものは小さくする方向
+        mirrors[currentMirror].GetComponent<RectTransform>().localScale = Vector3.Lerp(MinSizeUI, MaxSizeUI, timer.Rate());     //新しいものは大きく
+
+        GetComponent<RectTransform>().localPosition = START_POS + Vector3.Lerp(
+            new Vector3(-spacing * prevIndex, 0, 0),
+            new Vector3(-spacing * currentMirror, 0, 0),
+            timer.Rate());
     }
 }

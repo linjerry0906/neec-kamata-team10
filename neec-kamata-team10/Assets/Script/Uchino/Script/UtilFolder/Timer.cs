@@ -37,7 +37,6 @@ public class Timer
     {
         if(limitTime <= currentTime)
         {
-            currentTime = 0;
             return true;
         }
 
