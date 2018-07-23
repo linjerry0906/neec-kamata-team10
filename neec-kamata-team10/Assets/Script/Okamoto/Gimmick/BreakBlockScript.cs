@@ -32,7 +32,7 @@ public class BreakBlockScript : MonoBehaviour
         {
             //時間内にたくさんパーティクルを散らすような仕様に
             //GetComponent<BreakBlockEffect>().BreakEffect();
-
+            GetComponent<BreakBlockEffect>().BreakEffect();
             time -= Time.deltaTime;
 
             if (time <= 0)
@@ -77,7 +77,6 @@ public class BreakBlockScript : MonoBehaviour
             player.SetPlayerState(EPlayerState.Jump);
             player.SetIsJump(true);
         }
-        GetComponent<BreakBlockEffect>().BreakEffect();
     }
 
     //6.15 本田 変更:Enemy,MagicBlock,Splinterでも破壊される
