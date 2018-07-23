@@ -14,7 +14,8 @@ public class BestTimeTextPrint : MonoBehaviour {
     {
         
         DateTime scoreTime = GameManager.Instance.UnlockManager().ClearTime((EScene)stage);
-        string time = String.Format("{0}:{1}:{2}", scoreTime.Minute, scoreTime.Second, scoreTime.Millisecond);
+        //string time = String.Format("{0}:{1}:{2}", scoreTime.Minute, scoreTime.Second, scoreTime.Millisecond);
+        string time =  scoreTime.ToString("mm:ss:fff");
         GetComponent<Text>().text = time;
 	}
 	
