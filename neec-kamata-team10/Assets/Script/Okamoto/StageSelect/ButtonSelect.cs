@@ -189,8 +189,15 @@ public class ButtonSelect : MonoBehaviour {
                 creditButton.GetComponent<StageSelectScript>().ReturnStage();
                 return;
             }
+            //ステージがpanelButtonと同じ時用
+            int index = page * transform.GetComponent<StagePanelCreate>().ReturnPanelPerButton() - 1;
 
-            s = transform.GetChild(page - 1).GetChild(0).GetChild(stage % panelButton - 1).GetComponent<StageSelectScript>();
+            //stage % panelButton が0じゃないとき
+            if (stage % panelButton != 0) s = transform.GetChild(page - 1).GetChild(0).GetChild(stage % panelButton - 1).GetComponent<StageSelectScript>();
+            
+            //0の時
+            else s = transform.GetChild(page - 1).GetChild(0).GetChild(index).GetComponent<StageSelectScript>();
+
             s.ReturnStage();
         }
     }
