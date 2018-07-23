@@ -190,7 +190,7 @@ public class ButtonSelect : MonoBehaviour {
                 return;
             }
 
-            s = transform.GetChild(page - 1).GetChild(0).GetChild(stage - 1).GetComponent<StageSelectScript>();
+            s = transform.GetChild(page - 1).GetChild(0).GetChild(stage % panelButton - 1).GetComponent<StageSelectScript>();
             s.ReturnStage();
         }
     }
