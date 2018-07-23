@@ -37,7 +37,7 @@ public class FadeController : MonoBehaviour {
     [SerializeField]
     EfadeMode fadeMode;             //フェードモード
     [SerializeField]
-    EFadeScene fadeScene;           //フェード先シーン
+    EFadeScene fadeScene = EFadeScene.Demo;           //フェード先シーン
 
 	// Use this for initialization
 	void Start () {
