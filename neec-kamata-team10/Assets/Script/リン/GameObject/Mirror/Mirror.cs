@@ -286,6 +286,7 @@ public class Mirror : MonoBehaviour
         transform.GetChild(4).gameObject.SetActive(false);
         transform.GetChild(5).gameObject.SetActive(false);
         transform.GetChild(6).gameObject.SetActive(true);
+        transform.GetChild(8).gameObject.SetActive(false);
         Destroy(gameObject, 0.7f);
     }
 
