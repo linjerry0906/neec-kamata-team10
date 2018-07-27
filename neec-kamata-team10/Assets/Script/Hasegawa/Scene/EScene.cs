@@ -12,6 +12,7 @@
     Stage10 = 10,
     Stage11 = 11,
     Stage12 = 12,
+    Stage13 = 13,
     StageNull,              //Stage追加はこの上に
     Title = -100,
     PlayTest,
