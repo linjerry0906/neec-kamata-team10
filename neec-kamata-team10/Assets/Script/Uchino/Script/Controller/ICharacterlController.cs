@@ -11,6 +11,7 @@ public interface ICharacterController
     bool SwitchToTheLeft();           //鏡を左に切り替える
     bool OperateTheMirror();          //鏡の操作
     bool ThrowMirror();               //鏡を投げる（キーを離したとき:true）
+    bool Respawn();                   //リスポーン(即時やりなおし)
 	bool Pause();					  //一時停止:
 
     bool MoveSelectionUp();           //選択項目を上に移動

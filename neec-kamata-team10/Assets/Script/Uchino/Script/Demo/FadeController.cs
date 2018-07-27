@@ -25,19 +25,19 @@ enum EFadeScene
 
 public class FadeController : MonoBehaviour {
 
-    Image fadeImage;                //fade用のパネル
-    float red, blue, green, alpha;  //色、不透明度管理
-    bool isFadeOut = false;         //フェードアウトしたか
-    bool isFadeIn = false;          //フェードインしたか
+    Image fadeImage;                        //fade用のパネル
+    float red, blue, green, alpha;          //色、不透明度管理
+    bool isFadeOut = false;                 //フェードアウトしたか
+    bool isFadeIn  = false;                 //フェードインしたか
 
     [SerializeField]
-    float fadeInSpeed = 0.2f;       //フェードインするスピード
+    float fadeInSpeed = 0.2f;               //フェードインするスピード
     [SerializeField]
-    float fadeOutSpeed = 1f;        //フェードアウトするスピード
+    float fadeOutSpeed = 1f;                //フェードアウトするスピード
     [SerializeField]
-    EfadeMode fadeMode;             //フェードモード
+    EfadeMode fadeMode;                     //フェードモード
     [SerializeField]
-    EFadeScene fadeScene = EFadeScene.Demo;           //フェード先シーン
+    EFadeScene fadeScene;                   //フェード先シーン
 
 	// Use this for initialization
 	void Start () {

@@ -204,6 +204,14 @@ public class KeboardController : ICharacterController
 	}
 
     /// <summary>
+    /// リスポーン(即時リスポーン)
+    /// </summary>
+    /// <returns></returns>
+    public bool Respawn()
+    {
+        return Input.GetKey(KeyCode.Backspace);
+    }
+
     /// ゲーム終了
     /// </summary>
     /// <returns></returns>
@@ -211,4 +219,5 @@ public class KeboardController : ICharacterController
     {
         return Input.GetKeyDown(KeyCode.Escape);
     }
+
 }
