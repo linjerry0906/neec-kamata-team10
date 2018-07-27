@@ -209,7 +209,7 @@ public class KeboardController : ICharacterController
     /// <returns></returns>
     public bool Respawn()
     {
-        return Input.GetKeyDown(KeyCode.Backspace);
+        return Input.GetKey(KeyCode.Backspace);
     }
 
     /// ゲーム終了

@@ -309,7 +309,7 @@ public class PadController : ICharacterController
     /// <returns></returns>
     public bool Respawn()
     {
-        return Input.GetKeyDown(KeyCode.Joystick1Button9);  //ジョイスティックの窪み
+        return Input.GetKey(KeyCode.Joystick1Button9);  //ジョイスティックの窪み
     }
 
     /// <summary>
