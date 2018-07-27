@@ -57,6 +57,8 @@ public class Retry : MonoBehaviour
 		if(timer.IsTime())			//時間にになったらリセット
 		{
 			aliveFlag.Dead();
+			input.SetFadeFlag(true);
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
 		}
 	}
 }
