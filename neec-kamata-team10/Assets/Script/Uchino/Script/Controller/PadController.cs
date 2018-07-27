@@ -304,6 +304,15 @@ public class PadController : ICharacterController
     }
 
     /// <summary>
+    /// リスポーン（即時やりなおし）
+    /// </summary>
+    /// <returns></returns>
+    public bool Respawn()
+    {
+        return Input.GetKeyDown(KeyCode.Joystick1Button9);  //ジョイスティックの窪み
+    }
+
+    /// <summary>
     /// ゲームを終了
     /// </summary>
     /// <returns></returns>
