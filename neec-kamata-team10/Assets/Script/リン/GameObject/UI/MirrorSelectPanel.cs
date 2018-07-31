@@ -32,6 +32,8 @@ public class MirrorSelectPanel : MonoBehaviour
 
     private Vector3 MinSizeUI, MaxSizeUI;
 
+    private PlayerUI playerUI;
+
 
     private void Start()
     {
@@ -41,6 +43,8 @@ public class MirrorSelectPanel : MonoBehaviour
         timer = new Timer(animTime);
         MinSizeUI = new Vector3(MIN_SIZE, MIN_SIZE, 0);
         MaxSizeUI = new Vector3(MAX_SIZE, MAX_SIZE, 0);
+
+        playerUI = GameObject.Find("Player").GetComponentInChildren<PlayerUI>();
         SetCurrentMirror(currentMirror);
     }
 
@@ -67,6 +71,9 @@ public class MirrorSelectPanel : MonoBehaviour
         prevMirror = currentMirror;
         currentMirror = index;
         mirrors[currentMirror].GetComponent<Animator>().SetBool("Selected", true);                              //アニメション
+
+
+        playerUI.ChangeMirrorUI(currentMirror);
     }
 
     /// <summary>
